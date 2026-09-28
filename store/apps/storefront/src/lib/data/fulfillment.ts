@@ -23,7 +23,7 @@ export const listCartShippingMethods = async (cartId: string) => {
         },
         headers,
         next,
-        cache: "force-cache",
+        cache: process.env.NODE_ENV === "development" ? "no-store" : "force-cache",
       }
     )
     .then(({ shipping_options }) => shipping_options)

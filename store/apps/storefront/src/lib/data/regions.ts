@@ -13,7 +13,7 @@ export const listRegions = async () => {
     .fetch<{ regions: HttpTypes.StoreRegion[] }>(`/store/regions`, {
       method: "GET",
       next,
-      cache: "force-cache",
+      cache: process.env.NODE_ENV === "development" ? "no-store" : "force-cache",
     })
     .then(({ regions }) => regions)
 }
@@ -35,7 +35,9 @@ export const retrieveRegion = async (id: string) => {
 const regionMap = new Map<string, HttpTypes.StoreRegion>()
 
 export const getRegion = async (countryCode: string) => {
-  if (regionMap.has(countryCode)) {
+  if (process.env.NODE_ENV === "development") {
+    regionMap.clear()
+  } else if (regionMap.has(countryCode)) {
     return regionMap.get(countryCode)
   }
 

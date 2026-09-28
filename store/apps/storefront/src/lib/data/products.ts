@@ -70,12 +70,12 @@ export const listProducts = async ({
           offset,
           region_id: region?.id,
           fields:
-            "*variants.calculated_price,+variants.inventory_quantity,*variants.images,*variants.options,+metadata,+tags,",
+            "*variants.calculated_price,+variants.inventory_quantity,*variants.images,*variants.options,+metadata,+tags,*categories,",
           ...queryParams,
         },
         headers,
         next,
-        cache: "force-cache",
+        cache: process.env.NODE_ENV === "development" ? "no-store" : "force-cache",
       }
     )
     .then(({ products, count }) => {
@@ -132,7 +132,8 @@ export const listProductsWithSort = async ({
 
   const sortedProducts = sortProducts(products, sortBy)
 
-  const pageParam = (page - 1) * limit
+  // Pages are 1-based; a missing/zero page would produce slice(-limit, 0) = []
+  const pageParam = (Math.max(page, 1) - 1) * limit
 
   const filteredCount = products.length
 
