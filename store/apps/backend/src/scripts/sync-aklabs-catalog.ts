@@ -7,6 +7,7 @@ import {
   updateProductVariantsWorkflow,
   updateProductsWorkflow,
   updateShippingOptionsWorkflow,
+  updateStoresWorkflow,
 } from "@medusajs/medusa/core-flows"
 
 import { AKLABS_PRODUCTS, buildPrices } from "./seed-aklabs-products"
@@ -14,6 +15,7 @@ import { AKLABS_PRODUCTS, buildPrices } from "./seed-aklabs-products"
 /**
  * Idempotent maintenance for the AKLabs catalog:
  *
+ * 0. Names the store "AKLabs Store" (shown in the admin).
  * 1. Keeps AKLabs product copy (subtitle, description, material, origin) in sync.
  * 2. Gives every AKLabs variant a USD price (Ecuador) and an EUR price (Europe),
  *    so /ec and /dk can both sell the same catalog.
@@ -22,6 +24,7 @@ import { AKLABS_PRODUCTS, buildPrices } from "./seed-aklabs-products"
  * 4. Names the Ecuador shipping options in Spanish and adds an express option.
  */
 
+const STORE_NAME = "AKLabs Store"
 const DEMO_PRODUCT_HANDLES = ["t-shirt", "sweatshirt", "sweatpants", "shorts"]
 const DEMO_CATEGORY_NAMES = ["Shirts", "Sweatshirts", "Pants", "Merch"]
 
@@ -45,6 +48,19 @@ export default async function syncAklabsCatalog({
 }) {
   const logger = container.resolve(ContainerRegistrationKeys.LOGGER)
   const query = container.resolve(ContainerRegistrationKeys.QUERY)
+
+  // 0. Store name shown in the admin
+  const { data: stores } = await query.graph({
+    entity: "store",
+    fields: ["id", "name"],
+  })
+  const store = stores[0]
+  if (store && store.name !== STORE_NAME) {
+    await updateStoresWorkflow(container).run({
+      input: { selector: { id: store.id }, update: { name: STORE_NAME } },
+    })
+    logger.info(`Tienda renombrada a "${STORE_NAME}".`)
+  }
 
   // 1 + 2. Product copy and multi-currency prices
   const { data: aklabsProducts } = await query.graph({
