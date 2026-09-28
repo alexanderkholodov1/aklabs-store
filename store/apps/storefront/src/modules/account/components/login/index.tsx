@@ -17,32 +17,32 @@ const Login = ({ setCurrentView }: Props) => {
       className="max-w-sm w-full flex flex-col items-center"
       data-testid="login-page"
     >
-      <h1 className="text-large-semi uppercase mb-6">Welcome back</h1>
-      <p className="text-center text-base-regular text-ui-fg-base mb-8">
-        Sign in to access an enhanced shopping experience.
+      <h1 className="font-display text-5xl tracking-wide text-ak-ink mb-3">Bienvenido</h1>
+      <p className="text-center text-base-regular text-ak-ink/65 mb-8">
+        Inicia sesión para ver tus pedidos y guardar tus direcciones.
       </p>
       {message?.state === "verification_required" && (
         <div
           className="w-full mb-6 text-center text-base-regular text-ui-fg-base bg-ui-bg-subtle border border-ui-border-base rounded-rounded p-4"
           data-testid="login-verification-message"
         >
-          We sent a verification link to <strong>{message.email}</strong>.
-          Please verify your email, then sign in.
+          Enviamos un enlace de verificación a <strong>{message.email}</strong>.
+          Verifica tu correo y luego inicia sesión.
         </div>
       )}
       <form className="w-full" action={formAction}>
         <div className="flex flex-col w-full gap-y-2">
           <Input
-            label="Email"
+            label="Correo electrónico"
             name="email"
             type="email"
-            title="Enter a valid email address."
+            title="Ingresa un correo válido."
             autoComplete="email"
             required
             data-testid="email-input"
           />
           <Input
-            label="Password"
+            label="Contraseña"
             name="password"
             type="password"
             autoComplete="current-password"
@@ -55,17 +55,17 @@ const Login = ({ setCurrentView }: Props) => {
           data-testid="login-error-message"
         />
         <SubmitButton data-testid="sign-in-button" className="w-full mt-6">
-          Sign in
+          Iniciar sesión
         </SubmitButton>
       </form>
-      <span className="text-center text-ui-fg-base text-small-regular mt-6">
-        Not a member?{" "}
+      <span className="text-center text-ak-ink/70 text-small-regular mt-6">
+        ¿Aún no tienes cuenta?{" "}
         <button
           onClick={() => setCurrentView(LOGIN_VIEW.REGISTER)}
-          className="underline"
+          className="font-semibold text-ak-royal underline underline-offset-4"
           data-testid="register-button"
         >
-          Join us
+          Regístrate
         </button>
         .
       </span>
