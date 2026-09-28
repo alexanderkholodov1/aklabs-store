@@ -1,23 +1,39 @@
 "use client"
 
-import { Popover, PopoverPanel, Transition } from "@headlessui/react"
+import {
+  Popover,
+  PopoverButton,
+  PopoverPanel,
+  Transition,
+} from "@headlessui/react"
+import { Locale } from "@lib/data/locales"
 import useToggleState from "@lib/hooks/use-toggle-state"
 import { ArrowRightMini, XMark } from "@medusajs/icons"
 import { HttpTypes } from "@medusajs/types"
 import LocalizedClientLink from "@modules/common/components/localized-client-link"
 import { Text, clx } from "@modules/common/components/ui"
 import { Fragment } from "react"
-import CountrySelect from "../country-select"
 import LanguageSelect from "../language-select"
-import { Locale } from "@lib/data/locales"
+import { RegionSelect } from "../region-switcher"
 
+const SideMenuItems = [
+  { name: "Inicio", href: "/", testId: "home-link" },
+  { name: "Tienda", href: "/store", testId: "store-link" },
+  { name: "Hoodies", href: "/categories/hoodies", testId: "hoodies-link" },
+  { name: "Camisetas", href: "/categories/camisetas", testId: "camisetas-link" },
+  { name: "Joggers", href: "/categories/joggers", testId: "joggers-link" },
+  { name: "Gorras", href: "/categories/gorras", testId: "gorras-link" },
+  {
+    name: "Termos y botellas",
+    href: "/categories/termos-y-botellas",
+    testId: "termos-link",
+  },
+]
 
-const SideMenuItems = {
-  Home: "/",
-  Store: "/store",
-  Account: "/account",
-  Cart: "/cart",
-}
+const SecondaryItems = [
+  { name: "Mi cuenta", href: "/account", testId: "account-link" },
+  { name: "Carrito", href: "/cart", testId: "cart-link" },
+]
 
 type SideMenuProps = {
   regions: HttpTypes.StoreRegion[] | null
@@ -26,7 +42,6 @@ type SideMenuProps = {
 }
 
 const SideMenu = ({ regions, locales, currentLocale }: SideMenuProps) => {
-  const countryToggleState = useToggleState()
   const languageToggleState = useToggleState()
 
   return (
@@ -35,18 +50,31 @@ const SideMenu = ({ regions, locales, currentLocale }: SideMenuProps) => {
         <Popover className="h-full flex">
           {({ open, close }) => (
             <>
-              <div className="relative flex h-full">
-                <Popover.Button
+              <div className="relative flex h-full items-center">
+                <PopoverButton
                   data-testid="nav-menu-button"
-                  className="relative h-full flex items-center transition-all ease-out duration-200 focus:outline-none hover:text-ui-fg-base"
+                  className="flex h-10 items-center gap-2 rounded-full px-3 text-ak-ink/80 transition-colors hover:bg-white/90 hover:text-ak-ink focus:outline-none"
                 >
-                  Menu
-                </Popover.Button>
+                  <svg
+                    width="18"
+                    height="18"
+                    viewBox="0 0 18 18"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M2.5 5h13M2.5 9h9M2.5 13h13"
+                      stroke="currentColor"
+                      strokeWidth="1.6"
+                      strokeLinecap="round"
+                    />
+                  </svg>
+                  <span className="hidden xsmall:inline">Menú</span>
+                </PopoverButton>
               </div>
 
               {open && (
                 <div
-                  className="fixed inset-0 z-[50] bg-black/0 pointer-events-auto"
+                  className="fixed inset-0 z-[50] bg-ak-navy/30 backdrop-blur-sm pointer-events-auto"
                   onClick={close}
                   data-testid="side-menu-backdrop"
                 />
@@ -55,40 +83,71 @@ const SideMenu = ({ regions, locales, currentLocale }: SideMenuProps) => {
               <Transition
                 show={open}
                 as={Fragment}
-                enter="transition ease-out duration-150"
-                enterFrom="opacity-0"
-                enterTo="opacity-100 backdrop-blur-2xl"
+                enter="transition ease-out duration-200"
+                enterFrom="opacity-0 -translate-x-4"
+                enterTo="opacity-100 translate-x-0"
                 leave="transition ease-in duration-150"
-                leaveFrom="opacity-100 backdrop-blur-2xl"
-                leaveTo="opacity-0"
+                leaveFrom="opacity-100 translate-x-0"
+                leaveTo="opacity-0 -translate-x-4"
               >
-                <PopoverPanel className="flex flex-col absolute w-full pr-4 sm:pr-0 sm:w-1/3 2xl:w-1/4 sm:min-w-min h-[calc(100vh-1rem)] z-[51] inset-x-0 text-sm text-ui-fg-on-color m-2 backdrop-blur-2xl">
+                <PopoverPanel className="fixed left-3 top-3 bottom-3 z-[51] flex w-[calc(100%-1.5rem)] flex-col text-sm xsmall:w-[380px]">
                   <div
                     data-testid="nav-menu-popup"
-                    className="flex flex-col h-full bg-[rgba(3,7,18,0.5)] rounded-rounded justify-between p-6"
+                    className="relative flex h-full flex-col justify-between overflow-hidden rounded-[32px] bg-ak-navy p-6 text-white shadow-2xl"
                   >
-                    <div className="flex justify-end" id="xmark">
-                      <button data-testid="close-menu-button" onClick={close}>
+                    <div
+                      aria-hidden="true"
+                      className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-ak-sky/30 blur-[90px]"
+                    />
+                    <div
+                      aria-hidden="true"
+                      className="pointer-events-none absolute -bottom-24 -left-16 h-72 w-72 rounded-full bg-ak-red/30 blur-[90px]"
+                    />
+
+                    <div className="relative flex items-center justify-between">
+                      <span className="font-display text-2xl tracking-[0.08em] text-white/90">
+                        AKLABS
+                      </span>
+                      <button
+                        data-testid="close-menu-button"
+                        onClick={close}
+                        className="glass-dark flex h-10 w-10 items-center justify-center rounded-full"
+                        aria-label="Cerrar menú"
+                      >
                         <XMark />
                       </button>
                     </div>
-                    <ul className="flex flex-col gap-6 items-start justify-start">
-                      {Object.entries(SideMenuItems).map(([name, href]) => {
-                        return (
-                          <li key={name}>
-                            <LocalizedClientLink
-                              href={href}
-                              className="text-3xl leading-10 hover:text-ui-fg-disabled"
-                              onClick={close}
-                              data-testid={`${name.toLowerCase()}-link`}
-                            >
-                              {name}
-                            </LocalizedClientLink>
-                          </li>
-                        )
-                      })}
+
+                    <ul className="relative flex flex-col gap-1">
+                      {SideMenuItems.map((item) => (
+                        <li key={item.href}>
+                          <LocalizedClientLink
+                            href={item.href}
+                            className="group flex items-center justify-between rounded-2xl px-3 py-2 font-display text-4xl tracking-wide text-white/90 transition-colors hover:bg-white/10 hover:text-white"
+                            onClick={close}
+                            data-testid={item.testId}
+                          >
+                            {item.name}
+                            <ArrowRightMini className="opacity-0 transition-opacity group-hover:opacity-100" />
+                          </LocalizedClientLink>
+                        </li>
+                      ))}
                     </ul>
-                    <div className="flex flex-col gap-y-6">
+
+                    <div className="relative flex flex-col gap-4">
+                      <div className="flex gap-2">
+                        {SecondaryItems.map((item) => (
+                          <LocalizedClientLink
+                            key={item.href}
+                            href={item.href}
+                            onClick={close}
+                            className="glass-dark flex-1 rounded-full px-4 py-2.5 text-center font-medium"
+                            data-testid={item.testId}
+                          >
+                            {item.name}
+                          </LocalizedClientLink>
+                        ))}
+                      </div>
                       {!!locales?.length && (
                         <div
                           className="flex justify-between"
@@ -108,27 +167,12 @@ const SideMenu = ({ regions, locales, currentLocale }: SideMenuProps) => {
                           />
                         </div>
                       )}
-                      <div
-                        className="flex justify-between"
-                        onMouseEnter={countryToggleState.open}
-                        onMouseLeave={countryToggleState.close}
-                      >
-                        {regions && (
-                          <CountrySelect
-                            toggleState={countryToggleState}
-                            regions={regions}
-                          />
-                        )}
-                        <ArrowRightMini
-                          className={clx(
-                            "transition-transform duration-150",
-                            countryToggleState.state ? "-rotate-90" : ""
-                          )}
-                        />
+                      <div className="flex items-center justify-between gap-3">
+                        <span className="text-white/60">Región y moneda</span>
+                        <RegionSelect regions={regions} />
                       </div>
-                      <Text className="flex justify-between txt-compact-small">
-                        © {new Date().getFullYear()} Medusa Store. All rights
-                        reserved.
+                      <Text className="txt-compact-small text-white/50">
+                        © {new Date().getFullYear()} AKLabs. Merch oficial.
                       </Text>
                     </div>
                   </div>
