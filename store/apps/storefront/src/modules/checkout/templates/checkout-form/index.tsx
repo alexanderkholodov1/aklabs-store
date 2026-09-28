@@ -25,7 +25,17 @@ export default async function CheckoutForm({
   }
 
   return (
-    <div className="w-full grid grid-cols-1 gap-y-8">
+    <div className="glass liquid grid w-full grid-cols-1 gap-y-8 rounded-[32px] p-5 small:p-8">
+      <div className="flex flex-col gap-1">
+        <h1 className="font-display text-5xl tracking-wide text-ak-ink small:text-6xl">
+          Finaliza tu compra
+        </h1>
+        <p className="text-sm text-ak-ink/60">
+          Cuatro pasos: dirección, entrega, pago y revisión. Región{" "}
+          {cart.region?.name} · precios en {cart.currency_code?.toUpperCase()}.
+        </p>
+      </div>
+
       <Addresses cart={cart} customer={customer} />
 
       <Shipping cart={cart} availableShippingMethods={shippingMethods} />

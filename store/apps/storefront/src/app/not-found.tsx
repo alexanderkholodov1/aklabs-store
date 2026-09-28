@@ -1,27 +1,31 @@
-import { ArrowUpRightMini } from "@medusajs/icons"
-import { Text } from "@modules/common/components/ui"
 import { Metadata } from "next"
 import Link from "next/link"
 
 export const metadata: Metadata = {
-  title: "404",
-  description: "Something went wrong",
+  title: "Página no encontrada",
+  description: "La página que buscas no existe",
 }
 
 export default function NotFound() {
   return (
-    <div className="flex flex-col gap-4 items-center justify-center min-h-[calc(100vh-64px)]">
-      <h1 className="text-2xl-semi text-ui-fg-base">Page not found</h1>
-      <p className="text-small-regular text-ui-fg-base">
-        The page you tried to access does not exist.
-      </p>
-      <Link className="flex gap-x-1 items-center group" href="/">
-        <Text className="text-ui-fg-interactive">Go to frontpage</Text>
-        <ArrowUpRightMini
-          className="group-hover:rotate-45 ease-in-out duration-150"
-          color="var(--fg-interactive)"
-        />
-      </Link>
+    <div className="flex min-h-screen items-center justify-center px-4">
+      <div className="glass liquid flex max-w-xl flex-col items-center gap-5 rounded-[40px] px-8 py-16 text-center">
+        <span className="font-display text-8xl leading-none tracking-wide text-gradient-ak">
+          404
+        </span>
+        <h1 className="text-2xl font-semibold text-ak-ink">
+          Página no encontrada
+        </h1>
+        <p className="text-ak-ink/65">
+          La página que intentaste abrir no existe o fue movida.
+        </p>
+        <Link
+          href="/"
+          className="btn-ak-gradient inline-flex h-12 items-center rounded-full px-7 font-semibold text-white"
+        >
+          Volver al inicio
+        </Link>
+      </div>
     </div>
   )
 }

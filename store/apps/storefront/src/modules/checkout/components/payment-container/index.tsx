@@ -33,9 +33,9 @@ const PaymentContainer: React.FC<PaymentContainerProps> = ({
       value={paymentProviderId}
       disabled={disabled}
       className={clx(
-        "flex flex-col gap-y-2 text-small-regular cursor-pointer py-4 border rounded-rounded px-8 mb-2 hover:shadow-borders-interactive-with-active",
+        "flex flex-col gap-y-2 text-small-regular cursor-pointer py-4 border border-ak-ink/10 rounded-2xl px-5 mb-2 bg-white/70 transition-all hover:border-ak-sky",
         {
-          "border-ui-border-interactive":
+          "border-ak-blue ring-2 ring-ak-sky/40 bg-white":
             selectedPaymentOptionId === paymentProviderId,
         }
       )}
@@ -88,7 +88,7 @@ export const StripePaymentContainer = ({
         (stripeReady ? (
           <div className="my-4 transition-all duration-150 ease-in-out">
             <Text className="txt-medium-plus text-ui-fg-base mb-1">
-              Enter your payment details:
+              Ingresa los datos de tu tarjeta:
             </Text>
             <PaymentElement
               options={{ layout: "accordion" }}
@@ -103,7 +103,7 @@ export const StripePaymentContainer = ({
               onLoadError={(e) => {
                 setPaymentComplete(false)
                 setError(
-                  e.error?.message ?? "Could not load the payment methods."
+                  e.error?.message ?? "No se pudieron cargar los métodos de pago."
                 )
               }}
             />

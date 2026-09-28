@@ -9,6 +9,7 @@ import OptionSelect from "@modules/products/components/product-actions/option-se
 import { isEqual } from "lodash"
 import { useParams, usePathname, useSearchParams } from "next/navigation"
 import { useEffect, useMemo, useRef, useState } from "react"
+import LocalizedClientLink from "@modules/common/components/localized-client-link"
 import ProductPrice from "../product-price"
 import MobileActions from "./mobile-actions"
 import { useRouter } from "next/navigation"
@@ -38,15 +39,33 @@ export default function ProductActions({
 
   const [options, setOptions] = useState<Record<string, string | undefined>>({})
   const [isAdding, setIsAdding] = useState(false)
+  const [added, setAdded] = useState(false)
+  const [error, setError] = useState<string | null>(null)
   const countryCode = useParams().countryCode as string
 
-  // If there is only 1 variant, preselect the options
+  // If there is only 1 variant, preselect the options. Otherwise preselect
+  // every option that only has one value (e.g. "Talla: Única").
   useEffect(() => {
     if (product.variants?.length === 1) {
       const variantOptions = optionsAsKeymap(product.variants[0].options)
       setOptions(variantOptions ?? {})
+      return
     }
-  }, [product.variants])
+
+    const singleValueOptions = (product.options ?? []).reduce(
+      (acc: Record<string, string>, option) => {
+        if (option.values?.length === 1 && option.values[0].value) {
+          acc[option.id] = option.values[0].value
+        }
+        return acc
+      },
+      {}
+    )
+
+    if (Object.keys(singleValueOptions).length) {
+      setOptions((prev) => ({ ...singleValueOptions, ...prev }))
+    }
+  }, [product.variants, product.options])
 
   const selectedVariant = useMemo(() => {
     if (!product.variants || product.variants.length === 0) {
@@ -61,6 +80,7 @@ export default function ProductActions({
 
   // update the options when a variant is selected
   const setOptionValue = (optionId: string, value: string) => {
+    setAdded(false)
     setOptions((prev) => ({
       ...prev,
       [optionId]: value,
@@ -125,19 +145,30 @@ export default function ProductActions({
     if (!selectedVariant?.id) return null
 
     setIsAdding(true)
+    setAdded(false)
+    setError(null)
 
-    await addToCart({
-      variantId: selectedVariant.id,
-      quantity: 1,
-      countryCode,
-    })
-
-    setIsAdding(false)
+    try {
+      await addToCart({
+        variantId: selectedVariant.id,
+        quantity: 1,
+        countryCode,
+      })
+      setAdded(true)
+    } catch (e) {
+      setError(
+        e instanceof Error
+          ? e.message
+          : "No se pudo agregar al carrito. Inténtalo de nuevo."
+      )
+    } finally {
+      setIsAdding(false)
+    }
   }
 
   return (
     <>
-      <div className="flex flex-col gap-y-2" ref={actionsRef}>
+      <div className="flex flex-col gap-y-5" ref={actionsRef}>
         <div>
           {(product.variants?.length ?? 0) > 1 && (
             <div className="flex flex-col gap-y-4">
@@ -172,16 +203,40 @@ export default function ProductActions({
             !isValidVariant
           }
           variant="primary"
-          className="w-full h-10"
+          size="large"
+          className="w-full"
           isLoading={isAdding}
           data-testid="add-product-button"
         >
           {!selectedVariant
-            ? "Select variant"
+            ? "Elige tus opciones"
             : !inStock || !isValidVariant
-            ? "Out of stock"
-            : "Add to cart"}
+            ? "Agotado"
+            : "Añadir al carrito"}
         </Button>
+        {added && (
+          <p
+            className="flex items-center justify-between gap-3 rounded-2xl bg-emerald-50 px-4 py-3 text-sm text-emerald-800 ring-1 ring-emerald-200"
+            role="status"
+            data-testid="add-to-cart-success"
+          >
+            <span>Listo, se agregó a tu carrito.</span>
+            <LocalizedClientLink
+              href="/cart"
+              className="font-semibold underline underline-offset-4"
+            >
+              Ver carrito
+            </LocalizedClientLink>
+          </p>
+        )}
+        {error && (
+          <p
+            className="rounded-2xl bg-rose-50 px-4 py-3 text-sm text-rose-700 ring-1 ring-rose-200"
+            role="alert"
+          >
+            {error}
+          </p>
+        )}
         <MobileActions
           product={product}
           variant={selectedVariant}

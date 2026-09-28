@@ -8,15 +8,19 @@ type ConvertToLocaleParams = {
   locale?: string
 }
 
+// Ecuador formats dollars as "$1.234,50"; euros read naturally as "1234,50 €".
+const localeForCurrency = (currencyCode: string) =>
+  currencyCode.toLowerCase() === "usd" ? "es-EC" : "es-ES"
+
 export const convertToLocale = ({
   amount,
   currency_code,
   minimumFractionDigits,
   maximumFractionDigits,
-  locale = "en-US",
+  locale,
 }: ConvertToLocaleParams) => {
   return currency_code && !isEmpty(currency_code)
-    ? new Intl.NumberFormat(locale, {
+    ? new Intl.NumberFormat(locale ?? localeForCurrency(currency_code), {
         style: "currency",
         currency: currency_code,
         minimumFractionDigits,

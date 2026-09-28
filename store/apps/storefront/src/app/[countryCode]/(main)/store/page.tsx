@@ -5,9 +5,12 @@ import { SortOptions } from "@modules/store/components/refinement-list/sort-prod
 import StoreTemplate from "@modules/store/templates"
 
 export const metadata: Metadata = {
-  title: "Store",
-  description: "Explore all of our products.",
+  title: "Tienda",
+  description:
+    "Todo el merch AKLabs: hoodies, camisetas, joggers, gorras y termos.",
 }
+
+export const dynamic = "force-dynamic"
 
 type StorePageSearchParams = Record<string, string | string[] | undefined> & {
   sortBy?: SortOptions

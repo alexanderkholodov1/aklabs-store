@@ -1,6 +1,6 @@
 "use client"
 
-import FilterRadioGroup from "@modules/common/components/filter-radio-group"
+import { clx } from "@modules/common/components/ui"
 
 export type SortOptions = "price_asc" | "price_desc" | "created_at"
 
@@ -10,18 +10,18 @@ type SortProductsProps = {
   "data-testid"?: string
 }
 
-const sortOptions = [
+const sortOptions: { value: SortOptions; label: string }[] = [
   {
     value: "created_at",
-    label: "Latest Arrivals",
+    label: "Novedades",
   },
   {
     value: "price_asc",
-    label: "Price: Low -> High",
+    label: "Menor precio",
   },
   {
     value: "price_desc",
-    label: "Price: High -> Low",
+    label: "Mayor precio",
   },
 ]
 
@@ -30,18 +30,36 @@ const SortProducts = ({
   sortBy,
   setQueryParams,
 }: SortProductsProps) => {
-  const handleChange = (value: string) => {
-    setQueryParams("sortBy", value as SortOptions)
-  }
-
   return (
-    <FilterRadioGroup
-      title="Sort by"
-      items={sortOptions}
-      value={sortBy}
-      handleChange={handleChange}
+    <div
+      className="flex shrink-0 items-center gap-1 rounded-full bg-ak-ink/5 p-1"
+      role="radiogroup"
+      aria-label="Ordenar productos"
       data-testid={dataTestId}
-    />
+    >
+      {sortOptions.map((option) => {
+        const active = option.value === sortBy
+        return (
+          <button
+            key={option.value}
+            type="button"
+            role="radio"
+            aria-checked={active}
+            onClick={() => setQueryParams("sortBy", option.value)}
+            className={clx(
+              "rounded-full px-3.5 py-1.5 text-xs font-semibold transition-all xsmall:text-sm",
+              active
+                ? "bg-white text-ak-ink shadow"
+                : "text-ak-ink/60 hover:text-ak-ink"
+            )}
+            data-testid="radio-label"
+            data-active={active}
+          >
+            {option.label}
+          </button>
+        )
+      })}
+    </div>
   )
 }
 

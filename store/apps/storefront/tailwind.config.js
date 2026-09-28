@@ -20,6 +20,18 @@ module.exports = {
         padding: "padding-top padding-right padding-bottom padding-left",
       },
       colors: {
+        ak: {
+          red: "#E3161F",
+          "red-dark": "#9A0610",
+          blue: "#0B1ED8",
+          royal: "#0A4FB3",
+          ring: "#0A7FD1",
+          sky: "#12B5EA",
+          "sky-light": "#62CFF6",
+          navy: "#060B2B",
+          ink: "#0A1033",
+          mist: "#EEF5FC",
+        },
         grey: {
           0: "#FFFFFF",
           5: "#F9FAFB",
@@ -58,7 +70,9 @@ module.exports = {
         "3xl": "2rem",
       },
       fontFamily: {
+        display: ["var(--font-display)", "Bebas Neue", "Impact", "sans-serif"],
         sans: [
+          "var(--font-sans)",
           "Inter",
           "-apple-system",
           "BlinkMacSystemFont",
@@ -70,6 +84,22 @@ module.exports = {
         ],
       },
       keyframes: {
+        float: {
+          "0%, 100%": { transform: "translateY(0)" },
+          "50%": { transform: "translateY(-12px)" },
+        },
+        marquee: {
+          "0%": { transform: "translateX(0)" },
+          "100%": { transform: "translateX(-50%)" },
+        },
+        aurora: {
+          "0%, 100%": { transform: "translate3d(0, 0, 0) scale(1)" },
+          "50%": { transform: "translate3d(4%, -6%, 0) scale(1.08)" },
+        },
+        "fade-up": {
+          "0%": { opacity: "0", transform: "translateY(16px)" },
+          "100%": { opacity: "1", transform: "translateY(0)" },
+        },
         ring: {
           "0%": { transform: "rotate(0deg)" },
           "100%": { transform: "rotate(360deg)" },
@@ -141,6 +171,11 @@ module.exports = {
         },
       },
       animation: {
+        float: "float 6s ease-in-out infinite",
+        "float-slow": "float 9s ease-in-out infinite",
+        marquee: "marquee 32s linear infinite",
+        aurora: "aurora 16s ease-in-out infinite",
+        "fade-up": "fade-up 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both",
         ring: "ring 2.2s cubic-bezier(0.5, 0, 0.5, 1) infinite",
         "fade-in-right":
           "fade-in-right 0.3s cubic-bezier(0.5, 0, 0.5, 1) forwards",
