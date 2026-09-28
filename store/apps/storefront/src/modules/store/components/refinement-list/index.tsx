@@ -1,83 +1,118 @@
 "use client"
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
-import { useCallback, useMemo } from "react"
+import { useCallback } from "react"
 
-import {
-  OPTION_VALUE_QUERY_KEY,
-  parseOptionValueIds,
-} from "@lib/util/product-option-filters"
-import OptionsPicker from "./options-picker"
+import LocalizedClientLink from "@modules/common/components/localized-client-link"
+import { clx } from "@modules/common/components/ui"
 import SortProducts, { SortOptions } from "./sort-products"
+
+export type CategoryChip = {
+  id: string
+  name: string
+  handle: string
+  count: number
+}
 
 type RefinementListProps = {
   sortBy: SortOptions
-  search?: boolean
-  hideOptionsPicker?: boolean
+  categories?: CategoryChip[]
+  activeCategoryHandle?: string
   "data-testid"?: string
 }
 
+/**
+ * Toolbar above the product grid: category chips on the left and the sort
+ * control on the right. Categories are real links, so they work without JS.
+ */
 const RefinementList = ({
   sortBy,
-  hideOptionsPicker = false,
+  categories = [],
+  activeCategoryHandle,
   "data-testid": dataTestId,
 }: RefinementListProps) => {
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
 
-  const updateQueryParams = useCallback(
-    (updater: (params: URLSearchParams) => void) => {
+  const setQueryParams = useCallback(
+    (name: string, value: string) => {
       const params = new URLSearchParams(searchParams.toString())
-      updater(params)
-
+      params.set(name, value)
       params.delete("page")
-
-      const queryString = params.toString()
-      const currentQuery = searchParams.toString()
-      const nextPath = queryString ? `${pathname}?${queryString}` : pathname
-      const currentPath = currentQuery
-        ? `${pathname}?${currentQuery}`
-        : pathname
-
-      if (nextPath !== currentPath) {
-        router.push(nextPath)
-      }
+      router.push(`${pathname}?${params.toString()}`, { scroll: false })
     },
     [pathname, router, searchParams]
   )
 
-  const setQueryParams = (name: string, value: string) =>
-    updateQueryParams((params) => params.set(name, value))
-
-  const selectedOptionValueIds = useMemo(
-    () => parseOptionValueIds(searchParams),
-    [searchParams]
-  )
-
-  const setOptionValueIds = (valueIds: string[]) =>
-    updateQueryParams((params) => {
-      params.delete(OPTION_VALUE_QUERY_KEY)
-      valueIds.forEach((valueId) =>
-        params.append(OPTION_VALUE_QUERY_KEY, valueId)
-      )
-    })
-
   return (
-    <div className="flex flex-col gap-12 py-4 mb-8 small:px-0 pl-6 small:min-w-[250px] small:ml-[1.675rem]">
+    <div className="glass liquid mb-8 flex flex-col gap-4 rounded-[28px] p-3 small:flex-row small:items-center small:justify-between">
+      {categories.length > 0 ? (
+        <nav
+          aria-label="Categorías"
+          className="flex gap-2 overflow-x-auto no-scrollbar"
+        >
+          <CategoryLink
+            href="/store"
+            label="Todo"
+            active={!activeCategoryHandle}
+          />
+          {categories.map((c) => (
+            <CategoryLink
+              key={c.id}
+              href={`/categories/${c.handle}`}
+              label={c.name}
+              count={c.count}
+              active={activeCategoryHandle === c.handle}
+            />
+          ))}
+        </nav>
+      ) : (
+        <span />
+      )}
       <SortProducts
         sortBy={sortBy}
         setQueryParams={setQueryParams}
         data-testid={dataTestId}
       />
-      {!hideOptionsPicker && (
-        <OptionsPicker
-          selectedValueIds={selectedOptionValueIds}
-          setOptionValueIds={setOptionValueIds}
-        />
-      )}
     </div>
   )
 }
+
+const CategoryLink = ({
+  href,
+  label,
+  count,
+  active,
+}: {
+  href: string
+  label: string
+  count?: number
+  active: boolean
+}) => (
+  <LocalizedClientLink
+    href={href}
+    className={clx(
+      "flex shrink-0 items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold transition-all",
+      active
+        ? "bg-ak-ink text-white shadow-lg shadow-ak-blue/20"
+        : "text-ak-ink/70 hover:bg-white hover:text-ak-ink"
+    )}
+    data-testid="category-chip"
+    aria-current={active ? "page" : undefined}
+  >
+    {label}
+    {typeof count === "number" && (
+      <span
+        className={clx(
+          "rounded-full px-1.5 text-[11px]",
+          active ? "bg-white/20" : "bg-ak-ink/5"
+        )}
+      >
+        {count}
+      </span>
+    )}
+  </LocalizedClientLink>
+)
 
 export default RefinementList

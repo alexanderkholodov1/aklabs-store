@@ -1,6 +1,7 @@
 import { listProductsWithSort } from "@lib/data/products"
 import { getRegion } from "@lib/data/regions"
 import { OptionValueIds } from "@lib/util/product-option-filters"
+import LocalizedClientLink from "@modules/common/components/localized-client-link"
 import ProductPreview from "@modules/products/components/product-preview"
 import { Pagination } from "@modules/store/components/pagination"
 import { SortOptions } from "@modules/store/components/refinement-list/sort-products"
@@ -70,10 +71,34 @@ export default async function PaginatedProducts({
 
   const totalPages = Math.ceil(count / PRODUCT_LIMIT)
 
+  if (!products.length) {
+    return (
+      <div className="glass flex flex-col items-center gap-4 rounded-[32px] px-6 py-16 text-center">
+        <p className="font-display text-4xl tracking-wide text-ak-ink">
+          Nada por aquí todavía
+        </p>
+        <p className="max-w-md text-ak-ink/60">
+          No encontramos productos con estos filtros. Prueba con otra
+          categoría o mira toda la colección.
+        </p>
+        <LocalizedClientLink
+          href="/store"
+          className="btn-ak-gradient inline-flex h-11 items-center rounded-full px-6 text-sm font-semibold text-white"
+        >
+          Ver todos los productos
+        </LocalizedClientLink>
+      </div>
+    )
+  }
+
   return (
     <>
+      <p className="mb-4 px-1 text-sm text-ak-ink/55">
+        {count} {count === 1 ? "producto" : "productos"} · precios en{" "}
+        {region.currency_code?.toUpperCase()}
+      </p>
       <ul
-        className="grid grid-cols-2 w-full small:grid-cols-3 medium:grid-cols-4 gap-x-6 gap-y-8"
+        className="grid w-full grid-cols-2 gap-3 xsmall:gap-4 small:grid-cols-3 small:gap-6 medium:grid-cols-4"
         data-testid="products-list"
       >
         {products.map((p) => {
