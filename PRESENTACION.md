@@ -1,5 +1,9 @@
 # AKLabs Store: material para la presentación
 
+Diapositivas listas: [`presentacion/AKLabs_Store.pptx`](./presentacion/AKLabs_Store.pptx)
+(15 slides con notas del orador, en la identidad visual de la tienda; usa la fuente
+Bebas Neue para los titulares).
+
 Documento base para armar el PPT y guiar la demo en vivo. Cada sección se puede
 convertir en una o dos diapositivas. Al final hay un esquema de diapositivas
 sugerido, un guion de demo cronometrado y preguntas probables con respuestas.

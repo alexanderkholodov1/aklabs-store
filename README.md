@@ -9,7 +9,7 @@ Next.js** y **PostgreSQL de Supabase** como base de datos.
 - Flujo de compra completo: producto → carrito → checkout en 4 pasos → orden
   registrada en la tabla `order` de Supabase.
 
-> Presentación y guion de la demo: [`PRESENTACION.md`](./PRESENTACION.md)
+> Presentación: [`presentacion/AKLabs_Store.pptx`](./presentacion/AKLabs_Store.pptx) · guion de la demo: [`PRESENTACION.md`](./PRESENTACION.md)
 
 ---
 
