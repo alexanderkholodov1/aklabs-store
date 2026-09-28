@@ -43,13 +43,29 @@ export default function ProductActions({
   const [error, setError] = useState<string | null>(null)
   const countryCode = useParams().countryCode as string
 
-  // If there is only 1 variant, preselect the options
+  // If there is only 1 variant, preselect the options. Otherwise preselect
+  // every option that only has one value (e.g. "Talla: Única").
   useEffect(() => {
     if (product.variants?.length === 1) {
       const variantOptions = optionsAsKeymap(product.variants[0].options)
       setOptions(variantOptions ?? {})
+      return
     }
-  }, [product.variants])
+
+    const singleValueOptions = (product.options ?? []).reduce(
+      (acc: Record<string, string>, option) => {
+        if (option.values?.length === 1 && option.values[0].value) {
+          acc[option.id] = option.values[0].value
+        }
+        return acc
+      },
+      {}
+    )
+
+    if (Object.keys(singleValueOptions).length) {
+      setOptions((prev) => ({ ...singleValueOptions, ...prev }))
+    }
+  }, [product.variants, product.options])
 
   const selectedVariant = useMemo(() => {
     if (!product.variants || product.variants.length === 0) {

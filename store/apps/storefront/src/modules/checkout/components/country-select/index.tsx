@@ -23,9 +23,19 @@ const CountrySelect = forwardRef<
       return []
     }
 
+    const names = (() => {
+      try {
+        return new Intl.DisplayNames(["es"], { type: "region" })
+      } catch {
+        return null
+      }
+    })()
+
     return region.countries?.map((country) => ({
       value: country.iso_2,
-      label: country.display_name,
+      label:
+        (country.iso_2 && names?.of(country.iso_2.toUpperCase())) ||
+        country.display_name,
     }))
   }, [region])
 

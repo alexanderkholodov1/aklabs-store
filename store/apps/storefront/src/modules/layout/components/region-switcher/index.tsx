@@ -20,6 +20,19 @@ type CountryOption = {
   currency: string
 }
 
+// Medusa stores country names in English; show them in Spanish.
+const countryLabel = (iso2: string, fallback?: string | null) => {
+  try {
+    return (
+      new Intl.DisplayNames(["es"], { type: "region" }).of(iso2.toUpperCase()) ??
+      fallback ??
+      iso2.toUpperCase()
+    )
+  } catch {
+    return fallback ?? iso2.toUpperCase()
+  }
+}
+
 const useCountryOptions = (regions: HttpTypes.StoreRegion[] | null) => {
   const { countryCode } = useParams() as { countryCode?: string }
   const pathname = usePathname()
@@ -29,7 +42,7 @@ const useCountryOptions = (regions: HttpTypes.StoreRegion[] | null) => {
       .flatMap((region) =>
         (region.countries ?? []).map((c) => ({
           country: c.iso_2 ?? "",
-          label: c.display_name ?? c.iso_2?.toUpperCase() ?? "",
+          label: c.iso_2 ? countryLabel(c.iso_2, c.display_name) : "",
           regionName: region.name ?? "",
           currency: region.currency_code?.toUpperCase() ?? "",
         }))
