@@ -2,6 +2,55 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
+/*
+ * AKLabs design tokens.
+ * Colors come from the AK monogram: red (A), royal blue (K stem) and
+ * celeste (K leg), plus the navy used on the merch.
+ */
+:root {
+  --ak-red: #e3161f;
+  --ak-red-dark: #9a0610;
+  --ak-blue: #0b1ed8;
+  --ak-royal: #0a4fb3;
+  --ak-sky: #12b5ea;
+  --ak-navy: #060b2b;
+  --ak-ink: #0a1033;
+  --ak-gradient: linear-gradient(120deg, #e3161f 0%, #0b1ed8 52%, #12b5ea 100%);
+  --ak-gradient-cool: linear-gradient(120deg, #0b1ed8 0%, #0a7fd1 50%, #12b5ea 100%);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  html body {
+    color: var(--ak-ink);
+    background-color: #f3f7fc;
+    background-image: radial-gradient(
+        60rem 40rem at -10% -10%,
+        rgba(18, 181, 234, 0.16),
+        transparent 60%
+      ),
+      radial-gradient(
+        50rem 36rem at 110% 0%,
+        rgba(227, 22, 31, 0.08),
+        transparent 60%
+      ),
+      radial-gradient(
+        60rem 40rem at 50% 115%,
+        rgba(11, 30, 216, 0.1),
+        transparent 60%
+      );
+    background-attachment: fixed;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection {
+    background: rgba(18, 181, 234, 0.25);
+  }
+}
+
 @layer utilities {
   /* Chrome, Safari and Opera */
   .no-scrollbar::-webkit-scrollbar {
@@ -35,8 +84,8 @@
   select:-webkit-autofill,
   select:-webkit-autofill:hover,
   select:-webkit-autofill:focus {
-    border: 1px solid #212121;
-    -webkit-text-fill-color: #212121;
+    border: 1px solid #0a1033;
+    -webkit-text-fill-color: #0a1033;
     -webkit-box-shadow: 0 0 0px 1000px #fff inset;
     transition: background-color 5000s ease-in-out 0s;
   }
@@ -47,11 +96,138 @@
   input[type="search"]::-webkit-search-results-decoration {
     -webkit-appearance: none;
   }
+
+  .text-gradient-ak {
+    background-image: var(--ak-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .text-gradient-cool {
+    background-image: var(--ak-gradient-cool);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .bg-gradient-ak {
+    background-image: var(--ak-gradient);
+  }
+
+  .bg-gradient-cool {
+    background-image: var(--ak-gradient-cool);
+  }
 }
 
 @layer components {
   .content-container {
-    @apply max-w-[1440px] w-full mx-auto px-6;
+    @apply max-w-[1440px] w-full mx-auto px-4 small:px-8;
+  }
+
+  /* Liquid glass surfaces */
+  .glass {
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.8),
+      rgba(255, 255, 255, 0.55)
+    );
+    -webkit-backdrop-filter: blur(22px) saturate(180%);
+    backdrop-filter: blur(22px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    box-shadow: 0 14px 40px -18px rgba(10, 30, 90, 0.25),
+      inset 0 1px 0 rgba(255, 255, 255, 0.95);
+  }
+
+  .glass-strong {
+    background: rgba(255, 255, 255, 0.9);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    backdrop-filter: blur(24px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.9);
+    box-shadow: 0 18px 50px -20px rgba(10, 30, 90, 0.28),
+      inset 0 1px 0 rgba(255, 255, 255, 1);
+  }
+
+  .glass-dark {
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.14),
+      rgba(255, 255, 255, 0.04)
+    );
+    -webkit-backdrop-filter: blur(20px) saturate(160%);
+    backdrop-filter: blur(20px) saturate(160%);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    box-shadow: 0 24px 60px -24px rgba(0, 0, 0, 0.55),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  }
+
+  /* Specular sheen that gives glass cards the "liquid" highlight */
+  .liquid {
+    position: relative;
+    isolation: isolate;
+  }
+
+  .liquid::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: radial-gradient(
+      120% 70% at 0% 0%,
+      rgba(255, 255, 255, 0.7),
+      transparent 55%
+    );
+    opacity: 0.55;
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  /* Gradient rim drawn with a mask, so it follows any border radius */
+  .rim-ak {
+    position: relative;
+  }
+
+  .rim-ak::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.9),
+      rgba(255, 255, 255, 0.1) 40%,
+      rgba(18, 181, 234, 0.45) 70%,
+      rgba(227, 22, 31, 0.35)
+    );
+    -webkit-mask: linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+
+  .btn-ak-gradient {
+    background-image: linear-gradient(
+      120deg,
+      #e3161f 0%,
+      #0b1ed8 50%,
+      #12b5ea 100%
+    );
+    background-size: 200% 100%;
+    background-position: 0% 50%;
+    box-shadow: 0 12px 30px -12px rgba(11, 30, 216, 0.65),
+      inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  }
+
+  .btn-ak-gradient:hover {
+    background-position: 100% 50%;
+    box-shadow: 0 16px 36px -12px rgba(18, 181, 234, 0.7),
+      inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  }
+
+  .chip {
+    @apply inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold;
   }
 
   .contrast-btn {
@@ -108,5 +284,16 @@
 
   .text-3xl-semi {
     @apply text-[32px] leading-[44px] font-semibold;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }

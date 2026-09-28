@@ -42,7 +42,7 @@ export const Heading = forwardRef<HTMLHeadingElement, HeadingProps>(
       <Component
         ref={ref}
         className={clsx(
-          "font-semibold",
+          "font-semibold tracking-tight text-ak-ink",
           Component === "h1" && "text-3xl",
           Component === "h2" && "text-2xl",
           Component === "h3" && "text-xl",
@@ -64,6 +64,30 @@ type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   isLoading?: boolean
 }
 
+const ButtonSpinner = () => (
+  <svg
+    className="h-4 w-4 animate-spin"
+    viewBox="0 0 24 24"
+    fill="none"
+    aria-hidden="true"
+  >
+    <circle
+      cx="12"
+      cy="12"
+      r="9"
+      stroke="currentColor"
+      strokeOpacity="0.3"
+      strokeWidth="3"
+    />
+    <path
+      d="M21 12a9 9 0 0 0-9-9"
+      stroke="currentColor"
+      strokeWidth="3"
+      strokeLinecap="round"
+    />
+  </svg>
+)
+
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   (
     {
@@ -81,20 +105,29 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       <button
         ref={ref}
         disabled={disabled || isLoading}
+        aria-busy={isLoading || undefined}
         className={clsx(
-          "inline-flex gap-2 items-center justify-center rounded-md font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
-          variant === "primary" && "bg-black text-white hover:bg-gray-800",
+          "inline-flex gap-2 items-center justify-center rounded-full font-semibold tracking-tight transition-all duration-500 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ak-sky focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 disabled:saturate-50",
+          variant === "primary" && "btn-ak-gradient text-white",
           variant === "secondary" &&
-            "bg-white text-black border border-gray-200 hover:bg-gray-50",
-          variant === "transparent" && "bg-transparent hover:bg-gray-100",
-          size === "small" && "h-8 px-3 text-sm",
-          size === "medium" && "h-10 px-4",
-          size === "large" && "h-12 px-6 text-lg",
+            "glass text-ak-ink hover:bg-white hover:shadow-lg",
+          variant === "transparent" &&
+            "bg-transparent text-ak-ink hover:bg-ak-ink/5",
+          size === "small" && "h-8 px-4 text-xs",
+          size === "medium" && "h-10 px-5 text-sm",
+          size === "large" && "h-12 px-7 text-base",
           className
         )}
         {...props}
       >
-        {isLoading ? "Loading..." : children}
+        {isLoading ? (
+          <>
+            <ButtonSpinner />
+            <span>Procesando...</span>
+          </>
+        ) : (
+          children
+        )}
       </button>
     )
   }
@@ -133,7 +166,7 @@ export const Badge = forwardRef<HTMLSpanElement, BadgeProps>(
           "inline-flex items-center rounded-full px-2 py-1 text-xs font-medium",
           color === "green" && "bg-green-100 text-green-700",
           color === "red" && "bg-red-100 text-red-700",
-          color === "blue" && "bg-blue-100 text-blue-700",
+          color === "blue" && "bg-sky-100 text-ak-royal",
           color === "orange" && "bg-orange-100 text-orange-700",
           color === "grey" && "bg-gray-100 text-gray-700",
           color === "purple" && "bg-purple-100 text-purple-700",
@@ -178,7 +211,7 @@ export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
       <button
         ref={ref}
         className={clsx(
-          "inline-flex items-center justify-center rounded-md p-2 hover:bg-gray-100 transition-colors focus-visible:outline-none focus-visible:ring-2",
+          "inline-flex items-center justify-center rounded-full p-2 hover:bg-ak-ink/5 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ak-sky",
           className
         )}
         {...props}
@@ -221,7 +254,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
         <input
           ref={ref}
           className={clsx(
-            "flex h-10 w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
+            "flex h-10 w-full rounded-full border border-ak-ink/10 bg-white/80 px-4 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-ak-sky/60 focus:border-transparent disabled:cursor-not-allowed disabled:opacity-50",
             className
           )}
           {...props}
@@ -292,7 +325,7 @@ const TableRow = forwardRef<HTMLTableRowElement, TableRowProps>(
       <tr
         ref={ref}
         className={clsx(
-          "border-b transition-colors hover:bg-gray-50",
+          "border-b border-ak-ink/5 transition-colors hover:bg-white/40",
           className
         )}
         {...props}
@@ -384,7 +417,7 @@ const RadioGroupItem = forwardRef<HTMLInputElement, RadioGroupItemProps>(
           type="radio"
           id={id}
           className={clsx(
-            "h-4 w-4 border-gray-300 text-gray-900 focus:ring-gray-900",
+            "h-4 w-4 border-gray-300 accent-ak-blue focus:ring-ak-sky",
             className
           )}
           {...props}
@@ -414,7 +447,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
           type="checkbox"
           id={id}
           className={clsx(
-            "h-4 w-4 rounded border-gray-300 text-gray-900 focus:ring-gray-900",
+            "h-4 w-4 rounded border-gray-300 accent-ak-blue focus:ring-ak-sky",
             className
           )}
           {...props}
