@@ -388,6 +388,17 @@ Compra de prueba completada el 28/09/2026 en `/ec`:
 
 La fila aparece en `order` con `currency_code = usd` y la región Ecuador.
 
+Segunda compra de verificación en la región Europe (EUR), hecha por la Store API
+con los mismos pasos que sigue el storefront en `/dk`:
+
+| Campo | Valor |
+|---|---|
+| Orden | `#2` · `order_01M3M54VTRZYRMCCJXS5F1AA0A` |
+| Producto | AKLabs Pro Cap (Única / Negro), 26,00 € |
+| Envío | Standard Shipping, 10,00 € |
+| Total | 36,00 € EUR |
+| Región | Europe (Copenhague, `dk`) |
+
 ## 16. Higiene del repositorio
 
 - `.gitignore` en la raíz y en `store/`: excluye `node_modules`, `.next`,
