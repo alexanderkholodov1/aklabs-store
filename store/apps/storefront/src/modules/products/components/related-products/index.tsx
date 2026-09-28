@@ -1,6 +1,7 @@
 import { listProducts } from "@lib/data/products"
 import { getRegion } from "@lib/data/regions"
 import { HttpTypes } from "@medusajs/types"
+import { SectionTitle } from "@modules/common/components/brand"
 import Product from "../product-preview"
 
 type RelatedProductsProps = {
@@ -26,7 +27,7 @@ export default async function RelatedProducts({
   if (product.collection_id) {
     queryParams.collection_id = [product.collection_id]
   }
-  if (product.tags) {
+  if (product.tags?.length) {
     queryParams.tag_id = product.tags
       .map((t) => t.id)
       .filter(Boolean) as string[]
@@ -47,18 +48,15 @@ export default async function RelatedProducts({
   }
 
   return (
-    <div className="product-page-constraint">
-      <div className="flex flex-col items-center text-center mb-16">
-        <span className="text-base-regular text-gray-600 mb-6">
-          Related products
-        </span>
-        <p className="text-2xl-regular text-ui-fg-base max-w-lg">
-          You might also want to check out these products.
-        </p>
-      </div>
+    <div className="flex flex-col gap-10">
+      <SectionTitle
+        eyebrow="Completa el look"
+        title="También te puede gustar"
+        description="Más piezas de la colección AKLabs."
+      />
 
-      <ul className="grid grid-cols-2 small:grid-cols-3 medium:grid-cols-4 gap-x-6 gap-y-8">
-        {products.map((product) => (
+      <ul className="grid grid-cols-2 gap-3 xsmall:gap-4 small:grid-cols-4 small:gap-6">
+        {products.slice(0, 4).map((product) => (
           <li key={product.id}>
             <Product region={region} product={product} />
           </li>

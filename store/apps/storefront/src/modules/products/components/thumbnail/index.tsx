@@ -1,4 +1,4 @@
-import { Container, clx } from "@modules/common/components/ui"
+import { clx } from "@modules/common/components/ui"
 import Image from "next/image"
 import React from "react"
 
@@ -10,6 +10,7 @@ type ThumbnailProps = {
   size?: "small" | "medium" | "large" | "full" | "square"
   isFeatured?: boolean
   className?: string
+  alt?: string
   "data-testid"?: string
 }
 
@@ -19,41 +20,43 @@ const Thumbnail: React.FC<ThumbnailProps> = ({
   size = "small",
   isFeatured,
   className,
+  alt,
   "data-testid": dataTestid,
 }) => {
   const initialImage = thumbnail || images?.[0]?.url
 
   return (
-    <Container
+    <div
       className={clx(
-        "relative w-full overflow-hidden p-4 bg-ui-bg-subtle shadow-elevation-card-rest rounded-large group-hover:shadow-elevation-card-hover transition-shadow ease-in-out duration-150",
-        className,
+        "relative w-full overflow-hidden bg-white ring-1 ring-ak-ink/5",
+        size === "square" ? "rounded-2xl" : "rounded-[22px]",
         {
-          "aspect-[11/14]": isFeatured,
-          "aspect-[9/16]": !isFeatured && size !== "square",
+          "aspect-[4/5]": size !== "square",
           "aspect-[1/1]": size === "square",
-          "w-[180px]": size === "small",
+          "w-[180px]": size === "small" && !isFeatured,
           "w-[290px]": size === "medium",
           "w-[440px]": size === "large",
-          "w-full": size === "full",
-        }
+          "w-full": size === "full" || size === "square" || isFeatured,
+        },
+        className
       )}
       data-testid={dataTestid}
     >
-      <ImageOrPlaceholder image={initialImage} size={size} />
-    </Container>
+      <ImageOrPlaceholder image={initialImage} size={size} alt={alt} />
+    </div>
   )
 }
 
 const ImageOrPlaceholder = ({
   image,
   size,
-}: Pick<ThumbnailProps, "size"> & { image?: string }) => {
+  alt,
+}: Pick<ThumbnailProps, "size" | "alt"> & { image?: string }) => {
   return image ? (
     <Image
       src={image}
-      alt="Thumbnail"
-      className="absolute inset-0 object-cover object-center"
+      alt={alt || "Producto AKLabs"}
+      className="absolute inset-0 object-cover object-center transition-transform duration-700 ease-out group-hover:scale-[1.04]"
       draggable={false}
       quality={50}
       sizes="(max-width: 576px) 280px, (max-width: 768px) 360px, (max-width: 992px) 480px, 800px"

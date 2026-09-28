@@ -18,40 +18,45 @@ export default function ProductPrice({
   const selectedPrice = variant ? variantPrice : cheapestPrice
 
   if (!selectedPrice) {
-    return <div className="block w-32 h-9 bg-gray-100 animate-pulse" />
+    return <div className="block h-12 w-40 rounded-2xl bg-ak-ink/5 animate-pulse" />
   }
 
   return (
-    <div className="flex flex-col text-ui-fg-base">
-      <span
-        className={clx("text-xl-semi", {
-          "text-ui-fg-interactive": selectedPrice.price_type === "sale",
-        })}
-      >
-        {!variant && "From "}
-        <span
-          data-testid="product-price"
-          data-value={selectedPrice.calculated_price_number}
-        >
-          {selectedPrice.calculated_price}
-        </span>
+    <div className="flex flex-col text-ak-ink">
+      <span className="text-xs font-medium uppercase tracking-[0.14em] text-ak-ink/45">
+        {variant ? "Precio" : "Desde"}
       </span>
+      <div className="flex items-baseline gap-3">
+        <span
+          className={clx("text-4xl font-bold tracking-tight", {
+            "text-ak-red": selectedPrice.price_type === "sale",
+          })}
+        >
+          <span
+            data-testid="product-price"
+            data-value={selectedPrice.calculated_price_number}
+          >
+            {selectedPrice.calculated_price}
+          </span>
+        </span>
+        <span className="text-xs text-ak-ink/45">
+          {selectedPrice.currency_code?.toUpperCase()}
+        </span>
+      </div>
       {selectedPrice.price_type === "sale" && (
-        <>
-          <p>
-            <span className="text-ui-fg-subtle">Original: </span>
-            <span
-              className="line-through"
-              data-testid="original-product-price"
-              data-value={selectedPrice.original_price_number}
-            >
-              {selectedPrice.original_price}
-            </span>
-          </p>
-          <span className="text-ui-fg-interactive">
+        <p className="flex items-center gap-2 text-sm">
+          <span className="text-ak-ink/55">Antes:</span>
+          <span
+            className="line-through"
+            data-testid="original-product-price"
+            data-value={selectedPrice.original_price_number}
+          >
+            {selectedPrice.original_price}
+          </span>
+          <span className="chip bg-ak-red/10 text-ak-red">
             -{selectedPrice.percentage_diff}%
           </span>
-        </>
+        </p>
       )}
     </div>
   )

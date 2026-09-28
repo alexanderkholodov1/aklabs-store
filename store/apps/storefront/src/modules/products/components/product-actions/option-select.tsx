@@ -11,6 +11,20 @@ type OptionSelectProps = {
   "data-testid"?: string
 }
 
+// The API returns option values alphabetically (L, M, S, XL); sizes read
+// better in their natural order.
+const SIZE_ORDER = ["XXS", "XS", "S", "M", "L", "XL", "XXL", "XXXL"]
+
+const sortValues = (values: string[]) =>
+  [...values].sort((a, b) => {
+    const ia = SIZE_ORDER.indexOf(a.toUpperCase())
+    const ib = SIZE_ORDER.indexOf(b.toUpperCase())
+    if (ia === -1 && ib === -1) return 0
+    if (ia === -1) return 1
+    if (ib === -1) return -1
+    return ia - ib
+  })
+
 const OptionSelect: React.FC<OptionSelectProps> = ({
   option,
   current,
@@ -19,27 +33,32 @@ const OptionSelect: React.FC<OptionSelectProps> = ({
   "data-testid": dataTestId,
   disabled,
 }) => {
-  const filteredOptions = (option.values ?? []).map((v) => v.value)
+  const filteredOptions = sortValues((option.values ?? []).map((v) => v.value))
 
   return (
-    <div className="flex flex-col gap-y-3">
-      <span className="text-sm">Select {title}</span>
-      <div
-        className="flex flex-wrap justify-between gap-2"
-        data-testid={dataTestId}
-      >
+    <div className="flex flex-col gap-y-2.5">
+      <div className="flex items-center justify-between">
+        <span className="text-sm font-semibold text-ak-ink">{title}</span>
+        {current && (
+          <span className="text-xs text-ak-ink/55">
+            Seleccionado: <strong className="text-ak-ink">{current}</strong>
+          </span>
+        )}
+      </div>
+      <div className="flex flex-wrap gap-2" data-testid={dataTestId}>
         {filteredOptions.map((v) => {
+          const selected = v === current
           return (
             <button
+              type="button"
               onClick={() => updateOption(option.id, v)}
               key={v}
+              aria-pressed={selected}
               className={clx(
-                "border-ui-border-base bg-ui-bg-subtle border text-small-regular h-10 rounded-rounded p-2 flex-1 ",
-                {
-                  "border-ui-border-interactive": v === current,
-                  "hover:shadow-elevation-card-rest transition-shadow ease-in-out duration-150":
-                    v !== current,
-                }
+                "h-11 min-w-[3.25rem] flex-1 rounded-full border px-4 text-sm font-semibold transition-all duration-200 disabled:opacity-50",
+                selected
+                  ? "border-transparent bg-ak-ink text-white shadow-lg shadow-ak-blue/25"
+                  : "border-ak-ink/10 bg-white/80 text-ak-ink/80 hover:border-ak-sky hover:text-ak-ink"
               )}
               disabled={disabled}
               data-testid="option-button"

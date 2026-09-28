@@ -1,5 +1,4 @@
 import { HttpTypes } from "@medusajs/types"
-import { Heading, Text } from "@modules/common/components/ui"
 import LocalizedClientLink from "@modules/common/components/localized-client-link"
 
 type ProductInfoProps = {
@@ -7,32 +6,45 @@ type ProductInfoProps = {
 }
 
 const ProductInfo = ({ product }: ProductInfoProps) => {
+  const category = product.categories?.[0]
+
   return (
-    <div id="product-info">
-      <div className="flex flex-col gap-y-4 lg:max-w-[500px] mx-auto">
+    <div id="product-info" className="flex flex-col gap-3">
+      <div className="flex flex-wrap items-center gap-2">
+        {category && (
+          <LocalizedClientLink
+            href={`/categories/${category.handle}`}
+            className="chip bg-ak-mist text-ak-royal uppercase tracking-[0.12em] text-[10px] hover:bg-white"
+          >
+            {category.name}
+          </LocalizedClientLink>
+        )}
         {product.collection && (
           <LocalizedClientLink
             href={`/collections/${product.collection.handle}`}
-            className="text-medium text-ui-fg-muted hover:text-ui-fg-subtle"
+            className="chip bg-white text-ak-ink/70 ring-1 ring-ak-ink/5"
           >
             {product.collection.title}
           </LocalizedClientLink>
         )}
-        <Heading
-          level="h2"
-          className="text-3xl leading-10 text-ui-fg-base"
-          data-testid="product-title"
-        >
-          {product.title}
-        </Heading>
-
-        <Text
-          className="text-medium text-ui-fg-subtle whitespace-pre-line"
-          data-testid="product-description"
-        >
-          {product.description}
-        </Text>
       </div>
+      <h1
+        className="font-display text-5xl leading-[0.92] tracking-wide text-ak-ink small:text-6xl"
+        data-testid="product-title"
+      >
+        {product.title}
+      </h1>
+      {product.subtitle && (
+        <p className="text-base font-medium text-ak-royal">
+          {product.subtitle}
+        </p>
+      )}
+      <p
+        className="text-[15px] leading-relaxed text-ak-ink/70 whitespace-pre-line"
+        data-testid="product-description"
+      >
+        {product.description}
+      </p>
     </div>
   )
 }

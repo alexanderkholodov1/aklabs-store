@@ -14,18 +14,18 @@ type ProductTabsProps = {
 const ProductTabs = ({ product }: ProductTabsProps) => {
   const tabs = [
     {
-      label: "Product Information",
+      label: "Detalles del producto",
       component: <ProductInfoTab product={product} />,
     },
     {
-      label: "Shipping & Returns",
+      label: "Envíos y cambios",
       component: <ShippingInfoTab />,
     },
   ]
 
   return (
     <div className="w-full">
-      <Accordion type="multiple">
+      <Accordion type="multiple" defaultValue={[tabs[0].label]}>
         {tabs.map((tab, i) => (
           <Accordion.Item
             key={i}
@@ -41,78 +41,90 @@ const ProductTabs = ({ product }: ProductTabsProps) => {
   )
 }
 
+const countryName = (code?: string | null) => {
+  if (!code) {
+    return "-"
+  }
+  try {
+    return (
+      new Intl.DisplayNames(["es"], { type: "region" }).of(code.toUpperCase()) ??
+      code
+    )
+  } catch {
+    return code
+  }
+}
+
 const ProductInfoTab = ({ product }: ProductTabsProps) => {
+  const rows = [
+    { label: "Material", value: product.material || "-" },
+    { label: "País de origen", value: countryName(product.origin_country) },
+    { label: "Tipo", value: product.type?.value || product.categories?.[0]?.name || "-" },
+    { label: "Peso", value: product.weight ? `${product.weight} g` : "-" },
+    {
+      label: "Dimensiones",
+      value:
+        product.length && product.width && product.height
+          ? `${product.length} x ${product.width} x ${product.height} cm`
+          : "-",
+    },
+    {
+      label: "Variantes",
+      value: `${product.variants?.length ?? 0} combinaciones`,
+    },
+  ]
+
   return (
-    <div className="text-small-regular py-8">
-      <div className="grid grid-cols-2 gap-x-8">
-        <div className="flex flex-col gap-y-4">
-          <div>
-            <span className="font-semibold">Material</span>
-            <p>{product.material ? product.material : "-"}</p>
+    <div className="text-small-regular pb-6 pt-2">
+      <dl className="grid grid-cols-2 gap-x-6 gap-y-4">
+        {rows.map((row) => (
+          <div key={row.label}>
+            <dt className="text-xs font-semibold uppercase tracking-[0.1em] text-ak-ink/45">
+              {row.label}
+            </dt>
+            <dd className="mt-0.5 text-sm text-ak-ink">{row.value}</dd>
           </div>
-          <div>
-            <span className="font-semibold">Country of origin</span>
-            <p>{product.origin_country ? product.origin_country : "-"}</p>
-          </div>
-          <div>
-            <span className="font-semibold">Type</span>
-            <p>{product.type ? product.type.value : "-"}</p>
-          </div>
-        </div>
-        <div className="flex flex-col gap-y-4">
-          <div>
-            <span className="font-semibold">Weight</span>
-            <p>{product.weight ? `${product.weight} g` : "-"}</p>
-          </div>
-          <div>
-            <span className="font-semibold">Dimensions</span>
-            <p>
-              {product.length && product.width && product.height
-                ? `${product.length}L x ${product.width}W x ${product.height}H`
-                : "-"}
-            </p>
-          </div>
-        </div>
-      </div>
+        ))}
+      </dl>
     </div>
   )
 }
 
 const ShippingInfoTab = () => {
+  const items = [
+    {
+      icon: <FastDelivery />,
+      title: "Envío a todo Ecuador",
+      text: "Estándar en 2 a 4 días hábiles o express en 24 a 48 horas en ciudades principales. Elige el método en el checkout.",
+    },
+    {
+      icon: <Refresh />,
+      title: "Cambios de talla",
+      text: "¿No te quedó? Cambiamos tu prenda por otra talla sin costo durante los primeros 30 días.",
+    },
+    {
+      icon: <Back />,
+      title: "Devoluciones simples",
+      text: "Si el producto llega con algún defecto, te devolvemos el dinero. Sin letra pequeña.",
+    },
+  ]
+
   return (
-    <div className="text-small-regular py-8">
-      <div className="grid grid-cols-1 gap-y-8">
-        <div className="flex items-start gap-x-2">
-          <FastDelivery />
-          <div>
-            <span className="font-semibold">Fast delivery</span>
-            <p className="max-w-sm">
-              Your package will arrive in 3-5 business days at your pick up
-              location or in the comfort of your home.
-            </p>
+    <div className="text-small-regular pb-6 pt-2">
+      <div className="grid grid-cols-1 gap-y-5">
+        {items.map((item) => (
+          <div key={item.title} className="flex items-start gap-x-3">
+            <span className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-ak-mist text-ak-royal">
+              {item.icon}
+            </span>
+            <div>
+              <span className="text-sm font-semibold text-ak-ink">
+                {item.title}
+              </span>
+              <p className="max-w-sm text-sm text-ak-ink/65">{item.text}</p>
+            </div>
           </div>
-        </div>
-        <div className="flex items-start gap-x-2">
-          <Refresh />
-          <div>
-            <span className="font-semibold">Simple exchanges</span>
-            <p className="max-w-sm">
-              Is the fit not quite right? No worries - we&apos;ll exchange your
-              product for a new one.
-            </p>
-          </div>
-        </div>
-        <div className="flex items-start gap-x-2">
-          <Back />
-          <div>
-            <span className="font-semibold">Easy returns</span>
-            <p className="max-w-sm">
-              Just return your product and we&apos;ll refund your money. No
-              questions asked – we&apos;ll do our best to make sure your return
-              is hassle-free.
-            </p>
-          </div>
-        </div>
+        ))}
       </div>
     </div>
   )
