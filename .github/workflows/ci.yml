@@ -26,13 +26,15 @@ jobs:
       run:
         working-directory: store
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
 
-      - uses: pnpm/action-setup@v4
+      - uses: pnpm/action-setup@v6
         with:
           package_json_file: store/package.json
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version-file: store/.nvmrc
           cache: pnpm
@@ -44,5 +46,7 @@ jobs:
       - name: Storefront
         run: pnpm --dir apps/storefront exec tsc --noEmit -p .
 
+      # Runs without the types Medusa generates in .medusa/types during
+      # `medusa develop`, so code must not depend on them to compile.
       - name: Backend
         run: pnpm --dir apps/backend exec tsc --noEmit -p .
