@@ -1,3 +1,6 @@
+import { getLocale } from "@lib/data/locale-actions"
+import { I18nProvider } from "@lib/i18n/client"
+import { resolveLocale } from "@lib/i18n/locales"
 import { getBaseURL } from "@lib/util/env"
 import { Metadata, Viewport } from "next"
 import { Bebas_Neue, Inter } from "next/font/google"
@@ -34,15 +37,19 @@ export const viewport: Viewport = {
   themeColor: "#060B2B",
 }
 
-export default function RootLayout(props: { children: React.ReactNode }) {
+export default async function RootLayout(props: { children: React.ReactNode }) {
+  const locale = resolveLocale(await getLocale())
+
   return (
     <html
-      lang="en"
+      lang={locale}
       data-mode="light"
       className={`${sans.variable} ${display.variable}`}
     >
       <body className="font-sans">
-        <main className="relative">{props.children}</main>
+        <I18nProvider locale={locale}>
+          <main className="relative">{props.children}</main>
+        </I18nProvider>
       </body>
     </html>
   )

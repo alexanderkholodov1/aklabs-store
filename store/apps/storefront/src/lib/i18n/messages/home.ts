@@ -1,21 +1,5 @@
-import type { Locale } from "./locales"
-
-export type { Locale }
-export { DEFAULT_LOCALE, SUPPORTED_LOCALES } from "./locales"
-
-const en = {  nav: {
-    store: "Shop",
-    hoodies: "Hoodies",
-    tees: "Tees",
-    stickers: "Stickers",
-    figures: "Figures",
-    account: "Account",
-    cartEmpty: "Cart (0)",
-    cart: "Cart",
-    cartItemsSingular: "item",
-    cartItemsPlural: "items",
-    language: "Language",
-  },
+/** Home page sections. */
+export const en = {
   hero: {
     eyebrow: "Collection 01 · Designed in Ecuador",
     titleA: "Built for",
@@ -91,49 +75,6 @@ const en = {  nav: {
     ctaBody: "Pick a size, add it to the cart, and we ship it.",
     cta: "Go to the shop",
   },
-  footer: {
-    blurb:
-      "Official AKLabs merch. Red that starts the work, blue that builds it, cyan that clears it.",
-    shop: "Shop",
-    all: "All products",
-    account: "Your order",
-    myAccount: "Account",
-    orders: "Orders",
-    cart: "Cart",
-    shipping: "Shipping across Ecuador",
-    tech: "Stack",
-  },
-  product: {
-    choose: "Choose your options",
-    soldOut: "Sold out",
-    add: "Add to cart",
-    added: "Added to your cart.",
-    error: "Could not add this to the cart. Try again.",
-    ship: "Ships across Ecuador",
-    shipDetail: "Standard 2–4 days · Express 24–48 h",
-    exchange: "Size exchanges",
-    exchangeDetail: "Free for 30 days",
-    pay: "Clear checkout",
-    payDetail: "The order is confirmed right away",
-    related: "You might also like",
-    relatedBody: "More from the AKLabs collection.",
-    from: "From",
-    price: "Price",
-    unavailable: "Unavailable",
-  },
-  cart: {
-    empty: "Your cart is empty.",
-  },
-  marquee: [
-    "AKLabs",
-    "Hoodies",
-    "Caps",
-    "Tees",
-    "Stickers",
-    "Figures",
-    "Designed in Ecuador",
-    "Make · Test · Repeat",
-  ],
   story: {
     alt: "AK monogram",
     mark: "AK monogram",
@@ -162,20 +103,7 @@ const en = {  nav: {
   },
 }
 
-const es: typeof en = {
-  nav: {
-    store: "Tienda",
-    hoodies: "Hoodies",
-    tees: "Camisetas",
-    stickers: "Stickers",
-    figures: "Figuras",
-    account: "Cuenta",
-    cartEmpty: "Carrito (0)",
-    cart: "Carrito",
-    cartItemsSingular: "producto",
-    cartItemsPlural: "productos",
-    language: "Idioma",
-  },
+export const es: typeof en = {
   hero: {
     eyebrow: "Colección 01 · Diseñado en Ecuador",
     titleA: "Diseñado para",
@@ -251,49 +179,6 @@ const es: typeof en = {
     ctaBody: "Elige la talla, agrégala al carrito y la enviamos.",
     cta: "Ir a la tienda",
   },
-  footer: {
-    blurb:
-      "Merch oficial de AKLabs. Rojo que impulsa, azul que construye, celeste que aclara.",
-    shop: "Tienda",
-    all: "Todos los productos",
-    account: "Tu compra",
-    myAccount: "Mi cuenta",
-    orders: "Pedidos",
-    cart: "Carrito",
-    shipping: "Envíos a todo Ecuador",
-    tech: "Tecnología",
-  },
-  product: {
-    choose: "Elige tus opciones",
-    soldOut: "Agotado",
-    add: "Añadir al carrito",
-    added: "Se agregó a tu carrito.",
-    error: "No se pudo agregar al carrito. Inténtalo de nuevo.",
-    ship: "Envío a todo Ecuador",
-    shipDetail: "Estándar 2–4 días · Express 24–48 h",
-    exchange: "Cambios de talla",
-    exchangeDetail: "Sin costo durante 30 días",
-    pay: "Checkout claro",
-    payDetail: "El pedido se confirma al instante",
-    related: "También te puede gustar",
-    relatedBody: "Más piezas de la colección AKLabs.",
-    from: "Desde",
-    price: "Precio",
-    unavailable: "No disponible",
-  },
-  cart: {
-    empty: "Tu carrito está vacío.",
-  },
-  marquee: [
-    "AKLabs",
-    "Hoodies",
-    "Gorras",
-    "Camisetas",
-    "Stickers",
-    "Figuras",
-    "Diseñado en Ecuador",
-    "Crea · Prueba · Repite",
-  ],
   story: {
     alt: "Monograma AK",
     mark: "Monograma AK",
@@ -321,11 +206,3 @@ const es: typeof en = {
     ],
   },
 }
-
-/**
- * Dictionary registry keyed by locale code.
- * Adding a language = one object + one entry here. Components keep using `t.*`.
- */
-export const messages: Record<Locale, typeof en> = { en, es }
-
-export type Messages = typeof en
