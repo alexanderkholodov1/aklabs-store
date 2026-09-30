@@ -171,7 +171,7 @@ export const listProducts = async ({
     productMatches(product, queryParams)
   )
   const products = matched.slice(offset, offset + limit)
-  const nextPage = matched.length > offset + limit ? pageParam + 1 : null
+  const nextPage = matched.length > offset + limit ? _pageParam + 1 : null
 
   return {
     response: {
