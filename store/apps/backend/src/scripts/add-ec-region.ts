@@ -107,10 +107,12 @@ export default async function addEcRegion({
     logger.info("Store default currency is already USD, skipping store update.")
   } else {
     logger.info("Setting USD as default store currency...")
-    const currencyCodes = new Set(
+    // Typed explicitly: without the types Medusa generates in .medusa/types
+    // (absent in CI), query.graph returns loosely typed records.
+    const currencyCodes = new Set<string>(
       supportedCurrencies
         .map((currency) => currency?.currency_code)
-        .filter((code): code is string => !!code)
+        .filter((code): code is string => typeof code === "string" && code !== "")
     )
     currencyCodes.add("usd")
     currencyCodes.add("eur")
