@@ -670,7 +670,7 @@ export default async function seedAklabsProducts({
     toCreate.flatMap((p) => buildVariants(p).map((v) => v.sku))
   )
 
-  const itemsToStock = inventoryItems.filter((item: { sku?: string }) =>
+  const itemsToStock = inventoryItems.filter((item) =>
     item.sku ? newSkus.has(item.sku) : false
   )
 

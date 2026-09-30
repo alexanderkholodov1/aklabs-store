@@ -196,7 +196,7 @@ export default async function syncAklabsCatalog({
   }
 
   const ecOptions = (ecZone.shipping_options ?? []).filter(
-    (o): o is { id: string; name: string; shipping_profile_id: string } => !!o
+    (o): o is NonNullable<typeof o> => !!o
   )
 
   const standard = ecOptions.find(
