@@ -1,5 +1,6 @@
 import { listProducts } from "@lib/data/products"
 import { getRegion } from "@lib/data/regions"
+import { getMessages } from "@lib/i18n/get-messages"
 import { HttpTypes } from "@medusajs/types"
 import { SectionTitle } from "@modules/common/components/brand"
 import Product from "../product-preview"
@@ -19,6 +20,8 @@ export default async function RelatedProducts({
     return null
   }
 
+  const { t } = await getMessages()
+
   // edit this function to define your related products logic
   const queryParams: HttpTypes.StoreProductListParams = {}
   if (region?.id) {
@@ -29,7 +32,7 @@ export default async function RelatedProducts({
   }
   if (product.tags?.length) {
     queryParams.tag_id = product.tags
-      .map((t) => t.id)
+      .map((tag) => tag.id)
       .filter(Boolean) as string[]
   }
   queryParams.is_giftcard = false
@@ -50,15 +53,14 @@ export default async function RelatedProducts({
   return (
     <div className="flex flex-col gap-10">
       <SectionTitle
-        eyebrow="Completa el look"
-        title="También te puede gustar"
-        description="Más piezas de la colección AKLabs."
+        title={t.product.related}
+        description={t.product.relatedBody}
       />
 
       <ul className="grid grid-cols-2 gap-3 xsmall:gap-4 small:grid-cols-4 small:gap-6">
-        {products.slice(0, 4).map((product) => (
-          <li key={product.id}>
-            <Product region={region} product={product} />
+        {products.slice(0, 4).map((relatedProduct) => (
+          <li key={relatedProduct.id}>
+            <Product region={region} product={relatedProduct} />
           </li>
         ))}
       </ul>

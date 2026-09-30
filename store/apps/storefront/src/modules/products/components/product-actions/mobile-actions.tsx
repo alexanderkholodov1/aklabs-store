@@ -10,6 +10,7 @@ import { getProductPrice } from "@lib/util/get-product-price"
 import OptionSelect from "./option-select"
 import { HttpTypes } from "@medusajs/types"
 import { isSimpleProduct } from "@lib/util/product"
+import type { ProductActionLabels } from "./index"
 
 type MobileActionsProps = {
   product: HttpTypes.StoreProduct
@@ -21,6 +22,7 @@ type MobileActionsProps = {
   isAdding?: boolean
   show: boolean
   optionsDisabled: boolean
+  labels: ProductActionLabels
 }
 
 const MobileActions: React.FC<MobileActionsProps> = ({
@@ -33,6 +35,7 @@ const MobileActions: React.FC<MobileActionsProps> = ({
   isAdding,
   show,
   optionsDisabled,
+  labels,
 }) => {
   const { state, open, close } = useToggleState()
 
@@ -111,7 +114,7 @@ const MobileActions: React.FC<MobileActionsProps> = ({
                   <span>
                     {variant
                       ? Object.values(options).join(" / ")
-                      : "Elegir opciones"}
+                      : labels.choose}
                   </span>
                   <ChevronDown />
                 </div>
@@ -124,10 +127,10 @@ const MobileActions: React.FC<MobileActionsProps> = ({
                 data-testid="mobile-cart-button"
               >
                 {!variant
-                  ? "Elige tus opciones"
+                  ? labels.choose
                   : !inStock
-                  ? "Agotado"
-                  : "Añadir al carrito"}
+                  ? labels.soldOut
+                  : labels.add}
               </Button>
             </div>
           </div>

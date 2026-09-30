@@ -1,3 +1,4 @@
+import { Suspense } from "react"
 import { Metadata } from "next"
 
 import { listCartOptions, retrieveCart } from "@lib/data/cart"
@@ -13,24 +14,27 @@ export const metadata: Metadata = {
   metadataBase: new URL(getBaseURL()),
 }
 
-export default async function PageLayout(props: { children: React.ReactNode }) {
-  const customer = await retrieveCustomer()
-  const cart = await retrieveCart()
+/**
+ * Cart and shipping quotes hit Postgres on every read. They must not block
+ * the catalog, which is what the visitor is waiting to see.
+ */
+async function CartChrome() {
+  const [customer, cart] = await Promise.all([
+    retrieveCustomer(),
+    retrieveCart(),
+  ])
   let shippingOptions: StoreCartShippingOption[] = []
 
   if (cart) {
     const { shipping_options } = await listCartOptions()
-
     shippingOptions = shipping_options
   }
 
   return (
     <>
-      <Nav />
       {customer && cart && (
         <CartMismatchBanner customer={customer} cart={cart} />
       )}
-
       {cart && (
         <FreeShippingPriceNudge
           variant="popup"
@@ -38,8 +42,23 @@ export default async function PageLayout(props: { children: React.ReactNode }) {
           shippingOptions={shippingOptions}
         />
       )}
+    </>
+  )
+}
+
+export default function PageLayout(props: { children: React.ReactNode }) {
+  return (
+    <>
+      <Suspense fallback={<div className="h-20" />}>
+        <Nav />
+      </Suspense>
+      <Suspense fallback={null}>
+        <CartChrome />
+      </Suspense>
       {props.children}
-      <Footer />
+      <Suspense fallback={null}>
+        <Footer />
+      </Suspense>
     </>
   )
 }

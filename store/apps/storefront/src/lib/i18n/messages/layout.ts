@@ -1,0 +1,76 @@
+/** Header, footer and the brand ticker. */
+export const en = {
+  nav: {
+    store: "Shop",
+    hoodies: "Hoodies",
+    tees: "Tees",
+    stickers: "Stickers",
+    figures: "Figures",
+    account: "Account",
+    cartEmpty: "Cart (0)",
+    cart: "Cart",
+    cartItemsSingular: "item",
+    cartItemsPlural: "items",
+    language: "Language",
+  },
+  footer: {
+    blurb:
+      "Official AKLabs merch. Red that starts the work, blue that builds it, cyan that clears it.",
+    shop: "Shop",
+    all: "All products",
+    account: "Your order",
+    myAccount: "Account",
+    orders: "Orders",
+    cart: "Cart",
+    shipping: "Shipping across Ecuador",
+    tech: "Stack",
+  },
+  marquee: [
+    "AKLabs",
+    "Hoodies",
+    "Caps",
+    "Tees",
+    "Stickers",
+    "Figures",
+    "Designed in Ecuador",
+    "Make · Test · Repeat",
+  ],
+}
+
+export const es: typeof en = {
+  nav: {
+    store: "Tienda",
+    hoodies: "Hoodies",
+    tees: "Camisetas",
+    stickers: "Stickers",
+    figures: "Figuras",
+    account: "Cuenta",
+    cartEmpty: "Carrito (0)",
+    cart: "Carrito",
+    cartItemsSingular: "producto",
+    cartItemsPlural: "productos",
+    language: "Idioma",
+  },
+  footer: {
+    blurb:
+      "Merch oficial de AKLabs. Rojo que impulsa, azul que construye, celeste que aclara.",
+    shop: "Tienda",
+    all: "Todos los productos",
+    account: "Tu compra",
+    myAccount: "Mi cuenta",
+    orders: "Pedidos",
+    cart: "Carrito",
+    shipping: "Envíos a todo Ecuador",
+    tech: "Tecnología",
+  },
+  marquee: [
+    "AKLabs",
+    "Hoodies",
+    "Gorras",
+    "Camisetas",
+    "Stickers",
+    "Figuras",
+    "Diseñado en Ecuador",
+    "Crea · Prueba · Repite",
+  ],
+}

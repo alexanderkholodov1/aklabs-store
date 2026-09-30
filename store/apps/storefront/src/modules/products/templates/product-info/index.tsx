@@ -1,3 +1,5 @@
+import { getMessages } from "@lib/i18n/get-messages"
+import { resolveProductCopy } from "@lib/i18n/product-copy"
 import { HttpTypes } from "@medusajs/types"
 import LocalizedClientLink from "@modules/common/components/localized-client-link"
 
@@ -5,7 +7,9 @@ type ProductInfoProps = {
   product: HttpTypes.StoreProduct
 }
 
-const ProductInfo = ({ product }: ProductInfoProps) => {
+const ProductInfo = async ({ product }: ProductInfoProps) => {
+  const { locale } = await getMessages()
+  const copy = resolveProductCopy(product, locale)
   const category = product.categories?.[0]
 
   return (
@@ -32,18 +36,18 @@ const ProductInfo = ({ product }: ProductInfoProps) => {
         className="font-display text-5xl leading-[0.92] tracking-wide text-ak-ink small:text-6xl"
         data-testid="product-title"
       >
-        {product.title}
+        {copy.title}
       </h1>
-      {product.subtitle && (
+      {copy.subtitle && (
         <p className="text-base font-medium text-ak-royal">
-          {product.subtitle}
+          {copy.subtitle}
         </p>
       )}
       <p
         className="text-[15px] leading-relaxed text-ak-ink/70 whitespace-pre-line"
         data-testid="product-description"
       >
-        {product.description}
+        {copy.description}
       </p>
     </div>
   )

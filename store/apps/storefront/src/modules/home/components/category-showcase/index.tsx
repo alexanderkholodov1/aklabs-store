@@ -1,4 +1,5 @@
 import { listCategories } from "@lib/data/categories"
+import { getMessages } from "@lib/i18n/get-messages"
 import { SectionTitle } from "@modules/common/components/brand"
 import LocalizedClientLink from "@modules/common/components/localized-client-link"
 import { clx } from "@modules/common/components/ui"
@@ -34,9 +35,50 @@ const CATEGORY_ART: Record<
     blurb: "Acero inoxidable al vacío",
     tint: "from-ak-sky/25",
   },
+  stickers: {
+    image: "/aklabs/products/sticker-pack.png",
+    blurb: "Vinyl packs and wordmark sheets",
+    tint: "from-ak-red/20",
+  },
+  keychains: {
+    image: "/aklabs/products/keychain-enamel.png",
+    blurb: "Enamel keys and acrylic charms",
+    tint: "from-ak-blue/20",
+  },
+  figures: {
+    image: "/aklabs/products/mini-figure.png",
+    blurb: "Desk buddies and mini figures",
+    tint: "from-ak-sky/25",
+  },
+  socks: {
+    image: "/aklabs/products/crew-socks.png",
+    blurb: "Cushioned crew socks with an AK cuff mark",
+    tint: "from-ak-blue/20",
+  },
+  bags: {
+    image: "/aklabs/products/canvas-tote.png",
+    blurb: "Canvas totes and compact slings",
+    tint: "from-ak-sky/25",
+  },
+  pins: {
+    image: "/aklabs/products/enamel-pins.png",
+    blurb: "Enamel pins and woven patches",
+    tint: "from-ak-red/20",
+  },
+  stationery: {
+    image: "/aklabs/products/lab-notebook.png",
+    blurb: "Notebooks and mark posters",
+    tint: "from-ak-blue/20",
+  },
+  accessories: {
+    image: "/aklabs/products/mousepad.png",
+    blurb: "Desk mats, lanyards, and sleeves",
+    tint: "from-ak-sky/20",
+  },
 }
 
 export default async function CategoryShowcase() {
+  const { t } = await getMessages()
   const categories = await listCategories().catch(() => [])
 
   const visible = (categories ?? []).filter(
@@ -51,9 +93,9 @@ export default async function CategoryShowcase() {
   return (
     <section className="content-container py-16 small:py-20">
       <SectionTitle
-        eyebrow="Categorías"
-        title="Arma tu uniforme"
-        description="De la capucha a la botella: cada pieza lleva el ADN AKLabs."
+        eyebrow={t.categories.eyebrow}
+        title={t.categories.title}
+        description={t.categories.description}
       />
 
       <ul className="mt-10 grid grid-cols-2 gap-3 xsmall:gap-4 small:grid-cols-6 small:gap-5">
@@ -88,12 +130,14 @@ export default async function CategoryShowcase() {
                       {category.name}
                     </h3>
                     <p className="mt-1 max-w-[14rem] text-sm text-ak-ink/65">
-                      {art.blurb}
+                      {t.categories.blurbs[category.handle] ?? art.blurb}
                     </p>
                   </div>
                   <span className="inline-flex w-fit items-center gap-2 rounded-full bg-ak-ink px-4 py-2 text-xs font-semibold text-white transition-transform group-hover:translate-x-1">
                     {category.products?.length}{" "}
-                    {category.products?.length === 1 ? "producto" : "productos"}
+                    {category.products?.length === 1
+                      ? t.categories.product
+                      : t.categories.products}
                     <span aria-hidden="true">→</span>
                   </span>
                 </div>

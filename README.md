@@ -9,7 +9,6 @@ Next.js** y **PostgreSQL de Supabase** como base de datos.
 - Flujo de compra completo: producto → carrito → checkout en 4 pasos → orden
   registrada en la tabla `order` de Supabase.
 
-> Presentación: [`presentacion/AKLabs_Store.pptx`](./presentacion/AKLabs_Store.pptx) · guion de la demo: [`PRESENTACION.md`](./PRESENTACION.md)
 
 ---
 
@@ -37,7 +36,6 @@ Navegador ──HTTP──▶ Storefront Next.js (localhost:8000)
 ```
 .
 ├── README.md                 ← este archivo
-├── PRESENTACION.md           ← contenido para la presentación y la demo
 └── store/                    ← monorepo pnpm + Turborepo
     ├── apps/backend/         ← Medusa v2 (@dtc/backend)
     │   ├── medusa-config.ts

@@ -32,3 +32,9 @@ Thumbs.db
 .idea/
 .vscode/
 .vercel
+
+# Credenciales locales (nunca versionar)
+private/
+*.pem
+*service-account*.json
+*firebase-adminsdk*.json

@@ -9,6 +9,13 @@ module.exports = defineConfig({
       connection: {
         ssl: { rejectUnauthorized: false },
       },
+      // Keep a couple of sessions open. Reconnecting to the
+      // Supabase pooler costs more than the query itself.
+      pool: {
+        min: 2,
+        max: 10,
+        idleTimeoutMillis: 600000,
+      },
     },
     http: {
       storeCors: process.env.STORE_CORS!,

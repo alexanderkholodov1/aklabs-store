@@ -2,60 +2,38 @@
 
 import { sdk } from "@lib/config"
 import { HttpTypes } from "@medusajs/types"
-import { getCacheOptions } from "./cookies"
+import { remember } from "./catalog-cache"
 
 export const listRegions = async () => {
-  const next = {
-    ...(await getCacheOptions("regions")),
-  }
-
-  return await sdk.client
-    .fetch<{ regions: HttpTypes.StoreRegion[] }>(`/store/regions`, {
+  return remember("regions", async () => {
+    const { regions } = await sdk.client.fetch<{
+      regions: HttpTypes.StoreRegion[]
+    }>(`/store/regions`, {
       method: "GET",
-      next,
-      cache: process.env.NODE_ENV === "development" ? "no-store" : "force-cache",
+      cache: "no-store",
     })
-    .then(({ regions }) => regions)
+
+    return regions
+  })
 }
 
 export const retrieveRegion = async (id: string) => {
-  const next = {
-    ...(await getCacheOptions(["regions", id].join("-"))),
-  }
-
-  return await sdk.client
-    .fetch<{ region: HttpTypes.StoreRegion }>(`/store/regions/${id}`, {
-      method: "GET",
-      next,
-      cache: "force-cache",
-    })
-    .then(({ region }) => region)
+  const regions = await listRegions()
+  return regions?.find((region) => region.id === id) ?? null
 }
 
-const regionMap = new Map<string, HttpTypes.StoreRegion>()
-
 export const getRegion = async (countryCode: string) => {
-  if (process.env.NODE_ENV === "development") {
-    regionMap.clear()
-  } else if (regionMap.has(countryCode)) {
-    return regionMap.get(countryCode)
-  }
-
   const regions = await listRegions()
 
-  if (!regions) {
+  if (!regions?.length) {
     return null
   }
 
-  regions.forEach((region) => {
-    region.countries?.forEach((c) => {
-      regionMap.set(c?.iso_2 ?? "", region)
-    })
-  })
+  const code = (countryCode || "ec").toLowerCase()
 
-  const region = countryCode
-    ? regionMap.get(countryCode)
-    : regionMap.get("us")
-
-  return region
+  return (
+    regions.find((region) =>
+      region.countries?.some((country) => country.iso_2?.toLowerCase() === code)
+    ) ?? null
+  )
 }

@@ -20,6 +20,10 @@ type Props = {
 }
 
 export async function generateStaticParams() {
+  if (process.env.NODE_ENV === "development") {
+    return []
+  }
+
   const product_categories = await listCategories()
 
   if (!product_categories) {
@@ -51,11 +55,14 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
   try {
     const productCategory = await getCategoryByHandle(params.category)
 
+    if (!productCategory) {
+      notFound()
+    }
+
     const title = productCategory.name
 
     const description =
-      productCategory.description ??
-      `${title} AKLabs: merch oficial con envíos a todo Ecuador.`
+      productCategory.description || `${title} by AKLabs.`
 
     return {
       title,

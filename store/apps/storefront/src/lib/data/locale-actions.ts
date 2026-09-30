@@ -8,14 +8,14 @@ import { getAuthHeaders, getCacheTag, getCartId } from "./cookies"
 const LOCALE_COOKIE_NAME = "_medusa_locale"
 
 /**
- * Gets the current locale from cookies
+ * Gets the current locale from cookies. Defaults to English when unset.
  */
-export const getLocale = async (): Promise<string | null> => {
+export const getLocale = async (): Promise<string> => {
   try {
     const cookies = await nextCookies()
-    return cookies.get(LOCALE_COOKIE_NAME)?.value ?? null
+    return cookies.get(LOCALE_COOKIE_NAME)?.value ?? "en"
   } catch {
-    return null
+    return "en"
   }
 }
 

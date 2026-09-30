@@ -20,6 +20,9 @@ coverage
 **/.next/
 **/out/
 
+# Second dev server used to test without touching port 8000
+apps/sf8001/
+
 # Production
 **/build
 **/dist
