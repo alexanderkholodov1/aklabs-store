@@ -2,6 +2,14 @@ packages:
   - "apps/**"
   - "!apps/backend/.medusa/**"
 
+# One copy of the React type definitions for the whole workspace. Without it,
+# UI libraries shared with the backend resolve React 18 types and every JSX
+# element in the React 19 storefront fails `tsc`. The backend has no React code
+# of its own (the Medusa admin ships prebuilt), so 19 is safe there too.
+overrides:
+  "@types/react": "19.0.5"
+  "@types/react-dom": "19.0.5"
+
 allowBuilds:
   "@medusajs/telemetry": true
   "@swc/core": true
