@@ -24,7 +24,7 @@ merch. The store is also a portfolio piece and a live sales demo.
 2. **Honest.** Products are fictional and nothing is charged. The donations page is the only place with real money, and it says so clearly without shouting.
 3. **Brand first.** Seasonal events decorate; they never replace the AKLabs identity.
 4. **Secure by default.** Deny-by-default rules, least privilege, no secrets in the browser, security headers, dependency hygiene.
-5. **Fast.** Static-first pages and instant feedback; browsing never waits on a server.
+5. **Fast and light.** Static-first pages and instant feedback; browsing never waits on a server. A first view stays under about 300 KB, because the free Hosting plan includes 10 GB of transfer a month and disables the site until the next month when it runs out.
 6. **Accessible and responsive** at every screen size and zoom level.
 7. **Own your stack.** Open-source building blocks, portable data, no lock-in.
 8. **Small versions.** Each version ships on its own. Foundations first, details after.
@@ -58,8 +58,9 @@ where paying for a server makes sense.
 
 ## Now
 
-- Research: what to learn from DopamineCart and FoodNeverComes (agent running; output in `docs/research/shopping-simulators.md`).
-- Waiting for the owner's answers to decisions D1 to D8 below. D1 and D2 block v0.3.
+- v0.2 is ready for review in PR #2.
+- Waiting for the owner's answers to the decisions below. D1 and D2 block v0.3.
+- Research done: [`docs/research/shopping-simulators.md`](research/shopping-simulators.md). Key lessons: speed comes from architecture (static pages, local state, tiny assets, no third-party scripts); the payoff scene (the courier) is the product; honesty works best in layers; the free Hosting transfer quota makes a size budget mandatory.
 
 ## Versions
 
@@ -78,18 +79,19 @@ where paying for a server makes sense.
 - [x] Workspace lists its apps explicitly (local copies no longer leak into the lockfile)
 - [x] Course presentation removed from the repository (kept outside it)
 - [x] Catalog snapshot taken from Medusa (30 products, 13 categories, USD and EUR)
-- [ ] Shopping-simulator research (in progress)
+- [x] Shopping-simulator research (DopamineCart, FoodNeverComes)
 
 ### v0.3: first public version (next)
 Goal: aklabs-store.web.app is live, fast, responsive, and carries the portfolio essentials.
 - [ ] Catalog pipeline: Medusa export to `catalog.json` (products, variants, USD and EUR prices, sale prices, categories, English and Spanish copy)
+- [ ] Size budget: about 150 KB of JavaScript and 300 KB per first view, checked in CI. Product images converted to AVIF and WebP at build time (today: 34 PNGs averaging 165 KB), no third-party scripts, Firebase SDK loaded only when needed
 - [ ] Static export with `/en` and `/es` routes; product and category pages generated at build time
 - [ ] Client-side cart with persistence, currency switch (USD, EUR) and promotion codes
 - [ ] Simulated checkout that never asks for real payment data; confirmation page; order kept in the browser
 - [ ] Courier simulation and tracking page (timeline and animated route)
 - [ ] Responsive and zoom pass from 360 to 2560 px wide and at 150% zoom
 - [ ] About page (profile, highlights, contact) and How it works page (architecture, security, for businesses)
-- [ ] Demo notice: subtle, dismissible, honest
+- [ ] Honesty in layers: a small SIMULATION chip, a note at checkout, a receipt footer, and a "What is real?" page (answer: only the donations page); credit the Korean origin of the trend
 - [ ] CD: deploy main to Firebase Hosting and a preview channel for each pull request
 - [ ] Salvage the reviewed parts of `wip/batch1-partial` (listing, pagination, sorting, sale badges)
 
@@ -99,9 +101,10 @@ Goal: aklabs-store.web.app is live, fast, responsive, and carries the portfolio 
 - [ ] App Check against abuse
 - [ ] Remote Config flags (seasons, notices, experiments) without redeploying
 - [ ] Account page: past orders, track again, wishlist
+- [ ] Installable app (PWA): Safari clears browser storage after 7 days without a visit unless the site is installed, so this also protects the history
 
 ### v0.5: business layer
-- [ ] "For businesses" page: from brand brainstorming to checkout, what a client gets, how to get in touch
+- [ ] "Built by AKLabs" page for businesses: from brand brainstorming to checkout, the architecture, a security rules excerpt, performance scores, a mock merchant view, how to get in touch
 - [ ] Donations page ("a tea", "a ramen"): the only real money; a clear label, no giant banners
 - [ ] Owner story: how products, prices and promotions are managed (Medusa admin tour)
 - [ ] Contact paths per audience (LinkedIn in English, Instagram in Spanish)
@@ -111,6 +114,10 @@ Goal: aklabs-store.web.app is live, fast, responsive, and carries the portfolio 
 - [ ] A subtle seasonal chip in the header that opens a themed event page with its own discounts (like Steam sales); the rest of the store keeps the AKLabs look
 - [ ] Countdowns that keep themselves up to date
 - [ ] Micro-interactions: add-to-cart feedback, a checkout celebration, a "money not spent" counter
+- [ ] Signature finale: a full-screen courier call when the order "arrives" (text first, optional voice, captions, an off switch)
+- [ ] Shareable receipt ("$0.00 charged, you kept $X") as an image
+- [ ] Checkout as play: a tip slider, easter-egg coupons, a read-only "play card" with no inputs
+- [ ] Shareable cart link and exploration badges
 - [ ] Light 3D and parallax touches within a performance budget
 - [ ] Mini-games on event pages
 
@@ -159,6 +166,8 @@ Goal: aklabs-store.web.app is live, fast, responsive, and carries the portfolio 
 **D7. Brand book format (v0.9).** PowerPoint (like the course deck), a Figma file, or a `/brand` page on the site. Recommendation: Figma as the source, plus a case-study page and a PDF export. Needed: authorize the Figma connector if we use it.
 
 **D8. Analytics.** None, Firebase Performance Monitoring only (no personal data), or Google Analytics with a consent banner. Recommendation: Performance Monitoring only for now.
+
+**D9. Own domain (optional, any time).** About $10 to $15 a year. It gives a professional address instead of `web.app`, allows branded e-mail (D4), and with a free CDN proxy in front it can cache the site and protect the 10 GB monthly transfer quota. Not needed for v0.3.
 
 ## Decided
 
