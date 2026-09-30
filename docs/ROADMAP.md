@@ -25,7 +25,7 @@ merch. The store is also a portfolio piece and a live sales demo.
 3. **Brand first.** Seasonal events decorate; they never replace the AKLabs identity.
 4. **Secure by default.** Deny-by-default rules, least privilege, no secrets in the browser, security headers, dependency hygiene.
 5. **Fast and light.** Static-first pages and instant feedback; browsing never waits on a server. A first view stays under about 300 KB, because the free Hosting plan includes 10 GB of transfer a month and disables the site until the next month when it runs out.
-6. **Accessible and responsive** at every screen size and zoom level.
+6. **Accessible to everyone.** Designed from the start for people with disabilities, with WCAG 2.2 level AA as the minimum, checked in CI and by hand. Every image has a meaningful text alternative, nothing depends on color, sound or motion alone, and the store works with a keyboard, a screen reader and at any zoom level. See [Accessibility requirements](#accessibility-requirements).
 7. **Own your stack.** Open-source building blocks, portable data, no lock-in.
 8. **Small versions.** Each version ships on its own. Foundations first, details after.
 
@@ -56,9 +56,43 @@ a static export, and the cart, checkout and courier run in the browser. Medusa
 stays as the owner's back-office and as the reference for real client stores,
 where paying for a server makes sense.
 
+## Accessibility requirements
+
+These apply to every version and to every workstream brief. A version is not done until they hold.
+
+- **Text alternatives.**
+  - Every product and content image has written alt text (EN and ES) that describes the item: type, color, print.
+  - Decorative images use empty alt.
+  - Icon buttons have accessible names.
+  - The courier map has a text equivalent: the timeline.
+- **Keyboard.**
+  - Everything is reachable and usable with the keyboard, with a visible focus ring and a "Skip to content" link.
+  - Menus, popovers and dialogs close with Escape and return focus to where it was. No keyboard traps.
+- **Screen readers.**
+  - Semantic landmarks and headings, labelled controls, and the right `lang` for each language.
+  - Polite live regions announce cart changes and courier updates.
+- **Vision.**
+  - Contrast of at least 4.5:1 for text and 3:1 for large text and interface parts.
+  - Text stays readable at 200% size, and pages reflow at 400% zoom (320 px wide) without horizontal scrolling.
+  - Color is never the only signal: a sale price also says "Sale" in text.
+- **Motion, sound and time.**
+  - `prefers-reduced-motion` is respected, and there is no autoplay audio.
+  - The courier call has captions and an off switch.
+  - Countdowns inform; they never impose a time limit on a task.
+- **Forms.**
+  - Visible labels, errors tied to their fields, and `autocomplete` attributes.
+  - No visual puzzles: anti-abuse checks run invisibly.
+- **Touch.** Targets of at least 24 by 24 px (WCAG 2.2), 44 px where the layout allows.
+- **Cognitive load.** Plain language, consistent navigation, an undo when an item is removed from the cart, and an easy-to-understand "this is a simulation" message.
+- **Testing.**
+  - Automated axe checks on key pages in CI (from v0.3).
+  - Manual passes each version: keyboard only, NVDA on Windows, TalkBack or VoiceOver on a phone, and 200% and 400% zoom.
+- **Statement.** An accessibility page that explains the level reached and how to report a barrier (v0.5).
+
 ## Now
 
-- v0.2 is ready for review in PR #2.
+- v0.2 is complete and ready for review in PR #2. It includes the review fixes (CI, catalog cache, locale input validation) and the accessibility requirements.
+- The work for v0.3 is split into packages in [WORKPLAN.md](WORKPLAN.md), ready to delegate.
 - Waiting for the owner's answers to the decisions below. D1 and D2 block v0.3.
 - Research done: [`docs/research/shopping-simulators.md`](research/shopping-simulators.md). Key lessons: speed comes from architecture (static pages, local state, tiny assets, no third-party scripts); the payoff scene (the courier) is the product; honesty works best in layers; the free Hosting transfer quota makes a size budget mandatory.
 
@@ -80,6 +114,9 @@ where paying for a server makes sense.
 - [x] Course presentation removed from the repository (kept outside it)
 - [x] Catalog snapshot taken from Medusa (30 products, 13 categories, USD and EUR)
 - [x] Shopping-simulator research (DopamineCart, FoodNeverComes)
+- [x] PR review fixes: CI type-check without generated Medusa types, a catalog cache keyed by publishable key and capped in size, locale server actions that accept only supported locales
+- [x] Accessibility requirements for every version (WCAG 2.2 AA)
+- [x] Work plan: execution rules and v0.3 work packages ([WORKPLAN.md](WORKPLAN.md))
 
 ### v0.3: first public version (next)
 Goal: aklabs-store.web.app is live, fast, responsive, and carries the portfolio essentials.
@@ -89,7 +126,8 @@ Goal: aklabs-store.web.app is live, fast, responsive, and carries the portfolio 
 - [ ] Client-side cart with persistence, currency switch (USD, EUR) and promotion codes
 - [ ] Simulated checkout that never asks for real payment data; confirmation page; order kept in the browser
 - [ ] Courier simulation and tracking page (timeline and animated route)
-- [ ] Responsive and zoom pass from 360 to 2560 px wide and at 150% zoom
+- [ ] Responsive and zoom pass from 360 to 2560 px wide, at 150% zoom, and reflow at 400%
+- [ ] Accessibility baseline: skip link, landmarks, focus styles, written alt text for all 34 product images in English and Spanish, reduced motion, axe checks in CI
 - [ ] About page (profile, highlights, contact) and How it works page (architecture, security, for businesses)
 - [ ] Honesty in layers: a small SIMULATION chip, a note at checkout, a receipt footer, and a "What is real?" page (answer: only the donations page); credit the Korean origin of the trend
 - [ ] CD: deploy main to Firebase Hosting and a preview channel for each pull request
@@ -108,6 +146,7 @@ Goal: aklabs-store.web.app is live, fast, responsive, and carries the portfolio 
 - [ ] Donations page ("a tea", "a ramen"): the only real money; a clear label, no giant banners
 - [ ] Owner story: how products, prices and promotions are managed (Medusa admin tour)
 - [ ] Contact paths per audience (LinkedIn in English, Instagram in Spanish)
+- [ ] Accessibility statement: the level reached, known gaps, and how to report a barrier
 
 ### v0.6: delight
 - [ ] Seasonal calendar computed every year (Carnival from Easter, Halloween, Day of the Dead, Black Friday, Christmas, New Year)
@@ -123,7 +162,7 @@ Goal: aklabs-store.web.app is live, fast, responsive, and carries the portfolio 
 
 ### v0.7: AI and languages
 - [ ] Firebase AI Logic on the free Gemini tier: shopping buddy, gift finder, "roast my cart"
-- [ ] Genkit in CI for translation drafts and image alt text
+- [ ] Genkit in CI for translation drafts and alt text drafts; a person reviews every text before it ships
 - [ ] More languages (Russian first)
 
 ### v0.8: notifications
@@ -178,6 +217,8 @@ Goal: aklabs-store.web.app is live, fast, responsive, and carries the portfolio 
 - 2026-09-30: seasonal events stay subtle and open themed pages; the AKLabs identity stays.
 - 2026-09-30: the course presentation leaves the repository; PR #2 now carries the portfolio foundation.
 - 2026-09-30: the donations page is the only place with real money.
+- 2026-09-30: accessibility for people with disabilities (WCAG 2.2 AA) is a requirement of every version.
+- 2026-09-30: v0.2 closes with the foundations; everything not yet approved waits for its decision.
 
 ## Owner actions
 
