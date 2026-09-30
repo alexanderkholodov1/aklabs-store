@@ -21,7 +21,11 @@ import { AKLABS_PRODUCTS, buildPrices } from "./seed-aklabs-products"
  *    so /ec and /dk can both sell the same catalog.
  * 3. Soft-deletes the demo catalog created by the Medusa starter
  *    (products and categories), leaving only the AKLabs merch.
- * 4. Names the Ecuador shipping options in Spanish and adds an express option.
+ * 4. Names the Ecuador shipping options and adds an express option.
+ *
+ * Category / option labels are left as seeded. Storefront locale dictionaries
+ * (and product-copy overlays) own EN/ES display strings — this script must not
+ * rewrite Spanish labels to English in Postgres.
  */
 
 const STORE_NAME = "AKLabs Store"
@@ -29,15 +33,15 @@ const DEMO_PRODUCT_HANDLES = ["t-shirt", "sweatshirt", "sweatpants", "shorts"]
 const DEMO_CATEGORY_NAMES = ["Shirts", "Sweatshirts", "Pants", "Merch"]
 
 const EC_STANDARD = {
-  name: "Envío estándar Ecuador",
-  label: "Estándar",
-  description: "Entrega en 2 a 4 días hábiles en todo Ecuador.",
+  name: "Standard shipping",
+  label: "Standard",
+  description: "Delivery in 2 to 4 business days across Ecuador.",
 }
 
 const EC_EXPRESS = {
-  name: "Envío express Ecuador",
+  name: "Express shipping",
   label: "Express",
-  description: "Entrega en 24 a 48 horas en ciudades principales.",
+  description: "Delivery in 24 to 48 hours in major cities.",
   amount: 15,
 }
 
@@ -86,6 +90,7 @@ export default async function syncAklabsCatalog({
         products: [
           {
             id: product.id,
+            title: seed.title,
             subtitle: seed.subtitle,
             description: seed.description,
             material: seed.material,
@@ -115,6 +120,10 @@ export default async function syncAklabsCatalog({
       `AKLabs: ${seed.handle} actualizado (${variantIds.length} variantes, USD ${seed.prices.usd} / EUR ${seed.prices.eur}).`
     )
   }
+
+  // Category / option display names stay as seeded in Postgres.
+  // English/Spanish UI labels live in the storefront locale dictionaries —
+  // do not rename Spanish labels to English here.
 
   // 3. Remove the starter demo catalog (soft delete, recoverable)
   const { data: demoProducts } = await query.graph({
@@ -194,6 +203,7 @@ export default async function syncAklabsCatalog({
     (o) =>
       o.name === "Standard" ||
       o.name === "Standard Shipping" ||
+      o.name === "Envío estándar Ecuador" ||
       o.name === EC_STANDARD.name
   )
 

@@ -5,8 +5,122 @@ import { OptionValueIds } from "@lib/util/product-option-filters"
 import { sortProducts } from "@lib/util/sort-products"
 import { HttpTypes } from "@medusajs/types"
 import { SortOptions } from "@modules/store/components/refinement-list/sort-products"
-import { getAuthHeaders, getCacheOptions } from "./cookies"
+import { remember } from "./catalog-cache"
 import { getRegion, retrieveRegion } from "./regions"
+
+const CATALOG_FIELDS = [
+  "id",
+  "title",
+  "subtitle",
+  "description",
+  "handle",
+  "thumbnail",
+  "created_at",
+  "is_giftcard",
+  "collection_id",
+  "material",
+  "metadata",
+  "*images",
+  "*options",
+  "*options.values",
+  "*tags",
+  "*categories",
+  "*variants",
+  "*variants.calculated_price",
+  "+variants.inventory_quantity",
+  "*variants.options",
+  "*variants.images",
+].join(",")
+
+const asList = (value: string | string[] | undefined) => {
+  if (!value) {
+    return []
+  }
+
+  return Array.isArray(value) ? value : [value]
+}
+
+async function loadRegionCatalog(regionId: string) {
+  return remember(`catalog:${regionId}`, async () => {
+    const { products } = await sdk.client.fetch<{
+      products: HttpTypes.StoreProduct[]
+    }>(`/store/products`, {
+      method: "GET",
+      query: {
+        limit: 200,
+        region_id: regionId,
+        fields: CATALOG_FIELDS,
+      },
+      cache: "no-store",
+    })
+
+    return products
+  })
+}
+
+function productMatches(
+  product: HttpTypes.StoreProduct,
+  queryParams?: ProductListQueryParams
+) {
+  if (!queryParams) {
+    return true
+  }
+
+  const handles = asList(queryParams.handle)
+  if (handles.length && !handles.includes(product.handle ?? "")) {
+    return false
+  }
+
+  const ids = asList(queryParams.id)
+  if (ids.length && !ids.includes(product.id)) {
+    return false
+  }
+
+  const categoryIds = asList(queryParams.category_id)
+  if (
+    categoryIds.length &&
+    !product.categories?.some((category) =>
+      category?.id ? categoryIds.includes(category.id) : false
+    )
+  ) {
+    return false
+  }
+
+  const collectionIds = asList(queryParams.collection_id)
+  if (
+    collectionIds.length &&
+    (!product.collection_id || !collectionIds.includes(product.collection_id))
+  ) {
+    return false
+  }
+
+  const tagIds = asList(queryParams.tag_id as string | string[] | undefined)
+  if (
+    tagIds.length &&
+    !product.tags?.some((tag) => (tag?.id ? tagIds.includes(tag.id) : false))
+  ) {
+    return false
+  }
+
+  if (queryParams.is_giftcard === false && product.is_giftcard) {
+    return false
+  }
+
+  const optionValueIds = asList(queryParams.option_value_id)
+  if (optionValueIds.length) {
+    const matchesOption = product.variants?.some((variant) =>
+      variant.options?.some(
+        (option) => option.id && optionValueIds.includes(option.id)
+      )
+    )
+
+    if (!matchesOption) {
+      return false
+    }
+  }
+
+  return true
+}
 
 type ProductListQueryParams = (HttpTypes.FindParams &
   HttpTypes.StoreProductListParams) & {
@@ -52,44 +166,21 @@ export const listProducts = async ({
     }
   }
 
-  const headers = {
-    ...(await getAuthHeaders()),
+  const catalog = await loadRegionCatalog(region.id)
+  const matched = catalog.filter((product) =>
+    productMatches(product, queryParams)
+  )
+  const products = matched.slice(offset, offset + limit)
+  const nextPage = matched.length > offset + limit ? pageParam + 1 : null
+
+  return {
+    response: {
+      products,
+      count: matched.length,
+    },
+    nextPage,
+    queryParams,
   }
-
-  const next = {
-    ...(await getCacheOptions("products")),
-  }
-
-  return sdk.client
-    .fetch<{ products: HttpTypes.StoreProduct[]; count: number }>(
-      `/store/products`,
-      {
-        method: "GET",
-        query: {
-          limit,
-          offset,
-          region_id: region?.id,
-          fields:
-            "*variants.calculated_price,+variants.inventory_quantity,*variants.images,*variants.options,+metadata,+tags,*categories,",
-          ...queryParams,
-        },
-        headers,
-        next,
-        cache: process.env.NODE_ENV === "development" ? "no-store" : "force-cache",
-      }
-    )
-    .then(({ products, count }) => {
-      const nextPage = count > offset + limit ? pageParam + 1 : null
-
-      return {
-        response: {
-          products,
-          count,
-        },
-        nextPage: nextPage,
-        queryParams,
-      }
-    })
 }
 
 /**

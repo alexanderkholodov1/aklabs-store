@@ -36,8 +36,14 @@ const BagIcon = () => (
 
 const CartDropdown = ({
   cart: cartState,
+  labels,
 }: {
   cart?: HttpTypes.StoreCart | null
+  labels: {
+    cart: string
+    cartAria: string
+    empty: string
+  }
 }) => {
   const [activeTimer, setActiveTimer] = useState<NodeJS.Timer | undefined>(
     undefined
@@ -103,11 +109,11 @@ const CartDropdown = ({
             className="flex h-10 items-center gap-2 rounded-full bg-ak-ink pl-3.5 pr-2 text-white shadow-lg shadow-ak-blue/20 transition-transform hover:-translate-y-0.5"
             href="/cart"
             data-testid="nav-cart-link"
-            aria-label={`Carrito, ${totalItems} ${totalItems === 1 ? "producto" : "productos"}`}
+            aria-label={labels.cartAria}
           >
             <BagIcon />
             <span className="hidden xsmall:inline text-sm font-semibold">
-              Carrito
+              {labels.cart}
             </span>
             <span
               className="grid h-6 min-w-[1.5rem] place-items-center rounded-full bg-gradient-ak px-1.5 text-xs font-bold"
@@ -241,7 +247,7 @@ const CartDropdown = ({
                 <div className="grid h-14 w-14 place-items-center rounded-full bg-gradient-ak text-white">
                   <BagIcon />
                 </div>
-                <span className="text-ak-ink/70">Tu carrito está vacío.</span>
+                <span className="text-ak-ink/70">{labels.empty}</span>
                 <LocalizedClientLink href="/store">
                   <>
                     <span className="sr-only">Ir a todos los productos</span>

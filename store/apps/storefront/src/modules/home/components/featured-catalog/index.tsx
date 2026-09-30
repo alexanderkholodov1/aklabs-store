@@ -1,22 +1,29 @@
 import { listProductsWithSort } from "@lib/data/products"
-import { HttpTypes } from "@medusajs/types"
+import { getRegion } from "@lib/data/regions"
+import { getMessages } from "@lib/i18n/get-messages"
 import { SectionTitle } from "@modules/common/components/brand"
 import LocalizedClientLink from "@modules/common/components/localized-client-link"
 import ProductPreview from "@modules/products/components/product-preview"
 
 export default async function FeaturedCatalog({
   countryCode,
-  region,
 }: {
   countryCode: string
-  region: HttpTypes.StoreRegion
 }) {
+  const region = await getRegion(countryCode)
+
+  if (!region) {
+    return null
+  }
+
+  const { t } = await getMessages()
+
   const {
     response: { products },
   } = await listProductsWithSort({
     countryCode,
     sortBy: "created_at",
-    queryParams: { limit: 12 },
+    queryParams: { limit: 24 },
   })
 
   const featured = products.filter((product) =>
@@ -29,22 +36,25 @@ export default async function FeaturedCatalog({
     return null
   }
 
+  const currency = region.currency_code?.toUpperCase() ?? ""
+
   return (
     <section className="content-container py-16 small:py-24" id="coleccion">
       <SectionTitle
-        eyebrow="Colección 01"
+        eyebrow={t.featured.eyebrow}
         title={
           <>
-            El merch del <span className="text-gradient-ak">laboratorio</span>
+            {t.featured.titleA}{" "}
+            <span className="text-gradient-ak">{t.featured.titleB}</span>
           </>
         }
-        description={`Seis piezas pensadas para programar, entrenar y salir. Precios en ${region.currency_code?.toUpperCase()} para la región ${region.name}.`}
+        description={t.featured.description(currency, region.name)}
       >
         <LocalizedClientLink
           href="/store"
           className="glass inline-flex h-11 items-center gap-2 self-start rounded-full px-5 text-sm font-semibold text-ak-ink transition-colors hover:bg-white small:self-auto"
         >
-          Ver toda la tienda <span aria-hidden="true">→</span>
+          {t.featured.all} <span aria-hidden="true">→</span>
         </LocalizedClientLink>
       </SectionTitle>
 

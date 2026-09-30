@@ -44,7 +44,9 @@ export const retrieveCustomer =
   async (): Promise<HttpTypes.StoreCustomer | null> => {
     const authHeaders = await getAuthHeaders()
 
-    if (!authHeaders) return null
+    if (!("authorization" in authHeaders)) {
+      return null
+    }
 
     const headers = {
       ...authHeaders,
@@ -57,12 +59,9 @@ export const retrieveCustomer =
     return await sdk.client
       .fetch<{ customer: HttpTypes.StoreCustomer }>(`/store/customers/me`, {
         method: "GET",
-        query: {
-          fields: "*orders",
-        },
         headers,
         next,
-        cache: "force-cache",
+        cache: "no-store",
       })
       .then(({ customer }) => customer)
       .catch(() => null)

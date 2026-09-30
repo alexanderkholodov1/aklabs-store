@@ -2,58 +2,35 @@
 
 import { sdk } from "@lib/config"
 import { HttpTypes } from "@medusajs/types"
-import { getCacheOptions } from "./cookies"
+import { remember } from "./catalog-cache"
 
 export const retrieveCollection = async (id: string) => {
-  const next = {
-    ...(await getCacheOptions("collections")),
-  }
-
-  return await sdk.client
-    .fetch<{ collection: HttpTypes.StoreCollection }>(
-      `/store/collections/${id}`,
-      {
-        next,
-        cache: process.env.NODE_ENV === "development" ? "no-store" : "force-cache",
-      }
-    )
-    .then(({ collection }) => collection)
+  const { collections } = await listCollections()
+  return collections.find((collection) => collection.id === id) ?? null
 }
 
 export const listCollections = async (
   queryParams: Record<string, string> = {}
 ): Promise<{ collections: HttpTypes.StoreCollection[]; count: number }> => {
-  const next = {
-    ...(await getCacheOptions("collections")),
-  }
+  const limit = queryParams.limit || "100"
+  const offset = queryParams.offset || "0"
 
-  queryParams.limit = queryParams.limit || "100"
-  queryParams.offset = queryParams.offset || "0"
+  return remember(`collections:${limit}:${offset}`, async () => {
+    const { collections } = await sdk.client.fetch<{
+      collections: HttpTypes.StoreCollection[]
+      count: number
+    }>("/store/collections", {
+      query: { ...queryParams, limit, offset },
+      cache: "no-store",
+    })
 
-  return await sdk.client
-    .fetch<{ collections: HttpTypes.StoreCollection[]; count: number }>(
-      "/store/collections",
-      {
-        query: queryParams,
-        next,
-        cache: process.env.NODE_ENV === "development" ? "no-store" : "force-cache",
-      }
-    )
-    .then(({ collections }) => ({ collections, count: collections.length }))
+    return { collections, count: collections.length }
+  })
 }
 
 export const getCollectionByHandle = async (
   handle: string
 ): Promise<HttpTypes.StoreCollection | null> => {
-  const next = {
-    ...(await getCacheOptions("collections")),
-  }
-
-  return await sdk.client
-    .fetch<HttpTypes.StoreCollectionListResponse>(`/store/collections`, {
-      query: { handle, fields: "*products" },
-      next,
-      cache: process.env.NODE_ENV === "development" ? "no-store" : "force-cache",
-    })
-    .then(({ collections }) => collections[0] || null)
+  const { collections } = await listCollections()
+  return collections.find((collection) => collection.handle === handle) ?? null
 }

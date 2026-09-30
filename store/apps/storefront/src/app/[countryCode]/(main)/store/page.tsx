@@ -10,8 +10,6 @@ export const metadata: Metadata = {
     "Todo el merch AKLabs: hoodies, camisetas, joggers, gorras y termos.",
 }
 
-export const dynamic = "force-dynamic"
-
 type StorePageSearchParams = Record<string, string | string[] | undefined> & {
   sortBy?: SortOptions
   page?: string

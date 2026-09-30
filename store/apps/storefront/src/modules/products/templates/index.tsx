@@ -1,5 +1,7 @@
 import React, { Suspense } from "react"
 
+import { getMessages } from "@lib/i18n/get-messages"
+import { resolveProductCopy } from "@lib/i18n/product-copy"
 import ImageGallery from "@modules/products/components/image-gallery"
 import ProductActions from "@modules/products/components/product-actions"
 import ProductTabs from "@modules/products/components/product-tabs"
@@ -19,20 +21,31 @@ type ProductTemplateProps = {
   images: HttpTypes.StoreProductImage[]
 }
 
-const PERKS = [
-  { title: "Envío a todo Ecuador", text: "Estándar 2–4 días · Express 24–48 h" },
-  { title: "Cambios de talla", text: "Sin costo durante 30 días" },
-  { title: "Pago seguro", text: "Confirmación inmediata del pedido" },
-]
-
-const ProductTemplate: React.FC<ProductTemplateProps> = ({
+const ProductTemplate = async ({
   product,
   region,
   countryCode,
   images,
-}) => {
+}: ProductTemplateProps) => {
   if (!product || !product.id) {
     return notFound()
+  }
+
+  const { locale, t } = await getMessages()
+  const copy = resolveProductCopy(product, locale)
+
+  const perks = [
+    { title: t.product.ship, text: t.product.shipDetail },
+    { title: t.product.exchange, text: t.product.exchangeDetail },
+    { title: t.product.pay, text: t.product.payDetail },
+  ]
+
+  const actionLabels = {
+    choose: t.product.choose,
+    soldOut: t.product.soldOut,
+    add: t.product.add,
+    added: t.product.added,
+    error: t.product.error,
   }
 
   const category = product.categories?.[0]
@@ -44,15 +57,15 @@ const ProductTemplate: React.FC<ProductTemplateProps> = ({
         data-testid="product-container"
       >
         <nav
-          aria-label="Ruta"
+          aria-label="Breadcrumb"
           className="mb-6 flex flex-wrap items-center gap-2 text-sm text-ak-ink/55"
         >
           <LocalizedClientLink href="/" className="hover:text-ak-ink">
-            Inicio
+            Home
           </LocalizedClientLink>
           <span aria-hidden="true">/</span>
           <LocalizedClientLink href="/store" className="hover:text-ak-ink">
-            Tienda
+            {t.nav.store}
           </LocalizedClientLink>
           {category && (
             <>
@@ -66,11 +79,11 @@ const ProductTemplate: React.FC<ProductTemplateProps> = ({
             </>
           )}
           <span aria-hidden="true">/</span>
-          <span className="text-ak-ink">{product.title}</span>
+          <span className="text-ak-ink">{copy.title}</span>
         </nav>
 
         <div className="grid grid-cols-1 items-start gap-6 small:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] small:gap-10">
-          <ImageGallery images={images} title={product.title} />
+          <ImageGallery images={images} title={copy.title} />
 
           <div className="flex flex-col gap-5 small:sticky small:top-28">
             <div className="glass liquid flex flex-col gap-6 rounded-[32px] p-6 small:p-8">
@@ -81,13 +94,18 @@ const ProductTemplate: React.FC<ProductTemplateProps> = ({
                     disabled={true}
                     product={product}
                     region={region}
+                    labels={actionLabels}
                   />
                 }
               >
-                <ProductActionsWrapper id={product.id} region={region} />
+                <ProductActionsWrapper
+                  id={product.id}
+                  region={region}
+                  labels={actionLabels}
+                />
               </Suspense>
               <ul className="grid grid-cols-1 gap-2 xsmall:grid-cols-3">
-                {PERKS.map((perk) => (
+                {perks.map((perk) => (
                   <li
                     key={perk.title}
                     className="rounded-2xl bg-white/70 px-3 py-2.5 ring-1 ring-ak-ink/5"

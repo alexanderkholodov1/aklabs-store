@@ -1,70 +1,60 @@
 import { HttpTypes } from "@medusajs/types"
+import { getMessages } from "@lib/i18n/get-messages"
 import { Aurora, Eyebrow } from "@modules/common/components/brand"
 import { SwitchRegionButton } from "@modules/layout/components/region-switcher"
 import ReactCountryFlag from "react-country-flag"
 
-const PERKS = [
-  {
-    title: "Envíos a todo Ecuador",
-    text: "Estándar en 2 a 4 días hábiles o express en 24 a 48 horas.",
-    icon: (
-      <path
-        d="M3 7h11v9H3zM14 10h4l3 3v3h-7M7 19a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm10 0a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"
-        stroke="currentColor"
-        strokeWidth="1.7"
-        strokeLinejoin="round"
-        fill="none"
-      />
-    ),
-  },
-  {
-    title: "Precios en dólares",
-    text: "Ecuador usa el USD como moneda oficial: pagas lo que ves.",
-    icon: (
-      <path
-        d="M12 3v18M16.5 7.5c-.8-1.2-2.4-2-4.5-2-2.6 0-4.3 1.3-4.3 3.1 0 4.3 9 2.3 9 6.6 0 1.9-1.9 3.3-4.7 3.3-2.3 0-4.1-.9-5-2.4"
-        stroke="currentColor"
-        strokeWidth="1.7"
-        strokeLinecap="round"
-        fill="none"
-      />
-    ),
-  },
-  {
-    title: "Cambios de talla",
-    text: "¿No te quedó? Lo cambiamos sin costo durante 30 días.",
-    icon: (
-      <path
-        d="M4 9h13l-3-3M20 15H7l3 3"
-        stroke="currentColor"
-        strokeWidth="1.7"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        fill="none"
-      />
-    ),
-  },
-  {
-    title: "Compra segura",
-    text: "Checkout en pasos claros y pedido confirmado al instante.",
-    icon: (
-      <path
-        d="M12 3 5 6v5c0 4.4 3 8.3 7 10 4-1.7 7-5.6 7-10V6l-7-3Zm-3 9 2 2 4-4"
-        stroke="currentColor"
-        strokeWidth="1.7"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        fill="none"
-      />
-    ),
-  },
+const PERK_ICONS = [
+  <path
+    key="ship"
+    d="M3 7h11v9H3zM14 10h4l3 3v3h-7M7 19a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm10 0a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"
+    stroke="currentColor"
+    strokeWidth="1.7"
+    strokeLinejoin="round"
+    fill="none"
+  />,
+  <path
+    key="usd"
+    d="M12 3v18M16.5 7.5c-.8-1.2-2.4-2-4.5-2-2.6 0-4.3 1.3-4.3 3.1 0 4.3 9 2.3 9 6.6 0 1.9-1.9 3.3-4.7 3.3-2.3 0-4.1-.9-5-2.4"
+    stroke="currentColor"
+    strokeWidth="1.7"
+    strokeLinecap="round"
+    fill="none"
+  />,
+  <path
+    key="size"
+    d="M4 9h13l-3-3M20 15H7l3 3"
+    stroke="currentColor"
+    strokeWidth="1.7"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    fill="none"
+  />,
+  <path
+    key="safe"
+    d="M12 3 5 6v5c0 4.4 3 8.3 7 10 4-1.7 7-5.6 7-10V6l-7-3Zm-3 9 2 2 4-4"
+    stroke="currentColor"
+    strokeWidth="1.7"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    fill="none"
+  />,
 ]
 
-export const Perks = () => {
+export const Perks = async () => {
+  const { t } = await getMessages()
+
+  const perks = [
+    { title: t.perks.shipTitle, text: t.perks.shipText, icon: PERK_ICONS[0] },
+    { title: t.perks.usdTitle, text: t.perks.usdText, icon: PERK_ICONS[1] },
+    { title: t.perks.sizeTitle, text: t.perks.sizeText, icon: PERK_ICONS[2] },
+    { title: t.perks.safeTitle, text: t.perks.safeText, icon: PERK_ICONS[3] },
+  ]
+
   return (
     <section className="content-container py-10">
       <ul className="grid grid-cols-1 gap-3 xsmall:grid-cols-2 small:grid-cols-4 small:gap-5">
-        {PERKS.map((perk) => (
+        {perks.map((perk) => (
           <li key={perk.title} className="glass liquid rounded-[28px] p-6">
             <span className="grid h-12 w-12 place-items-center rounded-2xl bg-gradient-ak text-white shadow-lg shadow-ak-blue/25">
               <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true">
@@ -86,12 +76,14 @@ export const Perks = () => {
  * Explains the two sales regions. Switching links go straight to the
  * country path, which is how Medusa picks the region and its currency.
  */
-export const RegionsBanner = ({
+export const RegionsBanner = async ({
   region,
 }: {
   region: HttpTypes.StoreRegion
 }) => {
+  const { t } = await getMessages()
   const isEcuador = region.currency_code?.toLowerCase() === "usd"
+  const currency = region.currency_code?.toUpperCase() ?? ""
 
   return (
     <section className="px-3 py-10 small:px-6">
@@ -99,21 +91,14 @@ export const RegionsBanner = ({
         <Aurora className="opacity-70" />
         <div className="relative grid grid-cols-1 items-center gap-10 small:grid-cols-[1.1fr_1fr]">
           <div className="flex flex-col items-start gap-5">
-            <Eyebrow tone="dark">Multi-región</Eyebrow>
+            <Eyebrow tone="dark">{t.regions.eyebrow}</Eyebrow>
             <h2 className="font-display text-5xl leading-[0.95] tracking-wide small:text-7xl">
-              Una tienda,
+              {t.regions.titleA}
               <br />
-              <span className="text-gradient-ak">dos monedas</span>
+              <span className="text-gradient-ak">{t.regions.titleB}</span>
             </h2>
             <p className="max-w-lg text-white/70">
-              Estás comprando en la región{" "}
-              <strong className="text-white">{region.name}</strong> con precios
-              en{" "}
-              <strong className="text-white">
-                {region.currency_code?.toUpperCase()}
-              </strong>
-              . El mismo catálogo se vende en Ecuador en dólares y en Europa en
-              euros: Medusa calcula el precio según la región de tu carrito.
+              {t.regions.body(region.name, currency)}
             </p>
           </div>
 
@@ -123,14 +108,14 @@ export const RegionsBanner = ({
                 country: "ec",
                 flag: "EC",
                 name: "Ecuador",
-                detail: "Región Ecuador · USD",
+                detail: "Ecuador · USD",
                 active: isEcuador,
               },
               {
                 country: "dk",
                 flag: "EU",
-                name: "Europa",
-                detail: "Región Europe · EUR (ej. /dk)",
+                name: "Europe",
+                detail: "Europe · EUR (e.g. /dk)",
                 active: !isEcuador,
               },
             ].map((option) => (
@@ -156,8 +141,8 @@ export const RegionsBanner = ({
                 <p className="text-sm text-white/60">{option.detail}</p>
                 <p className="mt-3 text-xs text-ak-sky-light">
                   {option.active
-                    ? "Región actual"
-                    : `Cambiar a /${option.country} →`}
+                    ? t.regions.current
+                    : `${t.regions.switchTo} /${option.country} →`}
                 </p>
               </SwitchRegionButton>
             ))}
