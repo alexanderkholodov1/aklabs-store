@@ -1,5 +1,13 @@
-import { DEFAULT_LOCALE, Locale } from "./locales"
+import { Locale, SUPPORTED_LOCALES } from "./locales"
 
+/**
+ * Localized catalog copy.
+ *
+ * Resolution order for every field:
+ * 1. `metadata.i18n[locale]` on the record (managed from the Medusa admin),
+ * 2. the storefront overlay below (products only, keyed by handle),
+ * 3. the base Medusa field (English).
+ */
 export type ProductCopyFields = {
   title: string
   subtitle: string
@@ -8,9 +16,8 @@ export type ProductCopyFields = {
 
 /**
  * Storefront overlay for product title / subtitle / description by handle.
- * Medusa stores one language on the product row; this map supplies per-locale
- * copy without rewriting the database. English is the default; Spanish stays
- * a first-class entry. Add `fr: { ... }` (etc.) the same way when needed.
+ * It predates `metadata.i18n` and stays as a safety net while the catalog is
+ * migrated. English is the default; Spanish stays a first-class entry.
  */
 export type ProductCopyEntry = Partial<Record<Locale, ProductCopyFields>> & {
   en: ProductCopyFields
@@ -439,29 +446,174 @@ export const productCopy: Record<string, ProductCopyEntry> = {
   },
 }
 
+type Metadata = Record<string, unknown> | null | undefined
+
 type ProductLike = {
   handle?: string | null
   title?: string | null
   subtitle?: string | null
   description?: string | null
+  metadata?: Metadata
 }
 
-/**
- * Prefer locale overlay when present; otherwise keep the Medusa field.
- * Unknown locales fall back to English overlay, then to the Medusa value.
- */
+type CategoryLike = {
+  name?: string | null
+  description?: string | null
+  metadata?: Metadata
+}
+
+type CollectionLike = {
+  title?: string | null
+  metadata?: Metadata
+}
+
+const isRecord = (value: unknown): value is Record<string, unknown> =>
+  typeof value === "object" && value !== null && !Array.isArray(value)
+
+/** Admin tools sometimes store nested metadata as a JSON string. */
+const asRecord = (value: unknown): Record<string, unknown> | undefined => {
+  if (isRecord(value)) {
+    return value
+  }
+  if (typeof value === "string" && value.trim().startsWith("{")) {
+    try {
+      const parsed: unknown = JSON.parse(value)
+      return isRecord(parsed) ? parsed : undefined
+    } catch {
+      return undefined
+    }
+  }
+  return undefined
+}
+
+/** `metadata.i18n[locale]` as a plain object, when present. */
+export function localizedMetadata(
+  metadata: Metadata,
+  locale: Locale
+): Record<string, unknown> | undefined {
+  const i18n = asRecord(metadata?.i18n)
+  return asRecord(i18n?.[locale])
+}
+
+/** First non-empty string among the candidates. */
+const firstText = (...values: unknown[]): string | undefined =>
+  values.find(
+    (value): value is string =>
+      typeof value === "string" && value.trim().length > 0
+  )
+
 export function resolveProductCopy(
   product: ProductLike,
   locale: Locale
 ): ProductCopyFields {
-  const handle = product.handle ?? ""
-  const entry = handle ? productCopy[handle] : undefined
-  const overlay =
-    entry?.[locale] ?? (locale !== DEFAULT_LOCALE ? entry?.[DEFAULT_LOCALE] : undefined)
+  const fromMetadata = localizedMetadata(product.metadata, locale)
+  const overlay = product.handle ? productCopy[product.handle]?.[locale] : undefined
 
   return {
-    title: overlay?.title ?? product.title ?? "",
-    subtitle: overlay?.subtitle ?? product.subtitle ?? "",
-    description: overlay?.description ?? product.description ?? "",
+    title:
+      firstText(fromMetadata?.title, overlay?.title, product.title) ?? "",
+    subtitle:
+      firstText(fromMetadata?.subtitle, overlay?.subtitle, product.subtitle) ??
+      "",
+    description:
+      firstText(
+        fromMetadata?.description,
+        overlay?.description,
+        product.description
+      ) ?? "",
   }
+}
+
+export function resolveCategoryCopy(
+  category: CategoryLike,
+  locale: Locale
+): { name: string; description: string } {
+  const fromMetadata = localizedMetadata(category.metadata, locale)
+
+  return {
+    name: firstText(fromMetadata?.name, fromMetadata?.title, category.name) ?? "",
+    description:
+      firstText(fromMetadata?.description, category.description) ?? "",
+  }
+}
+
+export function resolveCollectionTitle(
+  collection: CollectionLike,
+  locale: Locale
+): string {
+  const fromMetadata = localizedMetadata(collection.metadata, locale)
+  return firstText(fromMetadata?.title, collection.title) ?? ""
+}
+
+/**
+ * Option names and values ("Size", "Black"), region names and similar short
+ * catalog terms are stored once in Medusa. This glossary shows them in the
+ * visitor's language; unknown terms are returned unchanged. Selection logic
+ * always keeps the raw value.
+ */
+type Term = Record<Locale, string> & { aliases?: string[] }
+
+const CATALOG_TERMS: Term[] = [
+  { en: "Size", es: "Talla" },
+  { en: "Capacity", es: "Capacidad" },
+  { en: "Finish", es: "Acabado" },
+  { en: "Edition", es: "Edición" },
+  { en: "Cover", es: "Tapa" },
+  { en: "Ruling", es: "Páginas" },
+  { en: "One size", es: "Talla única", aliases: ["Única", "Unica"] },
+  { en: "Small", es: "Pequeño" },
+  { en: "Large", es: "Grande" },
+  { en: "Standard", es: "Estándar" },
+  { en: "Black", es: "Negro" },
+  { en: "Navy", es: "Azul marino" },
+  { en: "Red", es: "Rojo" },
+  { en: "Blue", es: "Azul" },
+  { en: "Cyan", es: "Celeste" },
+  { en: "White", es: "Blanco" },
+  { en: "Silver", es: "Plateado" },
+  { en: "Gold", es: "Dorado" },
+  { en: "Charcoal", es: "Carbón" },
+  { en: "Heather gray", es: "Gris jaspeado", aliases: ["Gris jaspe"] },
+  { en: "Matte black", es: "Negro mate" },
+  { en: "Black enamel", es: "Esmalte negro" },
+  { en: "Brushed steel", es: "Acero cepillado" },
+  { en: "Matte", es: "Mate" },
+  { en: "Holographic", es: "Holográfico" },
+  { en: "Classic", es: "Clásica" },
+  { en: "Coding", es: "Programando" },
+  { en: "Shipping", es: "Empacando" },
+  { en: "Soft", es: "Blanda" },
+  { en: "Hard", es: "Dura" },
+  { en: "Blank", es: "En blanco" },
+  { en: "Lined", es: "Rayadas" },
+  { en: "3 pins", es: "3 pines" },
+  { en: "Europe", es: "Europa" },
+]
+
+const termIndex = new Map<string, Term>()
+for (const term of CATALOG_TERMS) {
+  const forms = [
+    ...SUPPORTED_LOCALES.map((code) => term[code]),
+    ...(term.aliases ?? []),
+  ]
+  forms.forEach((form) => termIndex.set(form.trim().toLowerCase(), term))
+}
+
+export function translateCatalogTerm(term: string, locale: Locale): string {
+  const match = termIndex.get(term.trim().toLowerCase())
+  return match ? match[locale] : term
+}
+
+/** "S / Negro" becomes "S / Black" in English. */
+export function translateVariantTitle(
+  title: string | null | undefined,
+  locale: Locale
+): string {
+  if (!title) {
+    return ""
+  }
+  return title
+    .split(" / ")
+    .map((part) => translateCatalogTerm(part, locale))
+    .join(" / ")
 }

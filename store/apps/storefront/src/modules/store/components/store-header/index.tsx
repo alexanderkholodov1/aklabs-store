@@ -1,59 +1,74 @@
+import { getMessages } from "@lib/i18n/get-messages"
 import { Aurora, Eyebrow } from "@modules/common/components/brand"
 import LocalizedClientLink from "@modules/common/components/localized-client-link"
+import InfoHint, { type InfoHintTopic } from "@modules/showcase/components/info-hint"
 
 type Crumb = { label: string; href?: string }
 
-/** Dark glass banner shown on top of listing pages (store, categories). */
-const StoreHeader = ({
+/** Dark glass banner on top of listing pages (shop, categories, collections). */
+const StoreHeader = async ({
   eyebrow,
   title,
   description,
   crumbs = [],
+  hint,
   testId,
 }: {
   eyebrow?: string
   title: string
   description?: string | null
   crumbs?: Crumb[]
+  hint?: InfoHintTopic
   testId?: string
 }) => {
+  const { t } = await getMessages()
+
   return (
-    <div className="relative mb-6 overflow-hidden rounded-[36px] bg-ak-navy px-6 py-10 text-white small:px-10 small:py-14">
+    <header className="relative mb-5 rounded-[clamp(1.75rem,1rem+2vw,2.25rem)] bg-ak-navy px-[clamp(1.25rem,0.6rem+2.8vw,3.5rem)] py-[clamp(1.75rem,1rem+3vw,3.5rem)] text-white">
       <Aurora className="opacity-70" />
-      <div className="relative flex flex-col gap-4">
+      <div className="relative flex flex-col gap-[clamp(0.75rem,0.5rem+1vw,1.25rem)]">
         {crumbs.length > 0 && (
-          <nav aria-label="Ruta" className="flex flex-wrap items-center gap-2 text-sm text-white/60">
-            <LocalizedClientLink href="/" className="hover:text-white">
-              Inicio
-            </LocalizedClientLink>
-            {crumbs.map((crumb) => (
-              <span key={crumb.label} className="flex items-center gap-2">
-                <span aria-hidden="true">/</span>
-                {crumb.href ? (
-                  <LocalizedClientLink href={crumb.href} className="hover:text-white">
-                    {crumb.label}
-                  </LocalizedClientLink>
-                ) : (
-                  <span className="text-white/85">{crumb.label}</span>
-                )}
-              </span>
-            ))}
+          <nav aria-label={t.common.breadcrumb}>
+            <ol className="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-white/70">
+              <li>
+                <LocalizedClientLink href="/" className="hover:text-white">
+                  {t.common.home}
+                </LocalizedClientLink>
+              </li>
+              {crumbs.map((crumb) => (
+                <li key={crumb.label} className="flex items-center gap-2">
+                  <span aria-hidden="true">/</span>
+                  {crumb.href ? (
+                    <LocalizedClientLink href={crumb.href} className="hover:text-white">
+                      {crumb.label}
+                    </LocalizedClientLink>
+                  ) : (
+                    <span aria-current="page" className="text-white">
+                      {crumb.label}
+                    </span>
+                  )}
+                </li>
+              ))}
+            </ol>
           </nav>
         )}
-        {eyebrow && <Eyebrow tone="dark">{eyebrow}</Eyebrow>}
+        {(eyebrow || hint) && (
+          <div className="flex items-center gap-2">
+            {eyebrow && <Eyebrow tone="dark">{eyebrow}</Eyebrow>}
+            {hint && <InfoHint topic={hint} />}
+          </div>
+        )}
         <h1
-          className="font-display text-6xl leading-[0.9] tracking-wide small:text-8xl"
+          className="font-display type-display-lg break-words tracking-wide"
           data-testid={testId}
         >
           {title}
         </h1>
         {description && (
-          <p className="max-w-2xl text-base text-white/70 small:text-lg">
-            {description}
-          </p>
+          <p className="max-w-2xl text-white/75 type-lead">{description}</p>
         )}
       </div>
-    </div>
+    </header>
   )
 }
 

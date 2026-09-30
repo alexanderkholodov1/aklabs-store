@@ -1,18 +1,27 @@
 import { Metadata } from "next"
-import { notFound } from "next/navigation"
+import { notFound, permanentRedirect } from "next/navigation"
 
-import { getCategoryByHandle, listCategories } from "@lib/data/categories"
+import {
+  findRenamedCategory,
+  getCategoryByHandle,
+  listCategories,
+} from "@lib/data/categories"
 import { listRegions } from "@lib/data/regions"
+import { getMessages } from "@lib/i18n/get-messages"
+import { resolveCategoryCopy } from "@lib/i18n/product-copy"
+import { parseOptionValueIds } from "@lib/util/product-option-filters"
 import { HttpTypes, StoreRegion } from "@medusajs/types"
 import CategoryTemplate from "@modules/categories/templates"
-import { SortOptions } from "@modules/store/components/refinement-list/sort-products"
-import { parseOptionValueIds } from "@lib/util/product-option-filters"
+import {
+  parsePage,
+  parseSortOption,
+} from "@modules/store/components/refinement-list/sort-options"
 
 type Props = {
   params: Promise<{ category: string[]; countryCode: string }>
   searchParams: Promise<
     Record<string, string | string[] | undefined> & {
-      sortBy?: SortOptions
+      sortBy?: string
       page?: string
       optionValueIds?: string | string[]
     }
@@ -24,21 +33,24 @@ export async function generateStaticParams() {
     return []
   }
 
-  const product_categories = await listCategories()
+  const [productCategories, regions] = await Promise.all([
+    listCategories(),
+    listRegions(),
+  ])
 
-  if (!product_categories) {
+  if (!productCategories) {
     return []
   }
 
-  const countryCodes = await listRegions().then((regions: StoreRegion[]) =>
-    regions?.map((r) => r.countries?.map((c) => c.iso_2)).flat()
-  )
+  const countryCodes = regions
+    ?.map((region: StoreRegion) => region.countries?.map((country) => country.iso_2))
+    .flat()
 
-  const categoryHandles = product_categories.map(
+  const categoryHandles = productCategories.map(
     (category: HttpTypes.StoreProductCategory) => category.handle
   )
 
-  const staticParams = countryCodes
+  return countryCodes
     ?.map((countryCode: string | undefined) =>
       categoryHandles.map((handle: string) => ({
         countryCode,
@@ -46,55 +58,58 @@ export async function generateStaticParams() {
       }))
     )
     .flat()
+}
 
-  return staticParams
+/**
+ * Category for the URL. Old handles (e.g. before the catalog moved to
+ * English) redirect permanently when the category lists them in
+ * `metadata.legacy_handles`.
+ */
+async function resolveCategory(countryCode: string, handle: string[]) {
+  const category = await getCategoryByHandle(handle)
+  if (category) {
+    return category
+  }
+
+  const renamed = await findRenamedCategory(handle)
+  if (renamed) {
+    permanentRedirect(`/${countryCode}/categories/${renamed.handle}`)
+  }
+
+  notFound()
 }
 
 export async function generateMetadata(props: Props): Promise<Metadata> {
   const params = await props.params
-  try {
-    const productCategory = await getCategoryByHandle(params.category)
+  const [category, { t, locale }] = await Promise.all([
+    resolveCategory(params.countryCode, params.category),
+    getMessages(),
+  ])
+  const copy = resolveCategoryCopy(category, locale)
 
-    if (!productCategory) {
-      notFound()
-    }
-
-    const title = productCategory.name
-
-    const description =
-      productCategory.description || `${title} by AKLabs.`
-
-    return {
-      title,
-      description,
-      alternates: {
-        canonical: `${params.category.join("/")}`,
-      },
-    }
-  } catch {
-    notFound()
+  return {
+    title: copy.name,
+    description: copy.description || t.store.categoryMeta(copy.name),
+    alternates: {
+      canonical: `/${params.countryCode}/categories/${params.category.join("/")}`,
+    },
   }
 }
 
 export default async function CategoryPage(props: Props) {
-  const searchParams = await props.searchParams
-  const params = await props.params
-  const { sortBy, page } = searchParams
-  const optionValueIds = parseOptionValueIds(searchParams)
-
-  const productCategory = await getCategoryByHandle(params.category)
-
-  if (!productCategory) {
-    notFound()
-  }
+  const [params, searchParams] = await Promise.all([
+    props.params,
+    props.searchParams,
+  ])
+  const category = await resolveCategory(params.countryCode, params.category)
 
   return (
     <CategoryTemplate
-      category={productCategory}
-      sortBy={sortBy}
-      page={page}
+      category={category}
+      sortBy={parseSortOption(searchParams.sortBy)}
+      page={parsePage(searchParams.page)}
       countryCode={params.countryCode}
-      optionValueIds={optionValueIds}
+      optionValueIds={parseOptionValueIds(searchParams)}
     />
   )
 }

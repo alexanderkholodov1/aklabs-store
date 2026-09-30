@@ -1,4 +1,7 @@
 /** Home page sections. */
+const numberWord = (count: number, words: string[]) =>
+  words[count] ?? String(count)
+
 export const en = {
   hero: {
     eyebrow: "Collection 01 · Designed in Ecuador",
@@ -12,11 +15,11 @@ export const en = {
     cyan: "cyan",
     cyanRole: " that makes the idea clear.",
     shop: "Shop the collection",
-    hoodies: "Shop hoodies",
-    pieces: "pieces",
-    prices: "prices in Ecuador",
+    howItWorks: "See how it is built",
+    pieces: "pieces in the catalog",
+    pricesIn: (region: string) => `prices in ${region}`,
     express: "express shipping",
-    hoodieAlt: "AKLabs Essential Hoodie in black",
+    artLabel: "Featured pieces",
   },
   featured: {
     eyebrow: "Collection 01",
@@ -30,42 +33,33 @@ export const en = {
     eyebrow: "Categories",
     title: "Build the uniform",
     description: "From the hoodie to the desk figure. Every piece carries the AK mark.",
-    product: "item",
-    products: "items",
-    blurbs: {
-      hoodies: "Heavyweight fleece, embroidered AK",
-      camisetas: "Ringspun cotton, unisex cut",
-      joggers: "For the desk, the gym, or a flight",
-      gorras: "Six panels or a soft dad hat",
-      "termos-y-botellas": "Vacuum steel, 750 ml and 1 L",
-      stickers: "Vinyl marks for laptops and bottles",
-      keychains: "Enamel and acrylic, on a steel ring",
-      figures: "Small vinyl pieces for the shelf",
-      socks: "Cushioned crew socks with an AK cuff mark",
-      bags: "Canvas totes and compact slings",
-      pins: "Enamel pins and woven patches",
-      stationery: "Notebooks and mark posters",
-      accessories: "Desk mats, lanyards, and sleeves",
-    } as Record<string, string>,
+    count: (count: number) => `${count} ${count === 1 ? "item" : "items"}`,
+    more: "More categories",
+    fallback: (name: string) => `The ${name} line from the lab.`,
   },
   perks: {
-    shipTitle: "Shipping across Ecuador",
+    shipTitle: (region: string) => `Shipping across ${region}`,
     shipText: "Standard in 2 to 4 business days, or express in 24 to 48 hours.",
-    usdTitle: "Prices in dollars",
-    usdText: "Ecuador's currency is the US dollar. You pay what you see.",
+    currencyTitle: (currency: string) => `Prices in ${currency}`,
+    currencyText: "Each region has its own currency and taxes. You pay what you see.",
     sizeTitle: "Size exchanges",
     sizeText: "If the fit is wrong, we exchange it free for 30 days.",
     safeTitle: "A clear checkout",
     safeText: "A few steps, then a confirmed order.",
   },
   regions: {
-    eyebrow: "Two regions",
+    eyebrow: (count: number) => `${count} ${count === 1 ? "region" : "regions"}`,
     titleA: "One store,",
-    titleB: "two currencies",
+    titleB: (count: number) =>
+      `${numberWord(count, ["no", "one", "two", "three", "four"])} ${
+        count === 1 ? "currency" : "currencies"
+      }`,
     body: (name: string, currency: string) =>
-      `You are shopping in ${name} with prices in ${currency}. The same catalog sells in US dollars in Ecuador and in euros in Europe.`,
+      `You are shopping in ${name} with prices in ${currency}. The same catalog sells in every region, each with its own currency, taxes, and shipping.`,
+    countries: (count: number) =>
+      `${count} ${count === 1 ? "country" : "countries"}`,
     current: "Current region",
-    switchTo: "Switch to",
+    switchTo: (name: string) => `Switch to ${name}`,
   },
   home: {
     description:
@@ -116,11 +110,11 @@ export const es: typeof en = {
     cyan: "celeste",
     cyanRole: " que aclara las ideas.",
     shop: "Comprar la colección",
-    hoodies: "Ver hoodies",
-    pieces: "piezas",
-    prices: "precios en Ecuador",
+    howItWorks: "Mira cómo está hecha",
+    pieces: "piezas en el catálogo",
+    pricesIn: (region) => `precios en ${region}`,
     express: "envío express",
-    hoodieAlt: "Hoodie AKLabs Essential en negro",
+    artLabel: "Piezas destacadas",
   },
   featured: {
     eyebrow: "Colección 01",
@@ -134,42 +128,32 @@ export const es: typeof en = {
     eyebrow: "Categorías",
     title: "Arma el uniforme",
     description: "De la hoodie a la figura de escritorio. Cada pieza lleva la marca AK.",
-    product: "pieza",
-    products: "piezas",
-    blurbs: {
-      hoodies: "Felpa gruesa y AK bordado",
-      camisetas: "Algodón ringspun, corte unisex",
-      joggers: "Para el escritorio, el gym o un viaje",
-      gorras: "Seis paneles o dad hat",
-      "termos-y-botellas": "Acero al vacío, 750 ml y 1 L",
-      stickers: "Vinilo para laptops y termos",
-      keychains: "Esmalte y acrílico, con aro de acero",
-      figures: "Vinilo pequeño para el estante",
-      socks: "Calcetines crew acolchados con marca AK",
-      bags: "Totes de canvas y slings compactos",
-      pins: "Pines de esmalte y parches tejidos",
-      stationery: "Cuadernos y pósteres del mark",
-      accessories: "Desk mats, lanyards y fundas",
-    },
+    count: (count) => `${count} ${count === 1 ? "pieza" : "piezas"}`,
+    more: "Más categorías",
+    fallback: (name) => `La línea ${name} del laboratorio.`,
   },
   perks: {
-    shipTitle: "Envíos a todo Ecuador",
+    shipTitle: (region) => `Envíos a todo ${region}`,
     shipText: "Estándar en 2 a 4 días hábiles, o express en 24 a 48 horas.",
-    usdTitle: "Precios en dólares",
-    usdText: "La moneda de Ecuador es el dólar. Pagas lo que ves.",
+    currencyTitle: (currency) => `Precios en ${currency}`,
+    currencyText: "Cada región tiene su moneda e impuestos. Pagas lo que ves.",
     sizeTitle: "Cambios de talla",
     sizeText: "Si no te queda, lo cambiamos sin costo por 30 días.",
     safeTitle: "Checkout claro",
     safeText: "Unos pasos y el pedido queda confirmado.",
   },
   regions: {
-    eyebrow: "Dos regiones",
+    eyebrow: (count) => `${count} ${count === 1 ? "región" : "regiones"}`,
     titleA: "Una tienda,",
-    titleB: "dos monedas",
+    titleB: (count) =>
+      `${numberWord(count, ["ninguna", "una", "dos", "tres", "cuatro"])} ${
+        count === 1 ? "moneda" : "monedas"
+      }`,
     body: (name, currency) =>
-      `Estás comprando en ${name} con precios en ${currency}. El mismo catálogo se vende en dólares en Ecuador y en euros en Europa.`,
+      `Estás comprando en ${name} con precios en ${currency}. El mismo catálogo se vende en cada región, con su propia moneda, impuestos y envíos.`,
+    countries: (count) => `${count} ${count === 1 ? "país" : "países"}`,
     current: "Región actual",
-    switchTo: "Cambiar a",
+    switchTo: (name) => `Cambiar a ${name}`,
   },
   home: {
     description:

@@ -183,6 +183,94 @@ export const listProducts = async ({
   }
 }
 
+/** Every product sold in the country's region (one cached request). */
+export const listRegionProducts = async (
+  countryCode: string
+): Promise<HttpTypes.StoreProduct[]> => {
+  const region = await getRegion(countryCode)
+  return region ? loadRegionCatalog(region.id) : []
+}
+
+export const getProductByHandle = async (
+  countryCode: string,
+  handle: string
+): Promise<HttpTypes.StoreProduct | null> => {
+  const products = await listRegionProducts(countryCode)
+  return products.find((product) => product.handle === handle) ?? null
+}
+
+/**
+ * Fallback curation when no product is flagged in the admin. Handles that do
+ * not exist are skipped, so the list can go stale without breaking the row.
+ */
+const FEATURED_HANDLES = [
+  "aklabs-essential-hoodie",
+  "aklabs-pro-cap",
+  "aklabs-tech-tee",
+  "aklabs-steel-thermo",
+  "aklabs-coach-jacket",
+  "aklabs-monogram-sticker-pack",
+  "aklabs-mini-figure",
+  "aklabs-canvas-tote",
+]
+
+const isFlagged = (value: unknown) =>
+  value === true || value === "true" || value === 1 || value === "1"
+
+const featuredRank = (product: HttpTypes.StoreProduct) => {
+  const rank = Number(product.metadata?.featured_rank)
+  return Number.isFinite(rank) ? rank : Number.MAX_SAFE_INTEGER
+}
+
+const isOnSale = (product: HttpTypes.StoreProduct) =>
+  !!product.variants?.some((variant) => {
+    const price = variant.calculated_price
+    return (
+      price?.calculated_price?.price_list_type === "sale" ||
+      (price?.calculated_amount ?? 0) < (price?.original_amount ?? 0)
+    )
+  })
+
+const newestFirst = (a: HttpTypes.StoreProduct, b: HttpTypes.StoreProduct) =>
+  new Date(b.created_at ?? 0).getTime() - new Date(a.created_at ?? 0).getTime()
+
+/**
+ * Home page selection. Order of precedence:
+ * 1. products with `metadata.featured = true`, sorted by `metadata.featured_rank`;
+ * 2. the FEATURED_HANDLES list above;
+ * 3. products on sale, then the newest ones.
+ * Each source only fills the slots the previous one left empty.
+ */
+export const listFeaturedProducts = async ({
+  countryCode,
+  limit = 8,
+}: {
+  countryCode: string
+  limit?: number
+}): Promise<HttpTypes.StoreProduct[]> => {
+  const products = await listRegionProducts(countryCode)
+
+  const curated = products
+    .filter((product) => isFlagged(product.metadata?.featured))
+    .sort((a, b) => featuredRank(a) - featuredRank(b))
+  const byHandle = FEATURED_HANDLES.map((handle) =>
+    products.find((product) => product.handle === handle)
+  ).filter((product): product is HttpTypes.StoreProduct => !!product)
+  const rest = [...products].sort(
+    (a, b) => Number(isOnSale(b)) - Number(isOnSale(a)) || newestFirst(a, b)
+  )
+
+  const picked = new Map<string, HttpTypes.StoreProduct>()
+  for (const product of [...curated, ...byHandle, ...rest]) {
+    if (picked.size >= limit) {
+      break
+    }
+    picked.set(product.id, product)
+  }
+
+  return Array.from(picked.values())
+}
+
 /**
  * This will fetch 100 products to the Next.js cache and sort them based on the sortBy parameter.
  * It will then return the paginated products based on the page and limit parameters.
