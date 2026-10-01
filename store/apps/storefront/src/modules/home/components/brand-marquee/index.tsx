@@ -1,17 +1,14 @@
-const WORDS = [
-  "AKLabs",
-  "Hoodies",
-  "Gorras",
-  "Camisetas",
-  "Joggers",
-  "Termos",
-  "Diseñado en Ecuador",
-  "Crea · Prueba · Repite",
-]
+import { getMessages } from "@lib/i18n/get-messages"
 
-const Row = ({ ariaHidden }: { ariaHidden?: boolean }) => (
+const Row = ({
+  words,
+  ariaHidden,
+}: {
+  words: string[]
+  ariaHidden?: boolean
+}) => (
   <ul className="flex shrink-0 items-center" aria-hidden={ariaHidden}>
-    {WORDS.map((word) => (
+    {words.map((word) => (
       <li
         key={word}
         className="flex items-center gap-8 pr-8 font-display text-3xl tracking-[0.08em] text-white small:text-4xl"
@@ -24,13 +21,15 @@ const Row = ({ ariaHidden }: { ariaHidden?: boolean }) => (
 )
 
 /** Infinite gradient ticker with the collection names. */
-const BrandMarquee = () => {
+const BrandMarquee = async () => {
+  const { t } = await getMessages()
+
   return (
     <div className="px-3 pt-4 small:px-6">
       <div className="mx-auto max-w-[1440px] overflow-hidden rounded-full bg-gradient-ak py-3 shadow-[0_20px_40px_-24px_rgba(11,30,216,0.8)]">
         <div className="flex w-max animate-marquee">
-          <Row />
-          <Row ariaHidden />
+          <Row words={t.marquee} />
+          <Row words={t.marquee} ariaHidden />
         </div>
       </div>
     </div>

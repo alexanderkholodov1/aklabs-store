@@ -7,6 +7,8 @@ import {
   Transition,
 } from "@headlessui/react"
 import { Locale } from "@lib/data/locales"
+import { resolveLocale } from "@lib/i18n/locales"
+import type { Locale as UiLocale } from "@lib/i18n/locales"
 import useToggleState from "@lib/hooks/use-toggle-state"
 import { ArrowRightMini, XMark } from "@medusajs/icons"
 import { HttpTypes } from "@medusajs/types"
@@ -14,25 +16,21 @@ import LocalizedClientLink from "@modules/common/components/localized-client-lin
 import { Text, clx } from "@modules/common/components/ui"
 import { Fragment } from "react"
 import LanguageSelect from "../language-select"
+import LanguageSwitch from "../language-switch"
 import { RegionSelect } from "../region-switcher"
 
 const SideMenuItems = [
-  { name: "Inicio", href: "/", testId: "home-link" },
-  { name: "Tienda", href: "/store", testId: "store-link" },
+  { name: "Home", href: "/", testId: "home-link" },
+  { name: "Shop", href: "/store", testId: "store-link" },
   { name: "Hoodies", href: "/categories/hoodies", testId: "hoodies-link" },
-  { name: "Camisetas", href: "/categories/camisetas", testId: "camisetas-link" },
-  { name: "Joggers", href: "/categories/joggers", testId: "joggers-link" },
-  { name: "Gorras", href: "/categories/gorras", testId: "gorras-link" },
-  {
-    name: "Termos y botellas",
-    href: "/categories/termos-y-botellas",
-    testId: "termos-link",
-  },
+  { name: "Tees", href: "/categories/camisetas", testId: "camisetas-link" },
+  { name: "Stickers", href: "/categories/stickers", testId: "stickers-link" },
+  { name: "Figures", href: "/categories/figures", testId: "figures-link" },
 ]
 
 const SecondaryItems = [
-  { name: "Mi cuenta", href: "/account", testId: "account-link" },
-  { name: "Carrito", href: "/cart", testId: "cart-link" },
+  { name: "Account", href: "/account", testId: "account-link" },
+  { name: "Cart", href: "/cart", testId: "cart-link" },
 ]
 
 type SideMenuProps = {
@@ -43,6 +41,7 @@ type SideMenuProps = {
 
 const SideMenu = ({ regions, locales, currentLocale }: SideMenuProps) => {
   const languageToggleState = useToggleState()
+  const uiLocale: UiLocale = resolveLocale(currentLocale)
 
   return (
     <div className="h-full">
@@ -53,7 +52,7 @@ const SideMenu = ({ regions, locales, currentLocale }: SideMenuProps) => {
               <div className="relative flex h-full items-center">
                 <PopoverButton
                   data-testid="nav-menu-button"
-                  className="flex h-10 items-center gap-2 rounded-full px-3 text-ak-ink/80 transition-colors hover:bg-white/90 hover:text-ak-ink focus:outline-none"
+                  className="flex h-10 items-center justify-center rounded-full px-3 text-ak-ink/80 transition-colors hover:bg-white/90 hover:text-ak-ink focus:outline-none"
                 >
                   <svg
                     width="18"
@@ -68,7 +67,7 @@ const SideMenu = ({ regions, locales, currentLocale }: SideMenuProps) => {
                       strokeLinecap="round"
                     />
                   </svg>
-                  <span className="hidden xsmall:inline">Menú</span>
+                  <span className="hidden xsmall:inline">Menu</span>
                 </PopoverButton>
               </div>
 
@@ -112,7 +111,7 @@ const SideMenu = ({ regions, locales, currentLocale }: SideMenuProps) => {
                         data-testid="close-menu-button"
                         onClick={close}
                         className="glass-dark flex h-10 w-10 items-center justify-center rounded-full"
-                        aria-label="Cerrar menú"
+                        aria-label="Close menu"
                       >
                         <XMark />
                       </button>
@@ -148,7 +147,7 @@ const SideMenu = ({ regions, locales, currentLocale }: SideMenuProps) => {
                           </LocalizedClientLink>
                         ))}
                       </div>
-                      {!!locales?.length && (
+                      {!!locales?.length ? (
                         <div
                           className="flex justify-between"
                           onMouseEnter={languageToggleState.open}
@@ -166,13 +165,21 @@ const SideMenu = ({ regions, locales, currentLocale }: SideMenuProps) => {
                             )}
                           />
                         </div>
+                      ) : (
+                        <div className="flex items-center justify-between gap-3">
+                          <span className="text-white/60">Language</span>
+                          <LanguageSwitch
+                            locale={uiLocale}
+                            className="flex items-center rounded-full bg-white/70 p-1 text-xs font-semibold"
+                          />
+                        </div>
                       )}
                       <div className="flex items-center justify-between gap-3">
-                        <span className="text-white/60">Región y moneda</span>
+                        <span className="text-white/60">Region & currency</span>
                         <RegionSelect regions={regions} />
                       </div>
                       <Text className="txt-compact-small text-white/50">
-                        © {new Date().getFullYear()} AKLabs. Merch oficial.
+                        © {new Date().getFullYear()} AKLabs
                       </Text>
                     </div>
                   </div>

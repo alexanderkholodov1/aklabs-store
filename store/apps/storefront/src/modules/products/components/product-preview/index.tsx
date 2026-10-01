@@ -1,3 +1,5 @@
+import { getMessages } from "@lib/i18n/get-messages"
+import { resolveProductCopy } from "@lib/i18n/product-copy"
 import { getProductPrice } from "@lib/util/get-product-price"
 import { HttpTypes } from "@medusajs/types"
 import LocalizedClientLink from "@modules/common/components/localized-client-link"
@@ -13,6 +15,8 @@ export default async function ProductPreview({
   isFeatured?: boolean
   region: HttpTypes.StoreRegion
 }) {
+  const { locale, t } = await getMessages()
+  const copy = resolveProductCopy(product, locale)
   const { cheapestPrice } = getProductPrice({
     product,
   })
@@ -35,7 +39,7 @@ export default async function ProductPreview({
             images={product.images}
             size="full"
             isFeatured={isFeatured}
-            alt={product.title}
+            alt={copy.title}
           />
           {category && (
             <span className="glass chip absolute left-3 top-3 text-[10px] uppercase tracking-[0.12em] text-ak-royal">
@@ -48,24 +52,24 @@ export default async function ProductPreview({
             className="text-sm font-semibold leading-snug text-ak-ink xsmall:text-base"
             data-testid="product-title"
           >
-            {product.title}
+            {copy.title}
           </h3>
-          {product.subtitle && (
+          {copy.subtitle && (
             <p className="hidden text-sm text-ak-ink/55 line-clamp-1 xsmall:block">
-              {product.subtitle}
+              {copy.subtitle}
             </p>
           )}
           <div className="mt-auto flex items-center justify-between gap-2 pt-3">
             <div className="flex flex-col">
               <span className="text-[11px] text-ak-ink/45">
-                {variantCount > 1 ? "Desde" : "Precio"}
+                {variantCount > 1 ? t.product.from : t.product.price}
               </span>
               <div className="flex items-baseline gap-2">
                 {cheapestPrice ? (
                   <PreviewPrice price={cheapestPrice} />
                 ) : (
                   <span className="text-sm text-ak-ink/50">
-                    No disponible
+                    {t.product.unavailable}
                   </span>
                 )}
               </div>

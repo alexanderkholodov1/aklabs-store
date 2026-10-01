@@ -1,0 +1,52 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  MEDUSA_DISABLE_TELEMETRY: "true"
+  NEXT_TELEMETRY_DISABLED: "1"
+
+jobs:
+  typecheck:
+    name: Type-check
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: store
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - uses: pnpm/action-setup@v6
+        with:
+          package_json_file: store/package.json
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: store/.nvmrc
+          cache: pnpm
+          cache-dependency-path: store/pnpm-lock.yaml
+
+      - name: Install
+        run: pnpm install --frozen-lockfile
+
+      - name: Storefront
+        run: pnpm --dir apps/storefront exec tsc --noEmit -p .
+
+      # Runs without the types Medusa generates in .medusa/types during
+      # `medusa develop`, so code must not depend on them to compile.
+      - name: Backend
+        run: pnpm --dir apps/backend exec tsc --noEmit -p .

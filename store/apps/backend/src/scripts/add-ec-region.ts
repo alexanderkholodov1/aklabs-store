@@ -30,11 +30,11 @@ export default async function addEcRegion({
     fields: ["id", "name", "currency_code", "countries.iso_2"],
   })
 
-  let ecRegion = regions.find((region) =>
-    region.countries?.some(
-      (country: { iso_2?: string }) =>
-        country.iso_2?.toLowerCase() === COUNTRY_CODE
-    )
+  let ecRegion: { id: string; name: string } | undefined = regions.find(
+    (region) =>
+      region.countries?.some(
+        (country) => country?.iso_2?.toLowerCase() === COUNTRY_CODE
+      )
   )
 
   if (ecRegion) {
@@ -100,18 +100,19 @@ export default async function addEcRegion({
 
   const supportedCurrencies = store.supported_currencies ?? []
   const hasUsdDefault = supportedCurrencies.some(
-    (currency: { currency_code?: string; is_default?: boolean }) =>
-      currency.currency_code === "usd" && currency.is_default
+    (currency) => currency?.currency_code === "usd" && currency.is_default
   )
 
   if (hasUsdDefault) {
     logger.info("Store default currency is already USD, skipping store update.")
   } else {
     logger.info("Setting USD as default store currency...")
-    const currencyCodes = new Set(
-      supportedCurrencies.map(
-        (currency: { currency_code?: string }) => currency.currency_code
-      )
+    // Typed explicitly: without the types Medusa generates in .medusa/types
+    // (absent in CI), query.graph returns loosely typed records.
+    const currencyCodes = new Set<string>(
+      supportedCurrencies
+        .map((currency) => currency?.currency_code)
+        .filter((code): code is string => typeof code === "string" && code !== "")
     )
     currencyCodes.add("usd")
     currencyCodes.add("eur")
@@ -151,7 +152,7 @@ export default async function addEcRegion({
     ],
   })
 
-  let ecServiceZone = fulfillmentSets
+  let ecServiceZone: { id: string } | undefined = fulfillmentSets
     .flatMap((set) =>
       (set.service_zones ?? []).map((zone) => ({
         set,
@@ -160,8 +161,7 @@ export default async function addEcRegion({
     )
     .find(({ zone }) =>
       zone.geo_zones?.some(
-        (geo: { country_code?: string }) =>
-          geo.country_code?.toLowerCase() === COUNTRY_CODE
+        (geo) => geo?.country_code?.toLowerCase() === COUNTRY_CODE
       )
     )?.zone
 

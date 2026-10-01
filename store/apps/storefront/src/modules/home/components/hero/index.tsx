@@ -1,8 +1,11 @@
+import { getMessages } from "@lib/i18n/get-messages"
 import { Aurora, Eyebrow } from "@modules/common/components/brand"
 import LocalizedClientLink from "@modules/common/components/localized-client-link"
 import Image from "next/image"
 
-const Hero = () => {
+const Hero = async () => {
+  const { t } = await getMessages()
+
   return (
     <section className="px-3 pt-4 small:px-6">
       <div className="relative mx-auto max-w-[1440px] overflow-hidden rounded-[40px] bg-ak-navy text-white">
@@ -10,24 +13,24 @@ const Hero = () => {
 
         <div className="relative grid grid-cols-1 gap-12 px-6 pb-14 pt-14 small:grid-cols-[1.05fr_1fr] small:items-center small:px-14 small:pb-20 small:pt-20">
           <div className="flex flex-col items-start gap-7 animate-fade-up">
-            <Eyebrow tone="dark">Colección 01 · Diseñado en Ecuador</Eyebrow>
+            <Eyebrow tone="dark">{t.hero.eyebrow}</Eyebrow>
 
             <h1 className="font-display text-[clamp(3.6rem,9vw,8.5rem)] leading-[0.86] tracking-wide">
-              Diseñado para
+              {t.hero.titleA}
               <br />
               <span className="text-gradient-ak bg-[length:200%_auto]">
-                los que crean
+                {t.hero.titleB}
               </span>
             </h1>
 
             <p className="max-w-xl text-lg text-white/75 small:text-xl">
-              Hoodies, gorras, camisetas y termos con la identidad AKLabs:{" "}
-              <span className="font-semibold text-[#ff5a61]">rojo</span> que
-              impulsa,{" "}
-              <span className="font-semibold text-[#6f7dff]">azul</span> que
-              construye y{" "}
-              <span className="font-semibold text-ak-sky-light">celeste</span>{" "}
-              que aclara las ideas.
+              {t.hero.bodyBefore}
+              <span className="font-semibold text-[#ff5a61]">{t.hero.red}</span>
+              {t.hero.redRole}
+              <span className="font-semibold text-[#6f7dff]">{t.hero.blue}</span>
+              {t.hero.blueRole}
+              <span className="font-semibold text-ak-sky-light">{t.hero.cyan}</span>
+              {t.hero.cyanRole}
             </p>
 
             <div className="flex flex-wrap items-center gap-3">
@@ -36,22 +39,22 @@ const Hero = () => {
                 className="btn-ak-gradient inline-flex h-14 items-center gap-3 rounded-full px-8 text-base font-semibold text-white transition-all duration-500"
                 data-testid="hero-shop-button"
               >
-                Comprar la colección
+                {t.hero.shop}
                 <span aria-hidden="true">→</span>
               </LocalizedClientLink>
               <LocalizedClientLink
                 href="/categories/hoodies"
                 className="glass-dark inline-flex h-14 items-center rounded-full px-7 text-base font-semibold text-white transition-colors hover:bg-white/15"
               >
-                Ver hoodies
+                {t.hero.hoodies}
               </LocalizedClientLink>
             </div>
 
             <dl className="grid w-full max-w-xl grid-cols-3 gap-3 pt-2">
               {[
-                { value: "6", label: "piezas de merch" },
-                { value: "USD", label: "precios en Ecuador" },
-                { value: "24–48 h", label: "envío express" },
+                { value: "6", label: t.hero.pieces },
+                { value: "USD", label: t.hero.prices },
+                { value: "24–48 h", label: t.hero.express },
               ].map((stat) => (
                 <div key={stat.label} className="glass-dark rounded-2xl px-4 py-3">
                   <dt className="sr-only">{stat.label}</dt>
@@ -72,7 +75,7 @@ const Hero = () => {
               <div className="relative aspect-square overflow-hidden rounded-[24px] bg-white">
                 <Image
                   src="/aklabs/products/hoodie-black-front.png"
-                  alt="AKLabs Essential Hoodie negra"
+                  alt={t.hero.hoodieAlt}
                   fill
                   priority
                   sizes="(max-width: 1024px) 60vw, 360px"
@@ -91,7 +94,7 @@ const Hero = () => {
               <div className="relative aspect-square overflow-hidden rounded-[20px] bg-white">
                 <Image
                   src="/aklabs/products/cap-navy-front.png"
-                  alt="AKLabs Pro Cap azul marino"
+                  alt="AKLabs Pro Cap"
                   fill
                   sizes="(max-width: 1024px) 40vw, 240px"
                   className="object-cover"
@@ -123,8 +126,8 @@ const Hero = () => {
                 ✓
               </span>
               <div className="leading-tight">
-                <p className="text-sm font-semibold">Envío a todo Ecuador</p>
-                <p className="text-xs text-white/60">Estándar o express</p>
+                <p className="text-sm font-semibold">{t.product.ship}</p>
+                <p className="text-xs text-white/60">{t.product.shipDetail}</p>
               </div>
             </div>
           </div>

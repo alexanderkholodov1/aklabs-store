@@ -14,10 +14,27 @@ import ProductPrice from "../product-price"
 import MobileActions from "./mobile-actions"
 import { useRouter } from "next/navigation"
 
+export type ProductActionLabels = {
+  choose: string
+  soldOut: string
+  add: string
+  added: string
+  error: string
+}
+
+const DEFAULT_LABELS: ProductActionLabels = {
+  choose: "Choose your options",
+  soldOut: "Sold out",
+  add: "Add to cart",
+  added: "Added to your cart.",
+  error: "Could not add this to the cart. Try again.",
+}
+
 type ProductActionsProps = {
   product: HttpTypes.StoreProduct
   region: HttpTypes.StoreRegion
   disabled?: boolean
+  labels?: ProductActionLabels
 }
 
 const optionsAsKeymap = (
@@ -32,6 +49,7 @@ const optionsAsKeymap = (
 export default function ProductActions({
   product,
   disabled,
+  labels = DEFAULT_LABELS,
 }: ProductActionsProps) {
   const router = useRouter()
   const pathname = usePathname()
@@ -156,11 +174,7 @@ export default function ProductActions({
       })
       setAdded(true)
     } catch (e) {
-      setError(
-        e instanceof Error
-          ? e.message
-          : "No se pudo agregar al carrito. Inténtalo de nuevo."
-      )
+      setError(e instanceof Error ? e.message : labels.error)
     } finally {
       setIsAdding(false)
     }
@@ -209,10 +223,10 @@ export default function ProductActions({
           data-testid="add-product-button"
         >
           {!selectedVariant
-            ? "Elige tus opciones"
+            ? labels.choose
             : !inStock || !isValidVariant
-            ? "Agotado"
-            : "Añadir al carrito"}
+            ? labels.soldOut
+            : labels.add}
         </Button>
         {added && (
           <p
@@ -220,12 +234,12 @@ export default function ProductActions({
             role="status"
             data-testid="add-to-cart-success"
           >
-            <span>Listo, se agregó a tu carrito.</span>
+            <span>{labels.added}</span>
             <LocalizedClientLink
               href="/cart"
               className="font-semibold underline underline-offset-4"
             >
-              Ver carrito
+              View cart
             </LocalizedClientLink>
           </p>
         )}
@@ -247,6 +261,7 @@ export default function ProductActions({
           isAdding={isAdding}
           show={!inView}
           optionsDisabled={!!disabled || isAdding}
+          labels={labels}
         />
       </div>
     </>
