@@ -1569,4 +1569,26 @@ textarea,
   transform: translateY(-50%) rotate(45deg);
 }
 
-.promise::after{content:"";position:absolute;width:26rem;height:26rem;border:1px solid #ffffff30;border-radius:50%;right:-10rem;bottom:-12rem;pointer-events:none}
+.promise::after {
+  content: "";
+  position: absolute;
+  width: 26rem;
+  height: 26rem;
+  border: 1px solid #ffffff30;
+  border-radius: 50%;
+  right: -10rem;
+  bottom: -12rem;
+  pointer-events: none;
+}
+
+.cart-line-controls {
+  flex-wrap: wrap;
+  gap: 8px 20px;
+}
+.cart-line-controls select {
+  width: 4.5rem;
+  min-width: 4.5rem;
+}
+.footer-social > a {
+  gap: 6px;
+}

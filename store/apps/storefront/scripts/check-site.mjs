@@ -166,7 +166,7 @@ try {
         path: path.join(
           temp,
           "screenshots",
-          `${label}-${route.startsWith("/es") ? "es" : "en"}-390.png`
+          `${label}-${route.startsWith("/es") ? "es" : "en"}-${page.viewportSize().width}.png`
         ),
         fullPage: true,
       })
@@ -457,6 +457,20 @@ try {
       document.documentElement.dataset.theme = "light"
     })
   }
+  // Purchases clear the cart. Restore a real catalog line so desktop and reflow
+  // checks exercise populated commerce forms, including the maximum quantity.
+  await page.evaluate(
+    (variantId) =>
+      localStorage.setItem(
+        "aklabs.cart.v1",
+        JSON.stringify({
+          version: 1,
+          lines: [{ variantId, quantity: 10 }],
+          promotion: "AKLABS10",
+        })
+      ),
+    catalog.products[0].variants[0].id
+  )
   const mobilePages = [...report.pages]
   await page.setViewportSize({ width: 1280, height: 900 })
   for (const item of mobilePages)
