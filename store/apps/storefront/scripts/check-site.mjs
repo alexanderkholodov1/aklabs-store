@@ -99,7 +99,11 @@ try {
   })
   const page = await context.newPage()
   const errors = []
-  page.on("pageerror", (error) => errors.push(error.message))
+  page.on("pageerror", (error) => {
+    const detail = { route: page.url(), message: error.message }
+    errors.push(detail)
+    console.error("BROWSER_ERROR", JSON.stringify(detail))
+  })
   async function audit(route, label) {
     const assets = new Map()
     const responseHandler = (response) => {
@@ -453,6 +457,10 @@ try {
       document.documentElement.dataset.theme = "light"
     })
   }
+  const mobilePages = [...report.pages]
+  await page.setViewportSize({ width: 1280, height: 900 })
+  for (const item of mobilePages)
+    await audit(item.route, `${item.label}-desktop`)
   // Every internal anchor in every exported page must resolve, including links only in the footer.
   const internal = new Set()
   for (const file of allFiles.filter((f) => f.endsWith(".html"))) {
@@ -468,7 +476,7 @@ try {
     )
   for (const width of [320, 360, 768, 1280, 2560]) {
     await page.setViewportSize({ width, height: 900 })
-    for (const { route } of report.pages) {
+    for (const { route } of mobilePages) {
       await page.goto(base + route, { waitUntil: "networkidle" })
       assert.ok(
         await page.evaluate(
@@ -486,6 +494,48 @@ try {
     }
     report.reflow.push({ width, pass: true })
   }
+  for (const width of [360, 1280]) {
+    await page.setViewportSize({ width, height: 900 })
+    for (const { route } of mobilePages) {
+      await page.goto(base + route, { waitUntil: "networkidle" })
+      await page.evaluate(() => {
+        document.documentElement.style.fontSize = "200%"
+      })
+      assert.ok(
+        await page.evaluate(
+          () => document.documentElement.scrollWidth <= innerWidth
+        ),
+        `200% text overflow ${width}: ${route}`
+      )
+    }
+    report.reflow.push({ width, textSize: "200%", pass: true })
+  }
+  // Corrupt browser data must recover to safe empty states, without affecting the main test order history.
+  const recoveryContext = await browser.newContext({
+    viewport: { width: 390, height: 844 },
+    reducedMotion: "reduce",
+  })
+  const recovery = await recoveryContext.newPage()
+  await recovery.goto(base + "/en", { waitUntil: "networkidle" })
+  await recovery.evaluate(() => {
+    localStorage.setItem(
+      "aklabs.cart.v1",
+      '{"version":1,"lines":[{"variantId":"unknown","quantity":1000000}],"promotion":"INVALID"}'
+    )
+    localStorage.setItem("aklabs.orders.v1", "{broken")
+  })
+  await recovery.goto(base + "/en/cart", { waitUntil: "networkidle" })
+  await recovery
+    .getByRole("heading", { name: "A little room for curiosity.", exact: true })
+    .waitFor()
+  await recovery.goto(base + "/en/order?id=AK-INVALID0", {
+    waitUntil: "networkidle",
+  })
+  await recovery
+    .getByRole("heading", { name: "No order on this device.", exact: true })
+    .waitFor()
+  await recoveryContext.close()
+  report.states.push({ label: "Corrupt storage recovers safely", pass: true })
   assert.deepEqual(errors, [], "browser errors")
   await context.close()
   console.log(

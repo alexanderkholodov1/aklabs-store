@@ -1,4 +1,5 @@
 "use client"
+import { Icon } from "@modules/common/icon"
 import { useCart } from "@lib/sim/cart"
 import { OfflineStatus } from "./offline"
 import { useRef, useState } from "react"
@@ -36,7 +37,10 @@ export function Shell({
         <span>{t.announcement}</span>
         <a href={`/${locale}/what-is-real`} className="simulation-chip">
           {t.simulation}
-          <span aria-hidden="true"> ↗</span>
+          <span aria-hidden="true">
+            {" "}
+            <Icon name="arrow-up" />
+          </span>
         </a>
       </div>
       <header
@@ -118,7 +122,7 @@ export function Shell({
               aria-controls="mobile-menu"
               onClick={() => setOpen(!open)}
             >
-              {open ? "×" : "☰"}
+              <Icon name={open ? "close" : "menu"} />
             </button>
           </div>
         </div>
@@ -162,15 +166,21 @@ export function Shell({
             <a href={`/${locale}/what-is-real`}>{t.real}</a>
           </nav>
           <div className="footer-social">
-            <a href={SITE.github}>GitHub ↗</a>
-            <a href={SITE.linkedin}>LinkedIn ↗</a>
-            <a href={SITE.instagram}>Instagram ↗</a>
+            <a href={SITE.github}>
+              GitHub <Icon name="arrow-up" />
+            </a>
+            <a href={SITE.linkedin}>
+              LinkedIn <Icon name="arrow-up" />
+            </a>
+            <a href={SITE.instagram}>
+              Instagram <Icon name="arrow-up" />
+            </a>
             <button
               className="theme-toggle"
               aria-pressed={dark}
               onClick={toggleDark}
             >
-              {dark ? "◐" : "◑"} {t.theme}
+              <Icon name={dark ? "sun" : "moon"} /> {t.theme}
             </button>
           </div>
         </div>

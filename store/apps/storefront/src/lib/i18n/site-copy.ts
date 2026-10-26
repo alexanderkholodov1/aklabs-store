@@ -53,7 +53,7 @@ const en = {
   high: "Price: high to low",
   name: "Name: A–Z",
   clear: "Clear filters",
-  emptyTitle: "No pieces here yet.",
+  emptyTitle: "No pieces match that search.",
   emptyBody: "Try a different search or explore the full collection.",
   previous: "Previous page",
   next: "Next page",

@@ -1,3 +1,4 @@
+import { Icon } from "@modules/common/icon"
 import { notFound } from "next/navigation"
 import { catalog, productFor } from "@lib/catalog"
 import { resolveLocale } from "@lib/i18n/locales"
@@ -30,14 +31,14 @@ export default async function ProductPage({
   return (
     <div className="container product-page">
       <a className="text-link breadcrumb" href={`/${locale}/store`}>
-        ← {t.back}
+        <Icon name="arrow-left" /> {t.back}
       </a>
       <ProductDetail product={product} locale={locale} />
       <section className="section">
         <div className="section-heading">
           <h2>{t.related}</h2>
           <a className="text-link" href={`/${locale}/store`}>
-            {t.all} ↗
+            {t.all} <Icon name="arrow-up" />
           </a>
         </div>
         <div className="product-grid">

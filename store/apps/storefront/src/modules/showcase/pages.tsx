@@ -1,3 +1,4 @@
+import { Icon } from "@modules/common/icon"
 import type { Locale } from "@lib/i18n/locales"
 import { profileFor } from "@lib/profile"
 import { SITE, SOCIAL_BY_LOCALE } from "@lib/site"
@@ -5,7 +6,11 @@ import { showcaseCopy } from "./copy"
 import "./showcase.css"
 
 function Arrow() {
-  return <span aria-hidden="true">↗</span>
+  return (
+    <span aria-hidden="true">
+      <Icon name="arrow-up" />
+    </span>
+  )
 }
 
 export function AboutPage({ locale }: { locale: Locale }) {
@@ -129,7 +134,7 @@ export function HowItWorksPage({ locale }: { locale: Locale }) {
               <span className="showcase-technology">{step.technology}</span>
               {index < t.flow.length - 1 && (
                 <span className="showcase-flow-arrow" aria-hidden="true">
-                  →
+                  <Icon name="arrow-right" />
                 </span>
               )}
             </li>

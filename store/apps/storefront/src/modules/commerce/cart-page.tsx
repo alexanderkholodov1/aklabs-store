@@ -1,4 +1,5 @@
 "use client"
+import { Icon } from "@modules/common/icon"
 import { useState } from "react"
 import { money } from "@lib/catalog"
 import type { Locale } from "@lib/i18n/locales"
@@ -78,13 +79,15 @@ export function CartPage({ locale }: { locale: Locale }) {
       {removed && (
         <div className="undo-banner">
           <span>{message || t.removed}</span>
-          <button onClick={undo}>{t.undo} ↶</button>
+          <button onClick={undo}>
+            {t.undo} <Icon name="undo" />
+          </button>
         </div>
       )}
       {!cart.lines.length ? (
         <div className="empty-state">
           <span className="empty-mark" aria-hidden="true">
-            ↗
+            <Icon name="arrow-up" />
           </span>
           <h2>{t.empty}</h2>
           <p>{t.emptyBody}</p>
@@ -159,7 +162,7 @@ export function CartPage({ locale }: { locale: Locale }) {
               )
             })}
             <a className="text-link" href={`/${locale}/store`}>
-              ← {t.continue}
+              <Icon name="arrow-left" /> {t.continue}
             </a>
           </div>
           <aside className="order-summary">
@@ -198,7 +201,7 @@ export function CartPage({ locale }: { locale: Locale }) {
             </form>
             <Totals cart={cart} currency={currency} locale={locale} />
             <a className="button full" href={`/${locale}/checkout`}>
-              {t.checkout} →
+              {t.checkout} <Icon name="arrow-right" />
             </a>
             <p className="quiet-note">{t.simulationNote}</p>
           </aside>

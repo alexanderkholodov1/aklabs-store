@@ -1,4 +1,5 @@
 "use client"
+import { Icon } from "@modules/common/icon"
 import { useEffect, useRef, useState } from "react"
 import { money } from "@lib/catalog"
 import type { Locale } from "@lib/i18n/locales"
@@ -42,7 +43,7 @@ function NoOrder({ locale }: { locale: Locale }) {
         </a>
         {recent && (
           <a className="text-link" href={`/${locale}/order?id=${recent.id}`}>
-            {t.recent} →
+            {t.recent} <Icon name="arrow-right" />
           </a>
         )}
       </div>
@@ -76,7 +77,7 @@ export function OrderPage({ locale }: { locale: Locale }) {
     <section className="container commerce-page">
       <div className="order-celebration">
         <span className="confirmation-mark" aria-hidden="true">
-          ✓
+          <Icon name="check" />
         </span>
         <p className="eyebrow">
           {order.id} / {t.saved}
@@ -88,7 +89,7 @@ export function OrderPage({ locale }: { locale: Locale }) {
           aria-label={t.track}
           href={`/${locale}/tracking?id=${order.id}`}
         >
-          {t.track} ↗
+          {t.track} <Icon name="arrow-up" />
         </a>
       </div>
       <div className="commerce-grid receipt-grid">
@@ -362,7 +363,9 @@ export function TrackingPage({ locale }: { locale: Locale }) {
                 className={i <= stage ? "complete" : ""}
                 aria-current={i === stage ? "step" : undefined}
               >
-                <span aria-hidden="true">{i < stage ? "✓" : i + 1}</span>
+                <span aria-hidden="true">
+                  {i < stage ? <Icon name="check" /> : i + 1}
+                </span>
                 <div>
                   <h2>{step.title}</h2>
                   <p>{step.body}</p>
@@ -393,13 +396,13 @@ export function TrackingPage({ locale }: { locale: Locale }) {
             className="button secondary full"
             href={`/${locale}/order?id=${order.id}`}
           >
-            {t.seeOrder} ↗
+            {t.seeOrder} <Icon name="arrow-up" />
           </a>
         </div>
       </div>
       <div className="tracking-outro">
         <a className="text-link" href={`/${locale}/store`}>
-          {t.continue} ↗
+          {t.continue} <Icon name="arrow-up" />
         </a>
         <p>{t.receiptNote}</p>
       </div>

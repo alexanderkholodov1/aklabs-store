@@ -1,3 +1,4 @@
+import { Icon } from "@modules/common/icon"
 import { notFound } from "next/navigation"
 import { catalog } from "@lib/catalog"
 import { resolveLocale } from "@lib/i18n/locales"
@@ -32,7 +33,7 @@ export default async function Category({
     <section className="container catalog-page">
       <div className="page-intro">
         <a className="text-link" href={`/${locale}/store`}>
-          ← {t.back}
+          <Icon name="arrow-left" /> {t.back}
         </a>
         <p className="eyebrow">AK / {t.collection}</p>
         <h1>{category.name[locale]}</h1>

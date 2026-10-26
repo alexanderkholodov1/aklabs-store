@@ -1,4 +1,5 @@
 "use client"
+import { Icon } from "@modules/common/icon"
 import { useEffect, useRef, useState } from "react"
 import type { Locale } from "@lib/i18n/locales"
 import { commerceCopy } from "@lib/i18n/commerce-copy"
@@ -121,7 +122,7 @@ export function Checkout({ locale }: { locale: Locale }) {
     <section className="container commerce-page">
       <div className="checkout-heading">
         <a className="text-link" href={`/${locale}/cart`}>
-          ← {t.bag}
+          <Icon name="arrow-left" /> {t.bag}
         </a>
         <h1>{t.checkoutTitle}</h1>
         <p>{t.checkoutBody}</p>
@@ -134,7 +135,9 @@ export function Checkout({ locale }: { locale: Locale }) {
         <ol>
           {steps.map((label, i) => (
             <li key={label} aria-current={step === i ? "step" : undefined}>
-              <span aria-hidden="true">{i < step ? "✓" : i + 1}</span>
+              <span aria-hidden="true">
+                {i < step ? <Icon name="check" /> : i + 1}
+              </span>
               {label}
             </li>
           ))}
@@ -167,7 +170,7 @@ export function Checkout({ locale }: { locale: Locale }) {
                   setErrors({})
                 }}
               >
-                {t.demo} ↗
+                {t.demo} <Icon name="arrow-up" />
               </button>
               <p className="address-note" id="address-note">
                 {t.addressNote}
@@ -218,7 +221,7 @@ export function Checkout({ locale }: { locale: Locale }) {
                 )}
               </div>
               <button className="button full" type="submit">
-                {t.toDelivery} →
+                {t.toDelivery} <Icon name="arrow-right" />
               </button>
             </form>
           )}
@@ -251,14 +254,14 @@ export function Checkout({ locale }: { locale: Locale }) {
               </fieldset>
               <div className="checkout-buttons">
                 <button className="button secondary" onClick={() => setStep(0)}>
-                  ← {t.back}
+                  <Icon name="arrow-left" /> {t.back}
                 </button>
                 <button
                   className="button"
                   aria-label={t.reviewOrder}
                   onClick={() => setStep(2)}
                 >
-                  {t.reviewOrder} →
+                  {t.reviewOrder} <Icon name="arrow-right" />
                 </button>
               </div>
             </>
@@ -277,7 +280,7 @@ export function Checkout({ locale }: { locale: Locale }) {
                   {address.country}
                 </p>
                 <button className="text-link" onClick={() => setStep(0)}>
-                  {t.edit} ↗
+                  {t.edit} <Icon name="arrow-up" />
                 </button>
               </div>
               <div className="review-delivery">
@@ -290,7 +293,10 @@ export function Checkout({ locale }: { locale: Locale }) {
               </div>
               {error && (
                 <p className="form-error" role="alert">
-                  {error} <a href={`/${locale}/cart`}>{t.refreshCart} →</a>
+                  {error}{" "}
+                  <a href={`/${locale}/cart`}>
+                    {t.refreshCart} <Icon name="arrow-right" />
+                  </a>
                 </p>
               )}
               <div className="checkout-buttons">
@@ -299,7 +305,7 @@ export function Checkout({ locale }: { locale: Locale }) {
                   disabled={placing}
                   onClick={() => setStep(1)}
                 >
-                  ← {t.back}
+                  <Icon name="arrow-left" /> {t.back}
                 </button>
                 <button
                   className="button"
@@ -307,7 +313,7 @@ export function Checkout({ locale }: { locale: Locale }) {
                   disabled={placing}
                   onClick={submit}
                 >
-                  {t.place} →
+                  {t.place} <Icon name="arrow-right" />
                 </button>
               </div>
             </>

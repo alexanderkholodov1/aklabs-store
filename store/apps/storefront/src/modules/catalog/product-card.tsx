@@ -1,3 +1,4 @@
+import { Icon } from "@modules/common/icon"
 import type { Product } from "@lib/catalog"
 import type { Locale } from "@lib/i18n/locales"
 import { ProductImage } from "./product-image"
@@ -24,7 +25,7 @@ export function ProductCard({
             priority={priority}
           />
           <span className="card-arrow" aria-hidden="true">
-            ↗
+            <Icon name="arrow-up" />
           </span>
         </div>
         <div className="product-card-meta">

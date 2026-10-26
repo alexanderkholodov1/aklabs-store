@@ -208,7 +208,12 @@ export function CartProvider({
         removed: !!removed,
         apply,
         clear: () => {
-          save(() => empty)
+          try {
+            localStorage.setItem(CART_KEY, JSON.stringify(empty))
+          } catch {
+            setStorageError(true)
+          }
+          setCart(empty)
           setRemoved(null)
         },
       }}

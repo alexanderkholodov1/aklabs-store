@@ -31,7 +31,15 @@ export default async function Layout({
   const { locale } = await params
   if (!isLocale(locale)) notFound()
   return (
-    <html lang={locale}>
+    <html lang={locale} data-theme="light" suppressHydrationWarning>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              'try{document.documentElement.dataset.theme=localStorage.getItem("aklabs.theme")==="dark"?"dark":"light"}catch{}',
+          }}
+        />
+      </head>
       <body>
         <PreferencesProvider locale={locale}>
           <CartProvider locale={locale}>

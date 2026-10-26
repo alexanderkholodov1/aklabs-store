@@ -1,4 +1,5 @@
 "use client"
+import { Icon } from "@modules/common/icon"
 import { useEffect, useMemo, useState } from "react"
 import { catalog, type Category, type Product } from "@lib/catalog"
 import type { Locale } from "@lib/i18n/locales"
@@ -122,7 +123,13 @@ export function Listing({
       </p>
       {filtered.length ? (
         <>
-          <div className="product-grid">
+          <div
+            className="product-grid"
+            id="catalog-results"
+            tabIndex={-1}
+            role="region"
+            aria-label={t.catalog}
+          >
             {filtered
               .slice((current - 1) * PER_PAGE, current * PER_PAGE)
               .map((p, i) => (
@@ -142,6 +149,11 @@ export function Listing({
                 aria-current={i + 1 === current ? "page" : undefined}
                 onClick={() => {
                   setPage(i + 1)
+                  requestAnimationFrame(() =>
+                    document
+                      .getElementById("catalog-results")
+                      ?.focus({ preventScroll: true })
+                  )
                   document.querySelector(".listing-tools")?.scrollIntoView()
                 }}
               >
@@ -156,7 +168,7 @@ export function Listing({
       ) : (
         <div className="empty-state">
           <span className="empty-mark" aria-hidden="true">
-            ⌕
+            <Icon name="search" />
           </span>
           <h2>{t.emptyTitle}</h2>
           <p>{t.emptyBody}</p>

@@ -33,8 +33,8 @@ export function PreferencesProvider({
     setReady(true)
   }, [])
   useEffect(() => {
-    document.documentElement.dataset.theme = dark ? "dark" : "light"
-  }, [dark])
+    if (ready) document.documentElement.dataset.theme = dark ? "dark" : "light"
+  }, [dark, ready])
   const setCurrency = (value: Currency) => {
     update(value)
     try {

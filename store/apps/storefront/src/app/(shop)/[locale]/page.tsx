@@ -1,3 +1,4 @@
+import { Icon } from "@modules/common/icon"
 import { catalog } from "@lib/catalog"
 import { resolveLocale } from "@lib/i18n/locales"
 import { siteCopy } from "@lib/i18n/site-copy"
@@ -41,11 +42,16 @@ export default async function Home({
           <div className="hero-actions">
             <a className="button" href={`/${locale}/store`}>
               {t.explore}
-              <span aria-hidden="true">↗</span>
+              <span aria-hidden="true">
+                <Icon name="arrow-up" />
+              </span>
             </a>
             <a className="text-link" href={`/${locale}/how-it-works`}>
               {t.behind}
-              <span aria-hidden="true"> →</span>
+              <span aria-hidden="true">
+                {" "}
+                <Icon name="arrow-right" />
+              </span>
             </a>
           </div>
           <p className="edition">{t.edition}</p>
@@ -73,7 +79,7 @@ export default async function Home({
               <span>{t.heroNote}</span>
             </div>
             <span className="round-arrow" aria-hidden="true">
-              ↗
+              <Icon name="arrow-up" />
             </span>
           </div>
         </a>
@@ -81,7 +87,9 @@ export default async function Home({
       <div className="manifesto-strip">
         <div className="container">
           <span>DESIGN × TECHNOLOGY × CURIOSITY</span>
-          <span aria-hidden="true">✳</span>
+          <span aria-hidden="true">
+            <Icon name="star" />
+          </span>
           <span>EST. IN THE LAB / MADE TO EXPLORE</span>
         </div>
       </div>
@@ -93,7 +101,7 @@ export default async function Home({
             <p>{t.featuredBody}</p>
           </div>
           <a className="text-link" href={`/${locale}/store`}>
-            {t.all} ↗
+            {t.all} <Icon name="arrow-up" />
           </a>
         </div>
         <div className="product-grid">
@@ -128,7 +136,10 @@ export default async function Home({
                 </span>
                 <h3>
                   {edit.label}
-                  <span aria-hidden="true"> ↗</span>
+                  <span aria-hidden="true">
+                    {" "}
+                    <Icon name="arrow-up" />
+                  </span>
                 </h3>
               </a>
             )
@@ -137,19 +148,17 @@ export default async function Home({
       </section>
       <section className="promise container">
         <div className="promise-symbol" aria-hidden="true">
-          ✳
+          <Icon name="star" />
         </div>
         <div>
           <p className="eyebrow">THE AKLABS EXPERIMENT</p>
           <h2>{t.promiseTitle}</h2>
           <p>{t.promiseBody}</p>
           <a className="button light" href={`/${locale}/how-it-works`}>
-            {t.promiseCta} ↗
+            {t.promiseCta} <Icon name="arrow-up" />
           </a>
         </div>
-        <span className="promise-number" aria-hidden="true">
-          0.00
-        </span>
+
       </section>
     </>
   )

@@ -1,6 +1,6 @@
 {
   "name": "@dtc/storefront",
-  "version": "1.0.3",
+  "version": "0.3.0",
   "private": true,
   "author": "Kasper Fabricius Kristensen <kasper@medusajs.com> & Victor Gerbrands <victor@medusajs.com> (https://www.medusajs.com)",
   "description": "A bilingual, static shopping simulator for AKLabs",
@@ -10,7 +10,7 @@
   "scripts": {
     "dev": "next dev --turbopack -p 8000",
     "build": "next build",
-    "start": "next start -p 8000",
+    "start": "node scripts/serve-site.mjs",
     "lint": "ESLINT_USE_FLAT_CONFIG=false eslint src scripts --ext .ts,.tsx,.mjs",
     "analyze": "ANALYZE=true next build",
     "catalog:build": "node scripts/catalog/build.mjs",

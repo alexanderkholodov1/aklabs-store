@@ -1,4 +1,5 @@
 "use client"
+import { Icon } from "@modules/common/icon"
 import { useCart } from "@lib/sim/cart"
 import { useState } from "react"
 import type { Product } from "@lib/catalog"
@@ -76,9 +77,15 @@ export function ProductDetail({
                       name={option.id}
                       value={value.id}
                       checked={options[option.id] === value.id}
-                      onChange={() =>
+                      onChange={() => {
                         setOptions({ ...options, [option.id]: value.id })
-                      }
+                        if (option.id === "color") {
+                          const match = product.images.findIndex((image) =>
+                            image.id.includes(value.id)
+                          )
+                          if (match >= 0) setImage(match)
+                        }
+                      }}
                     />
                     <span>{value.label[locale]}</span>
                   </label>
@@ -99,13 +106,15 @@ export function ProductDetail({
         </button>
         {added && (
           <div className="added-feedback">
-            <span>{t.added} ✓</span>
+            <span>
+              {t.added} <Icon name="check" />
+            </span>
             <a
               className="text-link"
               aria-label={t.viewBag}
               href={`/${locale}/cart`}
             >
-              {t.viewBag} →
+              {t.viewBag} <Icon name="arrow-right" />
             </a>
           </div>
         )}
