@@ -19,7 +19,12 @@ export default function Entry() {
         <Link prefetch={false} className="button" href="/en">
           Explore in English
         </Link>{" "}
-        <Link prefetch={false} className="button secondary" href="/es" lang="es">
+        <Link
+          prefetch={false}
+          className="button secondary"
+          href="/es"
+          lang="es"
+        >
           Explorar en español
         </Link>
       </p>

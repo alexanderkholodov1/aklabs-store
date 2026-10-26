@@ -8,7 +8,12 @@ export default function NotFound() {
       <Link prefetch={false} className="button" href="/en/store">
         Explore the collection
       </Link>{" "}
-      <Link prefetch={false} className="button secondary" href="/es/store" lang="es">
+      <Link
+        prefetch={false}
+        className="button secondary"
+        href="/es/store"
+        lang="es"
+      >
         Explorar la colección
       </Link>
     </main>

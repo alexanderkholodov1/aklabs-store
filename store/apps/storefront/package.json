@@ -14,7 +14,7 @@
     "lint": "ESLINT_USE_FLAT_CONFIG=false eslint src scripts --ext .ts,.tsx,.mjs",
     "analyze": "ANALYZE=true next build",
     "catalog:build": "node scripts/catalog/build.mjs",
-    "build:site": "pnpm run catalog:build && next build",
+    "build:site": "pnpm run catalog:build && next build && node scripts/offline.mjs",
     "check:site": "node scripts/check-site.mjs"
   },
   "dependencies": {

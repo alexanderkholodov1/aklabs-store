@@ -1,3 +1,4 @@
+@import "./commerce.css";
 :root {
   --paper: #f7f7f2;
   --surface: #fff;
@@ -1443,4 +1444,37 @@ summary {
     transition: none !important;
     scroll-behavior: auto !important;
   }
+}
+
+.bag-count {
+  display: inline-grid !important;
+  place-items: center;
+  min-width: 18px;
+  height: 18px;
+  background: var(--ink);
+  color: var(--paper);
+  border-radius: 50%;
+  font-size: 0.6rem;
+  line-height: 1;
+}
+.added-feedback {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 14px;
+  font-size: 0.75rem;
+  margin-top: 8px;
+}
+.offline-status {
+  font-size: 0.64rem;
+  color: var(--muted);
+}
+.announcement {
+  min-height: 48px;
+}
+.simulation-chip {
+  min-height: 44px;
+}
+.section-heading > .text-link {
+  min-height: 44px;
 }

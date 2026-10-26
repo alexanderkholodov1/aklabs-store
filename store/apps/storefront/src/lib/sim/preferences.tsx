@@ -5,6 +5,7 @@ import type { Locale } from "@lib/i18n/locales"
 import { siteCopy } from "@lib/i18n/site-copy"
 const Preferences = createContext({
   currency: "USD" as Currency,
+  ready: false,
   setCurrency: (_value: Currency) => {},
   dark: false,
   toggleDark: () => {},
@@ -18,6 +19,7 @@ export function PreferencesProvider({
   locale: Locale
 }) {
   const [currency, update] = useState<Currency>("USD")
+  const [ready, setReady] = useState(false)
   const [dark, setDark] = useState(false)
   const [warning, setWarning] = useState(false)
   useEffect(() => {
@@ -28,6 +30,7 @@ export function PreferencesProvider({
     } catch {
       setWarning(true)
     }
+    setReady(true)
   }, [])
   useEffect(() => {
     document.documentElement.dataset.theme = dark ? "dark" : "light"
@@ -49,7 +52,9 @@ export function PreferencesProvider({
     }
   }
   return (
-    <Preferences.Provider value={{ currency, setCurrency, dark, toggleDark }}>
+    <Preferences.Provider
+      value={{ currency, setCurrency, dark, toggleDark, ready }}
+    >
       {warning && (
         <p className="storage-warning" role="status">
           {siteCopy(locale).storageWarning}

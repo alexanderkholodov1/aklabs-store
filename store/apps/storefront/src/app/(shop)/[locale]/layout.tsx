@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next"
 import { notFound } from "next/navigation"
 import { isLocale, SUPPORTED_LOCALES } from "@lib/i18n/locales"
 import { PreferencesProvider } from "@lib/sim/preferences"
+import { CartProvider } from "@lib/sim/cart"
 import { Shell } from "@modules/layout/shell"
 import { SITE } from "@lib/site"
 import "styles/globals.css"
@@ -33,7 +34,9 @@ export default async function Layout({
     <html lang={locale}>
       <body>
         <PreferencesProvider locale={locale}>
-          <Shell locale={locale}>{children}</Shell>
+          <CartProvider locale={locale}>
+            <Shell locale={locale}>{children}</Shell>
+          </CartProvider>
         </PreferencesProvider>
       </body>
     </html>

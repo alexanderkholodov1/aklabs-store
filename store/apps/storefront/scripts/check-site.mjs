@@ -1,6 +1,6 @@
+import { startServer } from "./site-server.mjs"
 import assert from "node:assert/strict"
-import { createServer } from "node:http"
-import { readFile, readdir, stat, mkdir, writeFile } from "node:fs/promises"
+import { readFile, readdir, mkdir, writeFile } from "node:fs/promises"
 import path from "node:path"
 import os from "node:os"
 import { gzipSync } from "node:zlib"
@@ -16,66 +16,6 @@ const out = path.join(app, "out")
 const catalog = JSON.parse(
   await readFile(path.join(app, "src/data/catalog.json"), "utf8")
 )
-const types = {
-  ".html": "text/html; charset=utf-8",
-  ".js": "text/javascript",
-  ".css": "text/css",
-  ".json": "application/json",
-  ".avif": "image/avif",
-  ".webp": "image/webp",
-  ".png": "image/png",
-  ".svg": "image/svg+xml",
-  ".txt": "text/plain",
-}
-export async function startServer() {
-  const server = createServer(async (req, res) => {
-    try {
-      const pathname = decodeURIComponent(
-        new URL(req.url, "http://local").pathname
-      )
-      const safe = path.resolve(out, `.${pathname}`)
-      if (!safe.startsWith(out + path.sep) && safe !== out) {
-        res.writeHead(403).end()
-        return
-      }
-      const candidates =
-        pathname === "/"
-          ? [path.join(out, "index.html")]
-          : [safe, `${safe}.html`, path.join(safe, "index.html")]
-      let file
-      for (const candidate of candidates) {
-        try {
-          if ((await stat(candidate)).isFile()) {
-            file = candidate
-            break
-          }
-        } catch {
-          /* Try next clean URL. */
-        }
-      }
-      if (!file) {
-        res.writeHead(404).end("Not found")
-        return
-      }
-      res.setHeader(
-        "content-type",
-        types[path.extname(file)] || "application/octet-stream"
-      )
-      const body = await readFile(file)
-      if (
-        /\.(js|css|html|txt|json)$/.test(file) &&
-        req.headers["accept-encoding"]?.includes("gzip")
-      ) {
-        res.setHeader("content-encoding", "gzip")
-        res.end(gzipSync(body))
-      } else res.end(body)
-    } catch {
-      res.writeHead(500).end("Server error")
-    }
-  })
-  await new Promise((resolve) => server.listen(0, "127.0.0.1", resolve))
-  return { server, base: `http://127.0.0.1:${server.address().port}` }
-}
 async function walk(dir) {
   const all = []
   for (const item of await readdir(dir, { withFileTypes: true })) {
@@ -85,11 +25,12 @@ async function walk(dir) {
   }
   return all
 }
-const { server, base } = await startServer()
+const { server, base } = await startServer(out)
 let browser
 const report = {
   routes: 0,
   pages: [],
+  states: [],
   flow: [],
   reflow: [],
   budgets: { javascript: 150 * 1024, firstView: 300 * 1024 },
@@ -146,6 +87,11 @@ try {
     executablePath: executable || installed,
     headless: true,
     args: ["--no-sandbox", "--disable-dev-shm-usage"],
+    env: {
+      ...process.env,
+      XDG_CONFIG_HOME: path.join(temp, "browser-config"),
+      XDG_CACHE_HOME: path.join(temp, "browser-cache"),
+    },
   })
   const context = await browser.newContext({
     viewport: { width: 390, height: 844 },
@@ -210,6 +156,17 @@ try {
       total <= report.budgets.firstView,
       `first view ${route}: ${total}`
     )
+    if (process.env.CAPTURE_SITE === "1") {
+      await mkdir(path.join(temp, "screenshots"), { recursive: true })
+      await page.screenshot({
+        path: path.join(
+          temp,
+          "screenshots",
+          `${label}-${route.startsWith("/es") ? "es" : "en"}-390.png`
+        ),
+        fullPage: true,
+      })
+    }
     const item = {
       route,
       label,
@@ -222,6 +179,34 @@ try {
     console.log(JSON.stringify(item))
   }
   const commerce = routes.includes("/en/checkout")
+  assert.ok(commerce, "Commerce routes must be exported")
+  for (const locale of ["en", "es"])
+    for (const segment of [
+      "cart",
+      "checkout",
+      "order",
+      "tracking",
+      "about",
+      "how-it-works",
+      "what-is-real",
+    ])
+      assert.ok(
+        routes.includes(`/${locale}/${segment}`),
+        `Missing ${locale}/${segment}`
+      )
+  async function auditState(label) {
+    const result = await new AxeBuilder({ page })
+      .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"])
+      .analyze()
+    assert.deepEqual(
+      result.violations
+        .filter((v) => ["serious", "critical"].includes(v.impact))
+        .map((v) => ({ id: v.id, nodes: v.nodes.map((n) => n.target) })),
+      [],
+      `axe state ${label}`
+    )
+    report.states.push({ label, serious: 0, critical: 0 })
+  }
   for (const locale of ["en", "es"]) {
     const basePages = [
       [`/${locale}`, "home"],
@@ -231,6 +216,14 @@ try {
     ]
     for (const [route, label] of basePages) await audit(route, label)
     if (commerce) {
+      await page.goto(base + `/${locale}`, { waitUntil: "networkidle" })
+      await page.locator(".hero-actions .button").click()
+      await page
+        .locator(`.category-chips a[href$="/${catalog.categories[0].handle}"]`)
+        .click()
+      await page
+        .locator('.product-link[href$="/aklabs-essential-hoodie"]')
+        .click()
       await page
         .getByRole("button", {
           name: locale === "en" ? "Add to bag" : "Añadir a la bolsa",
@@ -244,7 +237,58 @@ try {
         })
         .click()
       await audit(`/${locale}/cart`, "cart")
+      await page
+        .getByRole("button", {
+          name: new RegExp(`^${locale === "en" ? "Remove:" : "Quitar:"}`),
+        })
+        .click()
+      await page
+        .getByRole("button", {
+          name: locale === "en" ? "Undo removal" : "Deshacer eliminación",
+        })
+        .click()
+      assert.equal(await page.locator(".cart-line").count(), 1)
+      await page.reload({ waitUntil: "networkidle" })
+      assert.equal(await page.locator(".cart-line").count(), 1)
+      await page.locator("#promotion").fill("INVALID")
+      await page
+        .getByRole("button", {
+          name: locale === "en" ? "Apply code" : "Aplicar código",
+          exact: true,
+        })
+        .click()
+      await page
+        .locator("#promo-error")
+        .filter({
+          hasText: locale === "en" ? "Try AKLABS10" : "Prueba AKLABS10",
+        })
+        .waitFor()
+      await page.locator("#promotion").fill("aklabs10")
+      await page
+        .getByRole("button", {
+          name: locale === "en" ? "Apply code" : "Aplicar código",
+          exact: true,
+        })
+        .click()
+      await page.locator(".promo-success").waitFor()
       await audit(`/${locale}/checkout`, "checkout")
+      await page
+        .getByRole("button", {
+          name:
+            locale === "en" ? "Continue to delivery" : "Continuar a la entrega",
+        })
+        .click()
+      assert.equal(
+        await page.locator("#address-name").getAttribute("aria-invalid"),
+        "true"
+      )
+      assert.equal(
+        await page
+          .locator("#address-name")
+          .evaluate((el) => el === document.activeElement),
+        true
+      )
+      await auditState(`${locale}: address validation`)
       await page
         .getByRole("button", {
           name:
@@ -257,12 +301,14 @@ try {
             locale === "en" ? "Continue to delivery" : "Continuar a la entrega",
         })
         .click()
+      await auditState(`${locale}: delivery`)
       await page
         .getByRole("button", {
           name: locale === "en" ? "Review order" : "Revisar pedido",
           exact: true,
         })
         .click()
+      await auditState(`${locale}: review`)
       await page
         .getByRole("button", {
           name:
@@ -307,6 +353,106 @@ try {
       if (routes.includes(`/${locale}/${extra}`))
         await audit(`/${locale}/${extra}`, extra)
   }
+  await page.goto(base + "/en", { waitUntil: "networkidle" })
+  await page.getByRole("button", { name: "Explore", exact: true }).click()
+  await page.locator("#mobile-menu a").first().focus()
+  await page.keyboard.press("Escape")
+  assert.equal(
+    await page.locator(".menu-toggle").getAttribute("aria-expanded"),
+    "false"
+  )
+  assert.equal(
+    await page
+      .locator(".menu-toggle")
+      .evaluate((el) => el === document.activeElement),
+    true
+  )
+  await page
+    .getByRole("combobox", { name: "Currency", exact: true })
+    .selectOption("EUR")
+  await page.reload({ waitUntil: "networkidle" })
+  assert.equal(
+    await page
+      .getByRole("combobox", { name: "Currency", exact: true })
+      .inputValue(),
+    "EUR"
+  )
+  await page.locator("a.language-link").click()
+  await page.waitForURL(/\/es$/)
+  await page.locator('[data-preferences-ready="true"]').waitFor()
+  assert.equal(
+    await page
+      .getByRole("combobox", { name: "Moneda", exact: true })
+      .inputValue(),
+    "EUR"
+  )
+  // A fresh browser context caches the complete package from its first page, then purchases offline.
+  const offlineContext = await browser.newContext({
+    viewport: { width: 390, height: 844 },
+    reducedMotion: "reduce",
+  })
+  const offline = await offlineContext.newPage()
+  await offline.clock.install({ time: new Date("2026-10-26T12:00:00Z") })
+  await offline.goto(base + "/en", { waitUntil: "networkidle" })
+  await offline
+    .locator('[data-offline-ready="true"]')
+    .waitFor({ timeout: 60000 })
+  await offlineContext.setOffline(true)
+  await offline.locator(".hero-actions .button").click()
+  await offline
+    .locator('.product-link[href$="/aklabs-essential-hoodie"]')
+    .click()
+  await offline.getByRole("button", { name: "Add to bag", exact: true }).click()
+  await offline.getByRole("link", { name: "View bag", exact: true }).click()
+  await offline.getByRole("link", { name: /Try checkout/ }).click()
+  await offline.getByRole("button", { name: "Fill demo address" }).click()
+  await offline.getByRole("button", { name: "Continue to delivery" }).click()
+  await offline
+    .getByRole("button", { name: "Review order", exact: true })
+    .click()
+  await offline
+    .getByRole("button", { name: "Place simulated order", exact: true })
+    .click()
+  await offline.waitForURL(/\/order\?id=/)
+  await offline
+    .getByRole("link", { name: "Track your delivery", exact: true })
+    .click()
+  await offline.waitForURL(/\/tracking\?id=/)
+  await offline.clock.fastForward(125000)
+  await offline
+    .getByRole("heading", {
+      name: "Delivered. Enjoy the experiment.",
+      exact: true,
+    })
+    .waitFor()
+  assert.equal(
+    await offline.locator('li[aria-current="step"] h2').textContent(),
+    "Delivered. Enjoy the experiment."
+  )
+  assert.equal(
+    await offline.evaluate(
+      () => JSON.parse(localStorage.getItem("aklabs.orders.v1")).length
+    ),
+    1
+  )
+  report.flow.push(
+    "en: first load → offline browse → checkout → order → delivered (clock advanced)"
+  )
+  await offlineContext.close()
+  for (const locale of ["en", "es"]) {
+    await page.goto(base + `/${locale}/about`, { waitUntil: "networkidle" })
+    await page.evaluate(() => {
+      localStorage.setItem("aklabs.theme", "dark")
+      document.documentElement.dataset.theme = "dark"
+    })
+    await auditState(`${locale}: dark About`)
+    await page.goto(base + `/${locale}`, { waitUntil: "networkidle" })
+    await auditState(`${locale}: dark home`)
+    await page.evaluate(() => {
+      localStorage.setItem("aklabs.theme", "light")
+      document.documentElement.dataset.theme = "light"
+    })
+  }
   // Every internal anchor in every exported page must resolve, including links only in the footer.
   const internal = new Set()
   for (const file of allFiles.filter((f) => f.endsWith(".html"))) {
@@ -330,6 +476,13 @@ try {
         ),
         `overflow ${width}: ${route}`
       )
+    }
+    if (process.env.CAPTURE_SITE === "1" && [320, 1280, 2560].includes(width)) {
+      await page.goto(base + "/en", { waitUntil: "networkidle" })
+      await page.screenshot({
+        path: path.join(temp, "screenshots", `home-en-${width}.png`),
+        fullPage: true,
+      })
     }
     report.reflow.push({ width, pass: true })
   }

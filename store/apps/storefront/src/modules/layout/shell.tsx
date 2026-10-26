@@ -1,4 +1,6 @@
 "use client"
+import { useCart } from "@lib/sim/cart"
+import { OfflineStatus } from "./offline"
 import { useRef, useState } from "react"
 import type { Locale } from "@lib/i18n/locales"
 import { siteCopy } from "@lib/i18n/site-copy"
@@ -12,7 +14,8 @@ export function Shell({
   locale: Locale
 }) {
   const t = siteCopy(locale)
-  const { currency, setCurrency, dark, toggleDark } = usePreferences()
+  const { count } = useCart()
+  const { currency, setCurrency, dark, toggleDark, ready } = usePreferences()
   const [open, setOpen] = useState(false)
   const toggle = useRef<HTMLButtonElement>(null)
   const other = locale === "en" ? "es" : "en"
@@ -36,7 +39,15 @@ export function Shell({
           <span aria-hidden="true"> ↗</span>
         </a>
       </div>
-      <header className="site-header">
+      <header
+        className="site-header"
+        onKeyDown={(e) => {
+          if (e.key === "Escape" && open) {
+            setOpen(false)
+            toggle.current?.focus()
+          }
+        }}
+      >
         <div className="header-inner">
           <a href={`/${locale}`} className="wordmark" aria-label="AKLabs Store">
             <svg viewBox="0 0 48 40" width="37" height="32" aria-hidden="true">
@@ -59,6 +70,8 @@ export function Shell({
               <span className="sr-only">{t.currency}</span>
               <select
                 value={currency}
+                disabled={!ready}
+                data-preferences-ready={ready}
                 onChange={(e) => setCurrency(e.target.value as "USD" | "EUR")}
               >
                 <option>USD</option>
@@ -74,7 +87,11 @@ export function Shell({
             >
               {other.toUpperCase()}
             </a>
-            <a className="bag-link" href={`/${locale}/cart`}>
+            <a
+              className="bag-link"
+              aria-label={`${t.cart} (${count})`}
+              href={`/${locale}/cart`}
+            >
               <svg
                 viewBox="0 0 24 24"
                 width="20"
@@ -88,6 +105,10 @@ export function Shell({
                 <path d="M8 8V6a4 4 0 0 1 8 0v2" />
               </svg>
               <span>{t.cart}</span>
+              <span className="bag-count" aria-hidden="true">
+                {count}
+              </span>
+              <span className="sr-only">{count}</span>
             </a>
             <button
               className="menu-toggle"
@@ -158,6 +179,7 @@ export function Shell({
             {t.madeBy} <a href={`/${locale}/about`}>{SITE.owner}</a>
           </span>
           <span>{t.footerNote}</span>
+          <OfflineStatus locale={locale} />
           <span>© 2026 AKLabs</span>
         </div>
       </footer>

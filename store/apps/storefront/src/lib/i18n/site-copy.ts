@@ -1,6 +1,8 @@
 import type { Locale } from "./locales"
 
 const en = {
+  offlineReady: "Ready to explore offline",
+  offlineDefault: "Explore at your own pace",
   skip: "Skip to content",
   shop: "Shop",
   about: "About",
@@ -92,6 +94,8 @@ const en = {
   imageUnavailable: "Image unavailable",
 }
 const es: typeof en = {
+  offlineReady: "Listo para explorar sin conexión",
+  offlineDefault: "Explora a tu ritmo",
   skip: "Saltar al contenido",
   shop: "Tienda",
   about: "Acerca de",
