@@ -29,14 +29,38 @@ const en: Profile = {
     "Driven by curiosity and a philosophy of lifelong learning, I enjoy exploring different fields while building practical systems that bridge ideas, technology, and real-world impact.",
   ],
   highlights: [
-    { label: "Education", detail: "Computer Science Engineering, Universidad San Francisco de Quito (2023–2028)" },
-    { label: "Leadership", detail: "Vice President, IEEE Computer Society USFQ Chapter" },
-    { label: "Competitions", detail: "TCS CodeVita, IEEEXtreme, Diners Club Blue Challenge" },
-    { label: "Mentoring", detail: "Competitive Programming Club mentor and private tutor" },
-    { label: "Creative work", detail: "3+ years as a freelance video editor for international clients" },
+    {
+      label: "Education",
+      detail:
+        "Computer Science Engineering, Universidad San Francisco de Quito (2023–2028)",
+    },
+    {
+      label: "Leadership",
+      detail: "Vice President, IEEE Computer Society USFQ Chapter",
+    },
+    {
+      label: "Competitions",
+      detail: "TCS CodeVita, IEEEXtreme, Diners Club Blue Challenge",
+    },
+    {
+      label: "Mentoring",
+      detail: "Competitive Programming Club mentor and private tutor",
+    },
+    {
+      label: "Creative work",
+      detail: "3+ years as a freelance video editor for international clients",
+    },
     { label: "Languages", detail: "Spanish, English and Russian" },
   ],
-  skills: ["Software development", "Web and app development", "Competitive programming", "Video editing", "Adobe Premiere Pro", "Photoshop", "Illustrator"],
+  skills: [
+    "Software development",
+    "Web and app development",
+    "Competitive programming",
+    "Video editing",
+    "Adobe Premiere Pro",
+    "Photoshop",
+    "Illustrator",
+  ],
 }
 
 const es: Profile = {
@@ -54,14 +78,39 @@ const es: Profile = {
     "Motivado por la curiosidad intelectual y una filosofía de aprendizaje continuo, disfruto explorar distintos campos mientras desarrollo sistemas prácticos que conectan ideas, tecnología e impacto en el mundo real.",
   ],
   highlights: [
-    { label: "Formación", detail: "Ingeniería en Ciencias de la Computación, Universidad San Francisco de Quito (2023–2028)" },
-    { label: "Liderazgo", detail: "Vicepresidente, IEEE Computer Society, capítulo USFQ" },
-    { label: "Competencias", detail: "TCS CodeVita, IEEEXtreme, Diners Club Blue Challenge" },
-    { label: "Mentoría", detail: "Mentor del Club de Programación Competitiva y tutor privado" },
-    { label: "Trabajo creativo", detail: "Más de 3 años como editor de video freelance para clientes internacionales" },
+    {
+      label: "Formación",
+      detail:
+        "Ingeniería en Ciencias de la Computación, Universidad San Francisco de Quito (2023–2028)",
+    },
+    {
+      label: "Liderazgo",
+      detail: "Vicepresidente, IEEE Computer Society, capítulo USFQ",
+    },
+    {
+      label: "Competencias",
+      detail: "TCS CodeVita, IEEEXtreme, Diners Club Blue Challenge",
+    },
+    {
+      label: "Mentoría",
+      detail: "Mentor del Club de Programación Competitiva y tutor privado",
+    },
+    {
+      label: "Trabajo creativo",
+      detail:
+        "Más de 3 años como editor de video freelance para clientes internacionales",
+    },
     { label: "Idiomas", detail: "Español, inglés y ruso" },
   ],
-  skills: ["Desarrollo de software", "Desarrollo web y de apps", "Programación competitiva", "Edición de video", "Adobe Premiere Pro", "Photoshop", "Illustrator"],
+  skills: [
+    "Desarrollo de software",
+    "Desarrollo web y de apps",
+    "Programación competitiva",
+    "Edición de video",
+    "Adobe Premiere Pro",
+    "Photoshop",
+    "Illustrator",
+  ],
 }
 
 const profiles: Record<Locale, Profile> = { en, es }

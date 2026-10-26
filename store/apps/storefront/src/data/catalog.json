@@ -1,0 +1,4474 @@
+{
+  "schemaVersion": 1,
+  "locales": [
+    "en",
+    "es"
+  ],
+  "currencies": [
+    "USD",
+    "EUR"
+  ],
+  "provenance": {
+    "sources": [
+      {
+        "path": "store/apps/backend/src/scripts/seed-aklabs-products.ts",
+        "sha256": "f020a571300858f1faf3b665c60ffa00aab2b3eaf2b9f30d794c678a4d571943"
+      },
+      {
+        "path": "store/apps/backend/src/scripts/sync-aklabs-catalog.ts",
+        "sha256": "fd698bc59bbe302694d7e76bbb2909b391fde5a892b9709f581b334902729b6a"
+      },
+      {
+        "path": "store/apps/storefront/src/lib/i18n/product-copy.ts",
+        "sha256": "0e9b0a4231b7138d3337f6cec8616207f72abd1d644281b5e2e28bd483eafa17"
+      }
+    ],
+    "pricing": "Backend seed and sync declare major-unit base prices; catalog stores integer minor units (cents). Neither source declares product sales, so salePrices is null.",
+    "promotions": "AKLABS10 is a browser simulator policy: 10% off merchandise. It is not a Medusa promotion, has no cash value and never charges money.",
+    "localization": "Product copy is extracted from the EN/ES product-copy overlay. Category, option, material and written image-alt translations live in scripts/catalog/localization.mjs."
+  },
+  "categories": [
+    {
+      "id": "hoodies",
+      "handle": "hoodies",
+      "name": {
+        "en": "Hoodies & jackets",
+        "es": "Sudaderas y chaquetas"
+      }
+    },
+    {
+      "id": "caps",
+      "handle": "caps",
+      "name": {
+        "en": "Caps & beanies",
+        "es": "Gorras y gorros"
+      }
+    },
+    {
+      "id": "drinkware",
+      "handle": "drinkware",
+      "name": {
+        "en": "Drinkware",
+        "es": "Termos y tazas"
+      }
+    },
+    {
+      "id": "tees",
+      "handle": "tees",
+      "name": {
+        "en": "T-shirts",
+        "es": "Camisetas"
+      }
+    },
+    {
+      "id": "joggers",
+      "handle": "joggers",
+      "name": {
+        "en": "Joggers",
+        "es": "Pantalones deportivos"
+      }
+    },
+    {
+      "id": "stickers",
+      "handle": "stickers",
+      "name": {
+        "en": "Stickers",
+        "es": "Pegatinas"
+      }
+    },
+    {
+      "id": "keychains",
+      "handle": "keychains",
+      "name": {
+        "en": "Keychains",
+        "es": "Llaveros"
+      }
+    },
+    {
+      "id": "figures",
+      "handle": "figures",
+      "name": {
+        "en": "Figures",
+        "es": "Figuras"
+      }
+    },
+    {
+      "id": "socks",
+      "handle": "socks",
+      "name": {
+        "en": "Socks",
+        "es": "Calcetines"
+      }
+    },
+    {
+      "id": "bags",
+      "handle": "bags",
+      "name": {
+        "en": "Bags",
+        "es": "Bolsos"
+      }
+    },
+    {
+      "id": "pins",
+      "handle": "pins",
+      "name": {
+        "en": "Pins & patches",
+        "es": "Pines y parches"
+      }
+    },
+    {
+      "id": "accessories",
+      "handle": "accessories",
+      "name": {
+        "en": "Accessories",
+        "es": "Accesorios"
+      }
+    },
+    {
+      "id": "stationery",
+      "handle": "stationery",
+      "name": {
+        "en": "Stationery",
+        "es": "Papelería"
+      }
+    }
+  ],
+  "products": [
+    {
+      "id": "aklabs-essential-hoodie",
+      "handle": "aklabs-essential-hoodie",
+      "categoryId": "hoodies",
+      "copy": {
+        "en": {
+          "title": "AKLabs Essential Hoodie",
+          "subtitle": "Heavyweight fleece with an embroidered AK monogram",
+          "description": "The piece the lab is known for. A 320 gsm premium fleece hoodie with a brushed interior and a high-density embroidered AK monogram on the chest. Relaxed unisex fit, deep kangaroo pocket, and reinforced seams made for late nights and cold mornings."
+        },
+        "es": {
+          "title": "AKLabs Essential Hoodie",
+          "subtitle": "Felpa premium con monograma AK bordado",
+          "description": "La pieza insignia de AKLabs. Sudadera con capucha de felpa premium (320 g/m2) con interior afelpado y el monograma AK bordado en alta densidad sobre el pecho. Corte unisex relajado, bolsillo canguro amplio y costuras reforzadas: pensada para las madrugadas frías de la sierra y las sesiones largas de código."
+        }
+      },
+      "material": {
+        "en": "80% combed cotton, 20% polyester",
+        "es": "80 % algodón peinado, 20 % poliéster"
+      },
+      "weight": 650,
+      "prices": {
+        "USD": 5800,
+        "EUR": 5400
+      },
+      "salePrices": null,
+      "images": [
+        {
+          "id": "hoodie-black-front",
+          "source": "/aklabs/products/hoodie-black-front.png",
+          "width": 1024,
+          "height": 1024,
+          "alt": {
+            "en": "Black AKLabs pullover hoodie with a red, blue and cyan AK chest monogram.",
+            "es": "Sudadera negra AKLabs con capucha y monograma AK rojo, azul y celeste en el pecho."
+          },
+          "avif": {
+            "400": "/aklabs/products/hoodie-black-front-400.avif",
+            "800": "/aklabs/products/hoodie-black-front-800.avif"
+          },
+          "webp": {
+            "400": "/aklabs/products/hoodie-black-front-400.webp",
+            "800": "/aklabs/products/hoodie-black-front-800.webp"
+          }
+        },
+        {
+          "id": "hoodie-navy-front",
+          "source": "/aklabs/products/hoodie-navy-front.png",
+          "width": 1024,
+          "height": 1024,
+          "alt": {
+            "en": "Navy AKLabs pullover hoodie with a red, blue and cyan AK chest monogram.",
+            "es": "Sudadera azul marino AKLabs con capucha y monograma AK rojo, azul y celeste en el pecho."
+          },
+          "avif": {
+            "400": "/aklabs/products/hoodie-navy-front-400.avif",
+            "800": "/aklabs/products/hoodie-navy-front-800.avif"
+          },
+          "webp": {
+            "400": "/aklabs/products/hoodie-navy-front-400.webp",
+            "800": "/aklabs/products/hoodie-navy-front-800.webp"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "size",
+          "name": {
+            "en": "Size",
+            "es": "Talla"
+          },
+          "values": [
+            {
+              "id": "s",
+              "label": {
+                "en": "S",
+                "es": "S"
+              }
+            },
+            {
+              "id": "m",
+              "label": {
+                "en": "M",
+                "es": "M"
+              }
+            },
+            {
+              "id": "l",
+              "label": {
+                "en": "L",
+                "es": "L"
+              }
+            },
+            {
+              "id": "xl",
+              "label": {
+                "en": "XL",
+                "es": "XL"
+              }
+            }
+          ]
+        },
+        {
+          "id": "color",
+          "name": {
+            "en": "Color",
+            "es": "Color"
+          },
+          "values": [
+            {
+              "id": "black",
+              "label": {
+                "en": "Black",
+                "es": "Negro"
+              }
+            },
+            {
+              "id": "navy",
+              "label": {
+                "en": "Navy",
+                "es": "Azul marino"
+              }
+            }
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "id": "aklabs-essential-hoodie-1",
+          "sku": "AKLABSESSENTIALHOODIE-S-BLACK",
+          "options": {
+            "size": "s",
+            "color": "black"
+          },
+          "prices": {
+            "USD": 5800,
+            "EUR": 5400
+          },
+          "salePrices": null
+        },
+        {
+          "id": "aklabs-essential-hoodie-2",
+          "sku": "AKLABSESSENTIALHOODIE-S-NAVY",
+          "options": {
+            "size": "s",
+            "color": "navy"
+          },
+          "prices": {
+            "USD": 5800,
+            "EUR": 5400
+          },
+          "salePrices": null
+        },
+        {
+          "id": "aklabs-essential-hoodie-3",
+          "sku": "AKLABSESSENTIALHOODIE-M-BLACK",
+          "options": {
+            "size": "m",
+            "color": "black"
+          },
+          "prices": {
+            "USD": 5800,
+            "EUR": 5400
+          },
+          "salePrices": null
+        },
+        {
+          "id": "aklabs-essential-hoodie-4",
+          "sku": "AKLABSESSENTIALHOODIE-M-NAVY",
+          "options": {
+            "size": "m",
+            "color": "navy"
+          },
+          "prices": {
+            "USD": 5800,
+            "EUR": 5400
+          },
+          "salePrices": null
+        },
+        {
+          "id": "aklabs-essential-hoodie-5",
+          "sku": "AKLABSESSENTIALHOODIE-L-BLACK",
+          "options": {
+            "size": "l",
+            "color": "black"
+          },
+          "prices": {
+            "USD": 5800,
+            "EUR": 5400
+          },
+          "salePrices": null
+        },
+        {
+          "id": "aklabs-essential-hoodie-6",
+          "sku": "AKLABSESSENTIALHOODIE-L-NAVY",
+          "options": {
+            "size": "l",
+            "color": "navy"
+          },
+          "prices": {
+            "USD": 5800,
+            "EUR": 5400
+          },
+          "salePrices": null
+        },
+        {
+          "id": "aklabs-essential-hoodie-7",
+          "sku": "AKLABSESSENTIALHOODIE-XL-BLACK",
+          "options": {
+            "size": "xl",
+            "color": "black"
+          },
+          "prices": {
+            "USD": 5800,
+            "EUR": 5400
+          },
+          "salePrices": null
+        },
+        {
+          "id": "aklabs-essential-hoodie-8",
+          "sku": "AKLABSESSENTIALHOODIE-XL-NAVY",
+          "options": {
+            "size": "xl",
+            "color": "navy"
+          },
+          "prices": {
+            "USD": 5800,
+            "EUR": 5400
+          },
+          "salePrices": null
+        }
+      ]
+    },
+    {
+      "id": "aklabs-zip-hoodie",
+      "handle": "aklabs-zip-hoodie",
+      "categoryId": "hoodies",
+      "copy": {
+        "en": {
+          "title": "AKLabs Zip Hoodie",
+          "subtitle": "Full zip, same fleece, three lab colors",
+          "description": "A full-zip version of the Essential fleece. Metal zipper, ribbed cuffs, and the AK monogram embroidered small on the chest. Cut to layer over a tee on a flight or in a studio that never quite warms up."
+        },
+        "es": {
+          "title": "AKLabs Zip Hoodie",
+          "subtitle": "Cierre completo, misma felpa, tres colores del lab",
+          "description": "Versión con cierre completo de la felpa Essential. Cremallera metálica, puños ribeteados y el monograma AK bordado pequeño en el pecho. Pensada para llevarla sobre una camiseta en un vuelo o en un estudio que nunca termina de calentarse."
+        }
+      },
+      "material": {
+        "en": "80% combed cotton, 20% polyester",
+        "es": "80 % algodón peinado, 20 % poliéster"
+      },
+      "weight": 680,
+      "prices": {
+        "USD": 6400,
+        "EUR": 5900
+      },
+      "salePrices": null,
+      "images": [
+        {
+          "id": "zip-hoodie-navy",
+          "source": "/aklabs/products/zip-hoodie-navy.png",
+          "width": 1024,
+          "height": 1024,
+          "alt": {
+            "en": "Navy AKLabs zip hoodie with a small multicolor AK chest mark.",
+            "es": "Sudadera azul marino AKLabs con cremallera y marca AK multicolor en el pecho."
+          },
+          "avif": {
+            "400": "/aklabs/products/zip-hoodie-navy-400.avif",
+            "800": "/aklabs/products/zip-hoodie-navy-800.avif"
+          },
+          "webp": {
+            "400": "/aklabs/products/zip-hoodie-navy-400.webp",
+            "800": "/aklabs/products/zip-hoodie-navy-800.webp"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "size",
+          "name": {
+            "en": "Size",
+            "es": "Talla"
+          },
+          "values": [
+            {
+              "id": "s",
+              "label": {
+                "en": "S",
+                "es": "S"
+              }
+            },
+            {
+              "id": "m",
+              "label": {
+                "en": "M",
+                "es": "M"
+              }
+            },
+            {
+              "id": "l",
+              "label": {
+                "en": "L",
+                "es": "L"
+              }
+            },
+            {
+              "id": "xl",
+              "label": {
+                "en": "XL",
+                "es": "XL"
+              }
+            }
+          ]
+        },
+        {
+          "id": "color",
+          "name": {
+            "en": "Color",
+            "es": "Color"
+          },
+          "values": [
+            {
+              "id": "navy",
+              "label": {
+                "en": "Navy",
+                "es": "Azul marino"
+              }
+            },
+            {
+              "id": "black",
+              "label": {
+                "en": "Black",
+                "es": "Negro"
+              }
+            },
+            {
+              "id": "red",
+              "label": {
+                "en": "Red",
+                "es": "Rojo"
+              }
+            }
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "id": "aklabs-zip-hoodie-1",
+          "sku": "AKLABSZIPHOODIE-S-NAVY",
+          "options": {
+            "size": "s",
+            "color": "navy"
+          },
+          "prices": {
+            "USD": 6400,
+            "EUR": 5900
+          },
+          "salePrices": null
+        },
+        {
+          "id": "aklabs-zip-hoodie-2",
+          "sku": "AKLABSZIPHOODIE-S-BLACK",
+          "options": {
+            "size": "s",
+            "color": "black"
+          },
+          "prices": {
+            "USD": 6400,
+            "EUR": 5900
+          },
+          "salePrices": null
+        },
+        {
+          "id": "aklabs-zip-hoodie-3",
+          "sku": "AKLABSZIPHOODIE-S-RED",
+          "options": {
+            "size": "s",
+            "color": "red"
+          },
+          "prices": {
+            "USD": 6400,
+            "EUR": 5900
+          },
+          "salePrices": null
+        },
+        {
+          "id": "aklabs-zip-hoodie-4",
+          "sku": "AKLABSZIPHOODIE-M-NAVY",
+          "options": {
+            "size": "m",
+            "color": "navy"
+          },
+          "prices": {
+            "USD": 6400,
+            "EUR": 5900
+          },
+          "salePrices": null
+        },
+        {
+          "id": "aklabs-zip-hoodie-5",
+          "sku": "AKLABSZIPHOODIE-M-BLACK",
+          "options": {
+            "size": "m",
+            "color": "black"
+          },
+          "prices": {
+            "USD": 6400,
+            "EUR": 5900
+          },
+          "salePrices": null
+        },
+        {
+          "id": "aklabs-zip-hoodie-6",
+          "sku": "AKLABSZIPHOODIE-M-RED",
+          "options": {
+            "size": "m",
+            "color": "red"
+          },
+          "prices": {
+            "USD": 6400,
+            "EUR": 5900
+          },
+          "salePrices": null
+        },
+        {
+          "id": "aklabs-zip-hoodie-7",
+          "sku": "AKLABSZIPHOODIE-L-NAVY",
+          "options": {
+            "size": "l",
+            "color": "navy"
+          },
+          "prices": {
+            "USD": 6400,
+            "EUR": 5900
+          },
+          "salePrices": null
+        },
+        {
+          "id": "aklabs-zip-hoodie-8",
+          "sku": "AKLABSZIPHOODIE-L-BLACK",
+          "options": {
+            "size": "l",
+            "color": "black"
+          },
+          "prices": {
+            "USD": 6400,
+            "EUR": 5900
+          },
+          "salePrices": null
+        },
+        {
+          "id": "aklabs-zip-hoodie-9",
+          "sku": "AKLABSZIPHOODIE-L-RED",
+          "options": {
+            "size": "l",
+            "color": "red"
+          },
+          "prices": {
+            "USD": 6400,
+            "EUR": 5900
+          },
+          "salePrices": null
+        },
+        {
+          "id": "aklabs-zip-hoodie-10",
+          "sku": "AKLABSZIPHOODIE-XL-NAVY",
+          "options": {
+            "size": "xl",
+            "color": "navy"
+          },
+          "prices": {
+            "USD": 6400,
+            "EUR": 5900
+          },
+          "salePrices": null
+        },
+        {
+          "id": "aklabs-zip-hoodie-11",
+          "sku": "AKLABSZIPHOODIE-XL-BLACK",
+          "options": {
+            "size": "xl",
+            "color": "black"
+          },
+          "prices": {
+            "USD": 6400,
+            "EUR": 5900
+          },
+          "salePrices": null
+        },
+        {
+          "id": "aklabs-zip-hoodie-12",
+          "sku": "AKLABSZIPHOODIE-XL-RED",
+          "options": {
+            "size": "xl",
+            "color": "red"
+          },
+          "prices": {
+            "USD": 6400,
+            "EUR": 5900
+          },
+          "salePrices": null
+        }
+      ]
+    },
+    {
+      "id": "aklabs-pro-cap",
+      "handle": "aklabs-pro-cap",
+      "categoryId": "caps",
+      "copy": {
+        "en": {
+          "title": "AKLabs Pro Cap",
+          "subtitle": "Six panels, curved brim, raised embroidery",
+          "description": "A structured six-panel cap with a curved brim and an adjustable metal clasp. The AK monogram is embroidered in relief using the three brand colors. Cotton twill that works in a studio, a gym, or on the street."
+        },
+        "es": {
+          "title": "AKLabs Pro Cap",
+          "subtitle": "Seis paneles, visera curva y bordado en relieve",
+          "description": "Gorra estructurada de seis paneles con visera curva y cierre metálico ajustable. El monograma AK va bordado en relieve con los tres colores de la marca. Twill de algodón respirable para el día a día, el gimnasio o el streetwear."
+        }
+      },
+      "material": {
+        "en": "100% cotton twill",
+        "es": "Sarga de algodón 100 %"
+      },
+      "weight": 120,
+      "prices": {
+        "USD": 2800,
+        "EUR": 2600
+      },
+      "salePrices": null,
+      "images": [
+        {
+          "id": "cap-black-front",
+          "source": "/aklabs/products/cap-black-front.png",
+          "width": 1024,
+          "height": 1024,
+          "alt": {
+            "en": "Black curved-brim AKLabs cap with a red, blue and cyan embroidered AK.",
+            "es": "Gorra negra AKLabs de visera curva con AK bordado en rojo, azul y celeste."
+          },
+          "avif": {
+            "400": "/aklabs/products/cap-black-front-400.avif",
+            "800": "/aklabs/products/cap-black-front-800.avif"
+          },
+          "webp": {
+            "400": "/aklabs/products/cap-black-front-400.webp",
+            "800": "/aklabs/products/cap-black-front-800.webp"
+          }
+        },
+        {
+          "id": "cap-navy-front",
+          "source": "/aklabs/products/cap-navy-front.png",
+          "width": 1024,
+          "height": 1024,
+          "alt": {
+            "en": "Navy curved-brim AKLabs cap with a red, blue and cyan embroidered AK.",
+            "es": "Gorra azul marino AKLabs de visera curva con AK bordado en rojo, azul y celeste."
+          },
+          "avif": {
+            "400": "/aklabs/products/cap-navy-front-400.avif",
+            "800": "/aklabs/products/cap-navy-front-800.avif"
+          },
+          "webp": {
+            "400": "/aklabs/products/cap-navy-front-400.webp",
+            "800": "/aklabs/products/cap-navy-front-800.webp"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "size",
+          "name": {
+            "en": "Size",
+            "es": "Talla"
+          },
+          "values": [
+            {
+              "id": "one-size",
+              "label": {
+                "en": "One size",
+                "es": "Talla única"
+              }
+            }
+          ]
+        },
+        {
+          "id": "color",
+          "name": {
+            "en": "Color",
+            "es": "Color"
+          },
+          "values": [
+            {
+              "id": "black",
+              "label": {
+                "en": "Black",
+                "es": "Negro"
+              }
+            },
+            {
+              "id": "navy",
+              "label": {
+                "en": "Navy",
+                "es": "Azul marino"
+              }
+            }
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "id": "aklabs-pro-cap-1",
+          "sku": "AKLABSPROCAP-ONE-SIZE-BLACK",
+          "options": {
+            "size": "one-size",
+            "color": "black"
+          },
+          "prices": {
+            "USD": 2800,
+            "EUR": 2600
+          },
+          "salePrices": null
+        },
+        {
+          "id": "aklabs-pro-cap-2",
+          "sku": "AKLABSPROCAP-ONE-SIZE-NAVY",
+          "options": {
+            "size": "one-size",
+            "color": "navy"
+          },
+          "prices": {
+            "USD": 2800,
+            "EUR": 2600
+          },
+          "salePrices": null
+        }
+      ]
+    },
+    {
+      "id": "aklabs-dad-hat",
+      "handle": "aklabs-dad-hat",
+      "categoryId": "caps",
+      "copy": {
+        "en": {
+          "title": "AKLabs Dad Hat",
+          "subtitle": "Unstructured cotton, low profile",
+          "description": "An unstructured dad hat in washed cotton with a soft brim. The AK mark is embroidered small on the front panel. Lighter than the Pro Cap, meant for everyday wear."
+        },
+        "es": {
+          "title": "AKLabs Dad Hat",
+          "subtitle": "Algodón sin estructura, perfil bajo",
+          "description": "Dad hat sin estructura en algodón lavado con visera suave. La marca AK va bordada pequeña en el panel frontal. Más ligera que la Pro Cap, pensada para el uso diario."
+        }
+      },
+      "material": {
+        "en": "100% washed cotton",
+        "es": "Algodón lavado 100 %"
+      },
+      "weight": 90,
+      "prices": {
+        "USD": 2400,
+        "EUR": 2200
+      },
+      "salePrices": null,
+      "images": [
+        {
+          "id": "dad-hat-black",
+          "source": "/aklabs/products/dad-hat-black.png",
+          "width": 1024,
+          "height": 1024,
+          "alt": {
+            "en": "Black low-profile AKLabs dad hat with a multicolor AK front mark.",
+            "es": "Gorra negra AKLabs de perfil bajo con marca AK multicolor al frente."
+          },
+          "avif": {
+            "400": "/aklabs/products/dad-hat-black-400.avif",
+            "800": "/aklabs/products/dad-hat-black-800.avif"
+          },
+          "webp": {
+            "400": "/aklabs/products/dad-hat-black-400.webp",
+            "800": "/aklabs/products/dad-hat-black-800.webp"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "size",
+          "name": {
+            "en": "Size",
+            "es": "Talla"
+          },
+          "values": [
+            {
+              "id": "one-size",
+              "label": {
+                "en": "One size",
+                "es": "Talla única"
+              }
+            }
+          ]
+        },
+        {
+          "id": "color",
+          "name": {
+            "en": "Color",
+            "es": "Color"
+          },
+          "values": [
+            {
+              "id": "black",
+              "label": {
+                "en": "Black",
+                "es": "Negro"
+              }
+            },
+            {
+              "id": "navy",
+              "label": {
+                "en": "Navy",
+                "es": "Azul marino"
+              }
+            },
+            {
+              "id": "red",
+              "label": {
+                "en": "Red",
+                "es": "Rojo"
+              }
+            }
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "id": "aklabs-dad-hat-1",
+          "sku": "AKLABSDADHAT-ONE-SIZE-BLACK",
+          "options": {
+            "size": "one-size",
+            "color": "black"
+          },
+          "prices": {
+            "USD": 2400,
+            "EUR": 2200
+          },
+          "salePrices": null
+        },
+        {
+          "id": "aklabs-dad-hat-2",
+          "sku": "AKLABSDADHAT-ONE-SIZE-NAVY",
+          "options": {
+            "size": "one-size",
+            "color": "navy"
+          },
+          "prices": {
+            "USD": 2400,
+            "EUR": 2200
+          },
+          "salePrices": null
+        },
+        {
+          "id": "aklabs-dad-hat-3",
+          "sku": "AKLABSDADHAT-ONE-SIZE-RED",
+          "options": {
+            "size": "one-size",
+            "color": "red"
+          },
+          "prices": {
+            "USD": 2400,
+            "EUR": 2200
+          },
+          "salePrices": null
+        }
+      ]
+    },
+    {
+      "id": "aklabs-steel-thermo",
+      "handle": "aklabs-steel-thermo",
+      "categoryId": "drinkware",
+      "copy": {
+        "en": {
+          "title": "AKLabs Steel Thermo 750 ml",
+          "subtitle": "12 hours hot, 24 hours cold",
+          "description": "A double-wall vacuum bottle that keeps drinks hot for 12 hours and cold for 24. Leak-resistant lid, matte black finish, and a vertical AK printed in red, blue, and cyan. 750 ml."
+        },
+        "es": {
+          "title": "AKLabs Steel Thermo 750 ml",
+          "subtitle": "12 h caliente, 24 h frío",
+          "description": "Termo de acero inoxidable con doble pared al vacío: mantiene tus bebidas calientes hasta 12 horas y frías hasta 24. Tapa hermética a prueba de derrames, acabado negro mate y el AK vertical impreso en rojo, azul y celeste. Capacidad de 750 ml."
+        }
+      },
+      "material": {
+        "en": "18/8 stainless steel, double wall vacuum",
+        "es": "Acero inoxidable 18/8, doble pared al vacío"
+      },
+      "weight": 380,
+      "prices": {
+        "USD": 3400,
+        "EUR": 3200
+      },
+      "salePrices": null,
+      "images": [
+        {
+          "id": "thermo-black",
+          "source": "/aklabs/products/thermo-black.png",
+          "width": 864,
+          "height": 1152,
+          "alt": {
+            "en": "Matte black AKLabs thermos with a vertical red, blue and cyan AK print.",
+            "es": "Termo negro mate AKLabs con estampado AK vertical en rojo, azul y celeste."
+          },
+          "avif": {
+            "400": "/aklabs/products/thermo-black-400.avif",
+            "800": "/aklabs/products/thermo-black-800.avif"
+          },
+          "webp": {
+            "400": "/aklabs/products/thermo-black-400.webp",
+            "800": "/aklabs/products/thermo-black-800.webp"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "capacity",
+          "name": {
+            "en": "Capacity",
+            "es": "Capacidad"
+          },
+          "values": [
+            {
+              "id": "750-ml",
+              "label": {
+                "en": "750 ml",
+                "es": "750 ml"
+              }
+            }
+          ]
+        },
+        {
+          "id": "color",
+          "name": {
+            "en": "Color",
+            "es": "Color"
+          },
+          "values": [
+            {
+              "id": "matte-black",
+              "label": {
+                "en": "Matte black",
+                "es": "Negro mate"
+              }
+            }
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "id": "aklabs-steel-thermo-1",
+          "sku": "AKLABSSTEELTHERMO-750-ML-MATTE-BLACK",
+          "options": {
+            "capacity": "750-ml",
+            "color": "matte-black"
+          },
+          "prices": {
+            "USD": 3400,
+            "EUR": 3200
+          },
+          "salePrices": null
+        }
+      ]
+    },
+    {
+      "id": "aklabs-insulated-bottle",
+      "handle": "aklabs-insulated-bottle",
+      "categoryId": "drinkware",
+      "copy": {
+        "en": {
+          "title": "AKLabs Insulated Bottle 1 L",
+          "subtitle": "Brushed steel with a laser-etched wordmark",
+          "description": "A one-liter brushed stainless bottle with vacuum insulation and a screw cap. The AKLABS wordmark is laser-etched on the side. Built to stay on a desk or in a bag all day."
+        },
+        "es": {
+          "title": "AKLabs Insulated Bottle 1 L",
+          "subtitle": "Acero cepillado con grabado láser",
+          "description": "Botella térmica de acero inoxidable cepillado con aislamiento al vacío y tapa a rosca. Wordmark AKLABS grabado con láser. Un litro de capacidad para hidratarte todo el día, en la oficina o en la montaña."
+        }
+      },
+      "material": {
+        "en": "Brushed 18/8 stainless steel",
+        "es": "Acero inoxidable 18/8 cepillado"
+      },
+      "weight": 420,
+      "prices": {
+        "USD": 3600,
+        "EUR": 3400
+      },
+      "salePrices": null,
+      "images": [
+        {
+          "id": "bottle-steel",
+          "source": "/aklabs/products/bottle-steel.png",
+          "width": 864,
+          "height": 1152,
+          "alt": {
+            "en": "Silver brushed steel AKLabs bottle with a blue and cyan AKLABS wordmark.",
+            "es": "Botella plateada AKLabs de acero cepillado con nombre AKLABS azul y celeste."
+          },
+          "avif": {
+            "400": "/aklabs/products/bottle-steel-400.avif",
+            "800": "/aklabs/products/bottle-steel-800.avif"
+          },
+          "webp": {
+            "400": "/aklabs/products/bottle-steel-400.webp",
+            "800": "/aklabs/products/bottle-steel-800.webp"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "capacity",
+          "name": {
+            "en": "Capacity",
+            "es": "Capacidad"
+          },
+          "values": [
+            {
+              "id": "1-l",
+              "label": {
+                "en": "1 L",
+                "es": "1 L"
+              }
+            }
+          ]
+        },
+        {
+          "id": "finish",
+          "name": {
+            "en": "Finish",
+            "es": "Acabado"
+          },
+          "values": [
+            {
+              "id": "brushed-steel",
+              "label": {
+                "en": "Brushed steel",
+                "es": "Acero cepillado"
+              }
+            }
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "id": "aklabs-insulated-bottle-1",
+          "sku": "AKLABSINSULATEDBOTTLE-1-L-BRUSHED-STEEL",
+          "options": {
+            "capacity": "1-l",
+            "finish": "brushed-steel"
+          },
+          "prices": {
+            "USD": 3600,
+            "EUR": 3400
+          },
+          "salePrices": null
+        }
+      ]
+    },
+    {
+      "id": "aklabs-tech-tee",
+      "handle": "aklabs-tech-tee",
+      "categoryId": "tees",
+      "copy": {
+        "en": {
+          "title": "AKLabs Tech Tee",
+          "subtitle": "Ringspun cotton with a gradient AK",
+          "description": "A unisex ringspun tee at 180 gsm, soft from the first wash. Large-format DTG print of the AK monogram in a gradient. Modern fit, on its own or under the hoodie."
+        },
+        "es": {
+          "title": "AKLabs Tech Tee",
+          "subtitle": "Algodón ringspun con AK en gradiente",
+          "description": "Camiseta unisex de algodón ringspun de 180 g/m2, suave desde el primer uso. Estampado DTG de gran formato con el monograma AK en gradiente. Corte moderno que funciona sola o como capa debajo de la hoodie AKLabs."
+        }
+      },
+      "material": {
+        "en": "100% ringspun cotton",
+        "es": "Algodón hilado en anillos 100 %"
+      },
+      "weight": 220,
+      "prices": {
+        "USD": 2600,
+        "EUR": 2400
+      },
+      "salePrices": null,
+      "images": [
+        {
+          "id": "tee-gray-front",
+          "source": "/aklabs/products/tee-gray-front.png",
+          "width": 1024,
+          "height": 1024,
+          "alt": {
+            "en": "Heather gray AKLabs T-shirt with a large red, blue and cyan AK print.",
+            "es": "Camiseta gris jaspeado AKLabs con estampado AK grande en rojo, azul y celeste."
+          },
+          "avif": {
+            "400": "/aklabs/products/tee-gray-front-400.avif",
+            "800": "/aklabs/products/tee-gray-front-800.avif"
+          },
+          "webp": {
+            "400": "/aklabs/products/tee-gray-front-400.webp",
+            "800": "/aklabs/products/tee-gray-front-800.webp"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "size",
+          "name": {
+            "en": "Size",
+            "es": "Talla"
+          },
+          "values": [
+            {
+              "id": "s",
+              "label": {
+                "en": "S",
+                "es": "S"
+              }
+            },
+            {
+              "id": "m",
+              "label": {
+                "en": "M",
+                "es": "M"
+              }
+            },
+            {
+              "id": "l",
+              "label": {
+                "en": "L",
+                "es": "L"
+              }
+            },
+            {
+              "id": "xl",
+              "label": {
+                "en": "XL",
+                "es": "XL"
+              }
+            }
+          ]
+        },
+        {
+          "id": "color",
+          "name": {
+            "en": "Color",
+            "es": "Color"
+          },
+          "values": [
+            {
+              "id": "heather-gray",
+              "label": {
+                "en": "Heather gray",
+                "es": "Gris jaspeado"
+              }
+            },
+            {
+              "id": "black",
+              "label": {
+                "en": "Black",
+                "es": "Negro"
+              }
+            }
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "id": "aklabs-tech-tee-1",
+          "sku": "AKLABSTECHTEE-S-HEATHER-GRAY",
+          "options": {
+            "size": "s",
+            "color": "heather-gray"
+          },
+          "prices": {
+            "USD": 2600,
+            "EUR": 2400
+          },
+          "salePrices": null
+        },
+        {
+          "id": "aklabs-tech-tee-2",
+          "sku": "AKLABSTECHTEE-S-BLACK",
+          "options": {
+            "size": "s",
+            "color": "black"
+          },
+          "prices": {
+            "USD": 2600,
+            "EUR": 2400
+          },
+          "salePrices": null
+        },
+        {
+          "id": "aklabs-tech-tee-3",
+          "sku": "AKLABSTECHTEE-M-HEATHER-GRAY",
+          "options": {
+            "size": "m",
+            "color": "heather-gray"
+          },
+          "prices": {
+            "USD": 2600,
+            "EUR": 2400
+          },
+          "salePrices": null
+        },
+        {
+          "id": "aklabs-tech-tee-4",
+          "sku": "AKLABSTECHTEE-M-BLACK",
+          "options": {
+            "size": "m",
+            "color": "black"
+          },
+          "prices": {
+            "USD": 2600,
+            "EUR": 2400
+          },
+          "salePrices": null
+        },
+        {
+          "id": "aklabs-tech-tee-5",
+          "sku": "AKLABSTECHTEE-L-HEATHER-GRAY",
+          "options": {
+            "size": "l",
+            "color": "heather-gray"
+          },
+          "prices": {
+            "USD": 2600,
+            "EUR": 2400
+          },
+          "salePrices": null
+        },
+        {
+          "id": "aklabs-tech-tee-6",
+          "sku": "AKLABSTECHTEE-L-BLACK",
+          "options": {
+            "size": "l",
+            "color": "black"
+          },
+          "prices": {
+            "USD": 2600,
+            "EUR": 2400
+          },
+          "salePrices": null
+        },
+        {
+          "id": "aklabs-tech-tee-7",
+          "sku": "AKLABSTECHTEE-XL-HEATHER-GRAY",
+          "options": {
+            "size": "xl",
+            "color": "heather-gray"
+          },
+          "prices": {
+            "USD": 2600,
+            "EUR": 2400
+          },
+          "salePrices": null
+        },
+        {
+          "id": "aklabs-tech-tee-8",
+          "sku": "AKLABSTECHTEE-XL-BLACK",
+          "options": {
+            "size": "xl",
+            "color": "black"
+          },
+          "prices": {
+            "USD": 2600,
+            "EUR": 2400
+          },
+          "salePrices": null
+        }
+      ]
+    },
+    {
+      "id": "aklabs-studio-tee",
+      "handle": "aklabs-studio-tee",
+      "categoryId": "tees",
+      "copy": {
+        "en": {
+          "title": "AKLabs Studio Tee",
+          "subtitle": "Heavyweight blank with a centered mark",
+          "description": "A heavier 220 gsm tee with a centered AK monogram. The print uses the lab palette: red, royal blue, and cyan. Boxy unisex fit."
+        },
+        "es": {
+          "title": "AKLabs Studio Tee",
+          "subtitle": "Blank de peso grueso con marca centrada",
+          "description": "Camiseta más pesada de 220 g/m2 con el monograma AK centrado. El estampado usa la paleta del lab: rojo, azul royal y celeste. Corte unisex boxy."
+        }
+      },
+      "material": {
+        "en": "100% cotton, 220 gsm",
+        "es": "Algodón 100 %, 220 g/m²"
+      },
+      "weight": 240,
+      "prices": {
+        "USD": 2900,
+        "EUR": 2700
+      },
+      "salePrices": null,
+      "images": [
+        {
+          "id": "studio-tee-white",
+          "source": "/aklabs/products/studio-tee-white.png",
+          "width": 1024,
+          "height": 1024,
+          "alt": {
+            "en": "White AKLabs T-shirt with a centered red, blue and cyan AK print.",
+            "es": "Camiseta blanca AKLabs con estampado AK centrado en rojo, azul y celeste."
+          },
+          "avif": {
+            "400": "/aklabs/products/studio-tee-white-400.avif",
+            "800": "/aklabs/products/studio-tee-white-800.avif"
+          },
+          "webp": {
+            "400": "/aklabs/products/studio-tee-white-400.webp",
+            "800": "/aklabs/products/studio-tee-white-800.webp"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "size",
+          "name": {
+            "en": "Size",
+            "es": "Talla"
+          },
+          "values": [
+            {
+              "id": "s",
+              "label": {
+                "en": "S",
+                "es": "S"
+              }
+            },
+            {
+              "id": "m",
+              "label": {
+                "en": "M",
+                "es": "M"
+              }
+            },
+            {
+              "id": "l",
+              "label": {
+                "en": "L",
+                "es": "L"
+              }
+            },
+            {
+              "id": "xl",
+              "label": {
+                "en": "XL",
+                "es": "XL"
+              }
+            }
+          ]
+        },
+        {
+          "id": "color",
+          "name": {
+            "en": "Color",
+            "es": "Color"
+          },
+          "values": [
+            {
+              "id": "white",
+              "label": {
+                "en": "White",
+                "es": "Blanco"
+              }
+            },
+            {
+              "id": "black",
+              "label": {
+                "en": "Black",
+                "es": "Negro"
+              }
+            }
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "id": "aklabs-studio-tee-1",
+          "sku": "AKLABSSTUDIOTEE-S-WHITE",
+          "options": {
+            "size": "s",
+            "color": "white"
+          },
+          "prices": {
+            "USD": 2900,
+            "EUR": 2700
+          },
+          "salePrices": null
+        },
+        {
+          "id": "aklabs-studio-tee-2",
+          "sku": "AKLABSSTUDIOTEE-S-BLACK",
+          "options": {
+            "size": "s",
+            "color": "black"
+          },
+          "prices": {
+            "USD": 2900,
+            "EUR": 2700
+          },
+          "salePrices": null
+        },
+        {
+          "id": "aklabs-studio-tee-3",
+          "sku": "AKLABSSTUDIOTEE-M-WHITE",
+          "options": {
+            "size": "m",
+            "color": "white"
+          },
+          "prices": {
+            "USD": 2900,
+            "EUR": 2700
+          },
+          "salePrices": null
+        },
+        {
+          "id": "aklabs-studio-tee-4",
+          "sku": "AKLABSSTUDIOTEE-M-BLACK",
+          "options": {
+            "size": "m",
+            "color": "black"
+          },
+          "prices": {
+            "USD": 2900,
+            "EUR": 2700
+          },
+          "salePrices": null
+        },
+        {
+          "id": "aklabs-studio-tee-5",
+          "sku": "AKLABSSTUDIOTEE-L-WHITE",
+          "options": {
+            "size": "l",
+            "color": "white"
+          },
+          "prices": {
+            "USD": 2900,
+            "EUR": 2700
+          },
+          "salePrices": null
+        },
+        {
+          "id": "aklabs-studio-tee-6",
+          "sku": "AKLABSSTUDIOTEE-L-BLACK",
+          "options": {
+            "size": "l",
+            "color": "black"
+          },
+          "prices": {
+            "USD": 2900,
+            "EUR": 2700
+          },
+          "salePrices": null
+        },
+        {
+          "id": "aklabs-studio-tee-7",
+          "sku": "AKLABSSTUDIOTEE-XL-WHITE",
+          "options": {
+            "size": "xl",
+            "color": "white"
+          },
+          "prices": {
+            "USD": 2900,
+            "EUR": 2700
+          },
+          "salePrices": null
+        },
+        {
+          "id": "aklabs-studio-tee-8",
+          "sku": "AKLABSSTUDIOTEE-XL-BLACK",
+          "options": {
+            "size": "xl",
+            "color": "black"
+          },
+          "prices": {
+            "USD": 2900,
+            "EUR": 2700
+          },
+          "salePrices": null
+        }
+      ]
+    },
+    {
+      "id": "aklabs-performance-joggers",
+      "handle": "aklabs-performance-joggers",
+      "categoryId": "joggers",
+      "copy": {
+        "en": {
+          "title": "AKLabs Performance Joggers",
+          "subtitle": "Premium fleece and zip pockets",
+          "description": "Premium fleece joggers with an elastic waist, drawcord, and ribbed cuffs. An embroidered AK on the thigh and zippered side pockets. For remote work, the gym, or a long trip."
+        },
+        "es": {
+          "title": "AKLabs Performance Joggers",
+          "subtitle": "Felpa premium y bolsillos con cierre",
+          "description": "Joggers de felpa premium con cintura elástica, cordón y puños ribeteados. Logo AK bordado en el muslo y bolsillos laterales con cierre oculto para llevar lo esencial. Comodidad total para trabajo remoto, gimnasio o viaje."
+        }
+      },
+      "material": {
+        "en": "80% cotton, 20% polyester",
+        "es": "80 % algodón, 20 % poliéster"
+      },
+      "weight": 520,
+      "prices": {
+        "USD": 4800,
+        "EUR": 4500
+      },
+      "salePrices": null,
+      "images": [
+        {
+          "id": "joggers-charcoal",
+          "source": "/aklabs/products/joggers-charcoal.png",
+          "width": 1024,
+          "height": 1024,
+          "alt": {
+            "en": "Charcoal AKLabs joggers with a small multicolor AK thigh mark.",
+            "es": "Pantalones deportivos gris carbón AKLabs con marca AK multicolor en el muslo."
+          },
+          "avif": {
+            "400": "/aklabs/products/joggers-charcoal-400.avif",
+            "800": "/aklabs/products/joggers-charcoal-800.avif"
+          },
+          "webp": {
+            "400": "/aklabs/products/joggers-charcoal-400.webp",
+            "800": "/aklabs/products/joggers-charcoal-800.webp"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "size",
+          "name": {
+            "en": "Size",
+            "es": "Talla"
+          },
+          "values": [
+            {
+              "id": "s",
+              "label": {
+                "en": "S",
+                "es": "S"
+              }
+            },
+            {
+              "id": "m",
+              "label": {
+                "en": "M",
+                "es": "M"
+              }
+            },
+            {
+              "id": "l",
+              "label": {
+                "en": "L",
+                "es": "L"
+              }
+            },
+            {
+              "id": "xl",
+              "label": {
+                "en": "XL",
+                "es": "XL"
+              }
+            }
+          ]
+        },
+        {
+          "id": "color",
+          "name": {
+            "en": "Color",
+            "es": "Color"
+          },
+          "values": [
+            {
+              "id": "charcoal",
+              "label": {
+                "en": "Charcoal",
+                "es": "Gris carbón"
+              }
+            },
+            {
+              "id": "black",
+              "label": {
+                "en": "Black",
+                "es": "Negro"
+              }
+            }
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "id": "aklabs-performance-joggers-1",
+          "sku": "AKLABSPERFORMANCEJOGGERS-S-CHARCOAL",
+          "options": {
+            "size": "s",
+            "color": "charcoal"
+          },
+          "prices": {
+            "USD": 4800,
+            "EUR": 4500
+          },
+          "salePrices": null
+        },
+        {
+          "id": "aklabs-performance-joggers-2",
+          "sku": "AKLABSPERFORMANCEJOGGERS-S-BLACK",
+          "options": {
+            "size": "s",
+            "color": "black"
+          },
+          "prices": {
+            "USD": 4800,
+            "EUR": 4500
+          },
+          "salePrices": null
+        },
+        {
+          "id": "aklabs-performance-joggers-3",
+          "sku": "AKLABSPERFORMANCEJOGGERS-M-CHARCOAL",
+          "options": {
+            "size": "m",
+            "color": "charcoal"
+          },
+          "prices": {
+            "USD": 4800,
+            "EUR": 4500
+          },
+          "salePrices": null
+        },
+        {
+          "id": "aklabs-performance-joggers-4",
+          "sku": "AKLABSPERFORMANCEJOGGERS-M-BLACK",
+          "options": {
+            "size": "m",
+            "color": "black"
+          },
+          "prices": {
+            "USD": 4800,
+            "EUR": 4500
+          },
+          "salePrices": null
+        },
+        {
+          "id": "aklabs-performance-joggers-5",
+          "sku": "AKLABSPERFORMANCEJOGGERS-L-CHARCOAL",
+          "options": {
+            "size": "l",
+            "color": "charcoal"
+          },
+          "prices": {
+            "USD": 4800,
+            "EUR": 4500
+          },
+          "salePrices": null
+        },
+        {
+          "id": "aklabs-performance-joggers-6",
+          "sku": "AKLABSPERFORMANCEJOGGERS-L-BLACK",
+          "options": {
+            "size": "l",
+            "color": "black"
+          },
+          "prices": {
+            "USD": 4800,
+            "EUR": 4500
+          },
+          "salePrices": null
+        },
+        {
+          "id": "aklabs-performance-joggers-7",
+          "sku": "AKLABSPERFORMANCEJOGGERS-XL-CHARCOAL",
+          "options": {
+            "size": "xl",
+            "color": "charcoal"
+          },
+          "prices": {
+            "USD": 4800,
+            "EUR": 4500
+          },
+          "salePrices": null
+        },
+        {
+          "id": "aklabs-performance-joggers-8",
+          "sku": "AKLABSPERFORMANCEJOGGERS-XL-BLACK",
+          "options": {
+            "size": "xl",
+            "color": "black"
+          },
+          "prices": {
+            "USD": 4800,
+            "EUR": 4500
+          },
+          "salePrices": null
+        }
+      ]
+    },
+    {
+      "id": "aklabs-monogram-sticker-pack",
+      "handle": "aklabs-monogram-sticker-pack",
+      "categoryId": "stickers",
+      "copy": {
+        "en": {
+          "title": "AK Monogram Sticker Pack",
+          "subtitle": "Die-cut vinyl in the three lab marks",
+          "description": "Weatherproof vinyl stickers of the AK monogram, the circular badge, and the AKLABS wordmark. Matte or holographic. Made to live on a laptop, a bottle, or a flight case."
+        },
+        "es": {
+          "title": "Pack de stickers monograma AK",
+          "subtitle": "Vinilo troquelado con las tres marcas del lab",
+          "description": "Stickers de vinilo resistente al clima con el monograma AK, el badge circular y el wordmark AKLABS. Acabado mate u holográfico. Pensados para la laptop, el termo o el estuche de viaje."
+        }
+      },
+      "material": {
+        "en": "Weatherproof vinyl",
+        "es": "Vinilo resistente a la intemperie"
+      },
+      "weight": 20,
+      "prices": {
+        "USD": 800,
+        "EUR": 700
+      },
+      "salePrices": null,
+      "images": [
+        {
+          "id": "sticker-pack",
+          "source": "/aklabs/products/sticker-pack.png",
+          "width": 1024,
+          "height": 1024,
+          "alt": {
+            "en": "AKLabs sticker pack featuring red, blue and cyan AK monograms and wordmarks.",
+            "es": "Paquete de pegatinas AKLabs con monogramas AK y nombres en rojo, azul y celeste."
+          },
+          "avif": {
+            "400": "/aklabs/products/sticker-pack-400.avif",
+            "800": "/aklabs/products/sticker-pack-800.avif"
+          },
+          "webp": {
+            "400": "/aklabs/products/sticker-pack-400.webp",
+            "800": "/aklabs/products/sticker-pack-800.webp"
+          }
+        },
+        {
+          "id": "sticker-circle",
+          "source": "/aklabs/products/sticker-circle.png",
+          "width": 551,
+          "height": 521,
+          "alt": {
+            "en": "Circular AKLabs sticker with a red, blue and cyan AK badge.",
+            "es": "Pegatina circular AKLabs con emblema AK rojo, azul y celeste."
+          },
+          "avif": {
+            "400": "/aklabs/products/sticker-circle-400.avif",
+            "800": "/aklabs/products/sticker-circle-800.avif"
+          },
+          "webp": {
+            "400": "/aklabs/products/sticker-circle-400.webp",
+            "800": "/aklabs/products/sticker-circle-800.webp"
+          }
+        },
+        {
+          "id": "sticker-wordmark",
+          "source": "/aklabs/products/sticker-wordmark.png",
+          "width": 845,
+          "height": 391,
+          "alt": {
+            "en": "AKLABS wordmark sticker in blue and cyan on a white background.",
+            "es": "Pegatina con el nombre AKLABS en azul y celeste sobre fondo blanco."
+          },
+          "avif": {
+            "400": "/aklabs/products/sticker-wordmark-400.avif",
+            "800": "/aklabs/products/sticker-wordmark-800.avif"
+          },
+          "webp": {
+            "400": "/aklabs/products/sticker-wordmark-400.webp",
+            "800": "/aklabs/products/sticker-wordmark-800.webp"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "pack",
+          "name": {
+            "en": "Pack",
+            "es": "Paquete"
+          },
+          "values": [
+            {
+              "id": "3-stickers",
+              "label": {
+                "en": "3 stickers",
+                "es": "3 pegatinas"
+              }
+            },
+            {
+              "id": "6-stickers",
+              "label": {
+                "en": "6 stickers",
+                "es": "6 pegatinas"
+              }
+            },
+            {
+              "id": "12-stickers",
+              "label": {
+                "en": "12 stickers",
+                "es": "12 pegatinas"
+              }
+            }
+          ]
+        },
+        {
+          "id": "finish",
+          "name": {
+            "en": "Finish",
+            "es": "Acabado"
+          },
+          "values": [
+            {
+              "id": "matte",
+              "label": {
+                "en": "Matte",
+                "es": "Mate"
+              }
+            },
+            {
+              "id": "holographic",
+              "label": {
+                "en": "Holographic",
+                "es": "Holográfico"
+              }
+            }
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "id": "aklabs-monogram-sticker-pack-1",
+          "sku": "AKLABSMONOGRAMSTICKERPACK-3-STICKERS-MATTE",
+          "options": {
+            "pack": "3-stickers",
+            "finish": "matte"
+          },
+          "prices": {
+            "USD": 800,
+            "EUR": 700
+          },
+          "salePrices": null
+        },
+        {
+          "id": "aklabs-monogram-sticker-pack-2",
+          "sku": "AKLABSMONOGRAMSTICKERPACK-3-STICKERS-HOLOGRAPHIC",
+          "options": {
+            "pack": "3-stickers",
+            "finish": "holographic"
+          },
+          "prices": {
+            "USD": 800,
+            "EUR": 700
+          },
+          "salePrices": null
+        },
+        {
+          "id": "aklabs-monogram-sticker-pack-3",
+          "sku": "AKLABSMONOGRAMSTICKERPACK-6-STICKERS-MATTE",
+          "options": {
+            "pack": "6-stickers",
+            "finish": "matte"
+          },
+          "prices": {
+            "USD": 800,
+            "EUR": 700
+          },
+          "salePrices": null
+        },
+        {
+          "id": "aklabs-monogram-sticker-pack-4",
+          "sku": "AKLABSMONOGRAMSTICKERPACK-6-STICKERS-HOLOGRAPHIC",
+          "options": {
+            "pack": "6-stickers",
+            "finish": "holographic"
+          },
+          "prices": {
+            "USD": 800,
+            "EUR": 700
+          },
+          "salePrices": null
+        },
+        {
+          "id": "aklabs-monogram-sticker-pack-5",
+          "sku": "AKLABSMONOGRAMSTICKERPACK-12-STICKERS-MATTE",
+          "options": {
+            "pack": "12-stickers",
+            "finish": "matte"
+          },
+          "prices": {
+            "USD": 800,
+            "EUR": 700
+          },
+          "salePrices": null
+        },
+        {
+          "id": "aklabs-monogram-sticker-pack-6",
+          "sku": "AKLABSMONOGRAMSTICKERPACK-12-STICKERS-HOLOGRAPHIC",
+          "options": {
+            "pack": "12-stickers",
+            "finish": "holographic"
+          },
+          "prices": {
+            "USD": 800,
+            "EUR": 700
+          },
+          "salePrices": null
+        }
+      ]
+    },
+    {
+      "id": "aklabs-wordmark-sticker-sheet",
+      "handle": "aklabs-wordmark-sticker-sheet",
+      "categoryId": "stickers",
+      "copy": {
+        "en": {
+          "title": "AKLABS Sticker Sheet",
+          "subtitle": "A sheet of small marks for sharing",
+          "description": "One sheet of smaller AK marks and wordmarks, kiss-cut so you can peel just one. Useful when a single logo is too big and you still want the brand on a notebook."
+        },
+        "es": {
+          "title": "Hoja de stickers AKLABS",
+          "subtitle": "Una hoja de marcas pequeñas para compartir",
+          "description": "Una hoja con marcas AK y wordmarks más pequeños, troquelados para despegar solo uno. Útil cuando un logo grande es demasiado y aun así quieres la marca en un cuaderno."
+        }
+      },
+      "material": {
+        "en": "Kiss-cut vinyl sheet",
+        "es": "Hoja de vinilo troquelado"
+      },
+      "weight": 15,
+      "prices": {
+        "USD": 600,
+        "EUR": 500
+      },
+      "salePrices": null,
+      "images": [
+        {
+          "id": "sticker-wordmark",
+          "source": "/aklabs/products/sticker-wordmark.png",
+          "width": 845,
+          "height": 391,
+          "alt": {
+            "en": "AKLABS wordmark sticker in blue and cyan on a white background.",
+            "es": "Pegatina con el nombre AKLABS en azul y celeste sobre fondo blanco."
+          },
+          "avif": {
+            "400": "/aklabs/products/sticker-wordmark-400.avif",
+            "800": "/aklabs/products/sticker-wordmark-800.avif"
+          },
+          "webp": {
+            "400": "/aklabs/products/sticker-wordmark-400.webp",
+            "800": "/aklabs/products/sticker-wordmark-800.webp"
+          }
+        },
+        {
+          "id": "sticker-mark",
+          "source": "/aklabs/products/sticker-mark.png",
+          "width": 551,
+          "height": 521,
+          "alt": {
+            "en": "Die-cut AK monogram sticker in red, blue and cyan.",
+            "es": "Pegatina troquelada del monograma AK en rojo, azul y celeste."
+          },
+          "avif": {
+            "400": "/aklabs/products/sticker-mark-400.avif",
+            "800": "/aklabs/products/sticker-mark-800.avif"
+          },
+          "webp": {
+            "400": "/aklabs/products/sticker-mark-400.webp",
+            "800": "/aklabs/products/sticker-mark-800.webp"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "size",
+          "name": {
+            "en": "Size",
+            "es": "Talla"
+          },
+          "values": [
+            {
+              "id": "a6",
+              "label": {
+                "en": "A6",
+                "es": "A6"
+              }
+            },
+            {
+              "id": "a5",
+              "label": {
+                "en": "A5",
+                "es": "A5"
+              }
+            }
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "id": "aklabs-wordmark-sticker-sheet-1",
+          "sku": "AKLABSWORDMARKSTICKERSHEET-A6",
+          "options": {
+            "size": "a6"
+          },
+          "prices": {
+            "USD": 600,
+            "EUR": 500
+          },
+          "salePrices": null
+        },
+        {
+          "id": "aklabs-wordmark-sticker-sheet-2",
+          "sku": "AKLABSWORDMARKSTICKERSHEET-A5",
+          "options": {
+            "size": "a5"
+          },
+          "prices": {
+            "USD": 600,
+            "EUR": 500
+          },
+          "salePrices": null
+        }
+      ]
+    },
+    {
+      "id": "aklabs-enamel-keychain",
+      "handle": "aklabs-enamel-keychain",
+      "categoryId": "keychains",
+      "copy": {
+        "en": {
+          "title": "AK Enamel Keychain",
+          "subtitle": "Hard enamel and a steel ring",
+          "description": "A hard-enamel charm of the AK monogram with a metal outline and a short steel chain. The red, blue, and cyan fills match the logo. Clips to a bag or a key ring without feeling like a souvenir."
+        },
+        "es": {
+          "title": "Llavero de esmalte AK",
+          "subtitle": "Esmalte duro y aro de acero",
+          "description": "Charm de esmalte duro del monograma AK con contorno metálico y cadena corta de acero. Los rellenos en rojo, azul y celeste coinciden con el logo. Se engancha a una mochila o llaves sin parecer un recuerdo de feria."
+        }
+      },
+      "material": {
+        "en": "Hard enamel on metal",
+        "es": "Esmalte duro sobre metal"
+      },
+      "weight": 35,
+      "prices": {
+        "USD": 1400,
+        "EUR": 1300
+      },
+      "salePrices": null,
+      "images": [
+        {
+          "id": "keychain-enamel",
+          "source": "/aklabs/products/keychain-enamel.png",
+          "width": 1024,
+          "height": 1024,
+          "alt": {
+            "en": "Metal AKLabs keychain with a red, blue and cyan enamel AK charm.",
+            "es": "Llavero metálico AKLabs con charm AK de esmalte rojo, azul y celeste."
+          },
+          "avif": {
+            "400": "/aklabs/products/keychain-enamel-400.avif",
+            "800": "/aklabs/products/keychain-enamel-800.avif"
+          },
+          "webp": {
+            "400": "/aklabs/products/keychain-enamel-400.webp",
+            "800": "/aklabs/products/keychain-enamel-800.webp"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "finish",
+          "name": {
+            "en": "Finish",
+            "es": "Acabado"
+          },
+          "values": [
+            {
+              "id": "black-enamel",
+              "label": {
+                "en": "Black enamel",
+                "es": "Esmalte negro"
+              }
+            },
+            {
+              "id": "silver",
+              "label": {
+                "en": "Silver",
+                "es": "Plateado"
+              }
+            },
+            {
+              "id": "cyan",
+              "label": {
+                "en": "Cyan",
+                "es": "Celeste"
+              }
+            }
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "id": "aklabs-enamel-keychain-1",
+          "sku": "AKLABSENAMELKEYCHAIN-BLACK-ENAMEL",
+          "options": {
+            "finish": "black-enamel"
+          },
+          "prices": {
+            "USD": 1400,
+            "EUR": 1300
+          },
+          "salePrices": null
+        },
+        {
+          "id": "aklabs-enamel-keychain-2",
+          "sku": "AKLABSENAMELKEYCHAIN-SILVER",
+          "options": {
+            "finish": "silver"
+          },
+          "prices": {
+            "USD": 1400,
+            "EUR": 1300
+          },
+          "salePrices": null
+        },
+        {
+          "id": "aklabs-enamel-keychain-3",
+          "sku": "AKLABSENAMELKEYCHAIN-CYAN",
+          "options": {
+            "finish": "cyan"
+          },
+          "prices": {
+            "USD": 1400,
+            "EUR": 1300
+          },
+          "salePrices": null
+        }
+      ]
+    },
+    {
+      "id": "aklabs-acrylic-charm",
+      "handle": "aklabs-acrylic-charm",
+      "categoryId": "keychains",
+      "copy": {
+        "en": {
+          "title": "AK Acrylic Charm",
+          "subtitle": "Clear charm with the circular badge",
+          "description": "A clear acrylic charm printed with the circular AK badge and a silver split ring. Lighter than the enamel piece, and the print stays sharp against the transparency."
+        },
+        "es": {
+          "title": "Charm acrílico AK",
+          "subtitle": "Charm transparente con el badge circular",
+          "description": "Charm de acrílico transparente con el badge circular AK impreso y un aro partido plateado. Más ligero que la pieza de esmalte, y el print se ve nítido sobre la transparencia."
+        }
+      },
+      "material": {
+        "en": "Printed acrylic",
+        "es": "Acrílico impreso"
+      },
+      "weight": 18,
+      "prices": {
+        "USD": 1000,
+        "EUR": 900
+      },
+      "salePrices": null,
+      "images": [
+        {
+          "id": "acrylic-charm",
+          "source": "/aklabs/products/acrylic-charm.png",
+          "width": 1024,
+          "height": 1024,
+          "alt": {
+            "en": "Clear acrylic AKLabs keychain with a multicolor circular AK badge.",
+            "es": "Llavero AKLabs de acrílico transparente con emblema circular AK multicolor."
+          },
+          "avif": {
+            "400": "/aklabs/products/acrylic-charm-400.avif",
+            "800": "/aklabs/products/acrylic-charm-800.avif"
+          },
+          "webp": {
+            "400": "/aklabs/products/acrylic-charm-400.webp",
+            "800": "/aklabs/products/acrylic-charm-800.webp"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "color",
+          "name": {
+            "en": "Color",
+            "es": "Color"
+          },
+          "values": [
+            {
+              "id": "red",
+              "label": {
+                "en": "Red",
+                "es": "Rojo"
+              }
+            },
+            {
+              "id": "blue",
+              "label": {
+                "en": "Blue",
+                "es": "Azul"
+              }
+            },
+            {
+              "id": "cyan",
+              "label": {
+                "en": "Cyan",
+                "es": "Celeste"
+              }
+            }
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "id": "aklabs-acrylic-charm-1",
+          "sku": "AKLABSACRYLICCHARM-RED",
+          "options": {
+            "color": "red"
+          },
+          "prices": {
+            "USD": 1000,
+            "EUR": 900
+          },
+          "salePrices": null
+        },
+        {
+          "id": "aklabs-acrylic-charm-2",
+          "sku": "AKLABSACRYLICCHARM-BLUE",
+          "options": {
+            "color": "blue"
+          },
+          "prices": {
+            "USD": 1000,
+            "EUR": 900
+          },
+          "salePrices": null
+        },
+        {
+          "id": "aklabs-acrylic-charm-3",
+          "sku": "AKLABSACRYLICCHARM-CYAN",
+          "options": {
+            "color": "cyan"
+          },
+          "prices": {
+            "USD": 1000,
+            "EUR": 900
+          },
+          "salePrices": null
+        }
+      ]
+    },
+    {
+      "id": "aklabs-mini-figure",
+      "handle": "aklabs-mini-figure",
+      "categoryId": "figures",
+      "copy": {
+        "en": {
+          "title": "AK Mini Figure",
+          "subtitle": "A 10 cm vinyl figure from the lab",
+          "description": "A small designer vinyl figure in the AK palette: red, royal blue, and cyan. Faceless, hood up, laptop in hand. It sits on a shelf next to the work, not in a toy aisle."
+        },
+        "es": {
+          "title": "Mini figura AK",
+          "subtitle": "Figura de vinilo de 10 cm del laboratorio",
+          "description": "Una pequeña figura de vinilo de diseñador en la paleta AK: rojo, azul royal y celeste. Sin rostro, capucha puesta, laptop en la mano. Vive en el estante junto al trabajo, no en el pasillo de juguetes."
+        }
+      },
+      "material": {
+        "en": "Matte vinyl",
+        "es": "Vinilo mate"
+      },
+      "weight": 140,
+      "prices": {
+        "USD": 3200,
+        "EUR": 3000
+      },
+      "salePrices": null,
+      "images": [
+        {
+          "id": "mini-figure",
+          "source": "/aklabs/products/mini-figure.png",
+          "width": 1024,
+          "height": 1024,
+          "alt": {
+            "en": "AKLabs hooded vinyl figure in red, blue and cyan, holding a laptop.",
+            "es": "Figura AKLabs de vinilo con capucha en rojo, azul y celeste, sosteniendo una laptop."
+          },
+          "avif": {
+            "400": "/aklabs/products/mini-figure-400.avif",
+            "800": "/aklabs/products/mini-figure-800.avif"
+          },
+          "webp": {
+            "400": "/aklabs/products/mini-figure-400.webp",
+            "800": "/aklabs/products/mini-figure-800.webp"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "edition",
+          "name": {
+            "en": "Edition",
+            "es": "Edición"
+          },
+          "values": [
+            {
+              "id": "classic",
+              "label": {
+                "en": "Classic",
+                "es": "Clásica"
+              }
+            },
+            {
+              "id": "night-lab",
+              "label": {
+                "en": "Night lab",
+                "es": "Laboratorio nocturno"
+              }
+            }
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "id": "aklabs-mini-figure-1",
+          "sku": "AKLABSMINIFIGURE-CLASSIC",
+          "options": {
+            "edition": "classic"
+          },
+          "prices": {
+            "USD": 3200,
+            "EUR": 3000
+          },
+          "salePrices": null
+        },
+        {
+          "id": "aklabs-mini-figure-2",
+          "sku": "AKLABSMINIFIGURE-NIGHT-LAB",
+          "options": {
+            "edition": "night-lab"
+          },
+          "prices": {
+            "USD": 3200,
+            "EUR": 3000
+          },
+          "salePrices": null
+        }
+      ]
+    },
+    {
+      "id": "aklabs-desk-buddy",
+      "handle": "aklabs-desk-buddy",
+      "categoryId": "figures",
+      "copy": {
+        "en": {
+          "title": "AK Desk Buddy",
+          "subtitle": "A seated figure for the corner of the desk",
+          "description": "A chibi figure in a color-block jacket, seated on a stack of books. Two poses: one mid-code, one packing an order. Matte vinyl, meant to stay next to the keyboard."
+        },
+        "es": {
+          "title": "AK Desk Buddy",
+          "subtitle": "Figura sentada para la esquina del escritorio",
+          "description": "Figura chibi con chaqueta a bloques de color, sentada sobre una pila de libros. Dos poses: una programando, otra empacando un pedido. Vinilo mate, pensada para quedarse junto al teclado."
+        }
+      },
+      "material": {
+        "en": "Matte vinyl",
+        "es": "Vinilo mate"
+      },
+      "weight": 160,
+      "prices": {
+        "USD": 2800,
+        "EUR": 2600
+      },
+      "salePrices": null,
+      "images": [
+        {
+          "id": "desk-buddy",
+          "source": "/aklabs/products/desk-buddy.png",
+          "width": 1024,
+          "height": 1024,
+          "alt": {
+            "en": "Brown-haired AKLabs desk figure in a red, blue and cyan color-block jacket, seated on three books.",
+            "es": "Figura de escritorio AKLabs de pelo castaño con chaqueta a bloques rojos, azules y celestes, sentada en tres libros."
+          },
+          "avif": {
+            "400": "/aklabs/products/desk-buddy-400.avif",
+            "800": "/aklabs/products/desk-buddy-800.avif"
+          },
+          "webp": {
+            "400": "/aklabs/products/desk-buddy-400.webp",
+            "800": "/aklabs/products/desk-buddy-800.webp"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "pose",
+          "name": {
+            "en": "Pose",
+            "es": "Pose"
+          },
+          "values": [
+            {
+              "id": "coding",
+              "label": {
+                "en": "Coding",
+                "es": "Programando"
+              }
+            },
+            {
+              "id": "shipping",
+              "label": {
+                "en": "Shipping",
+                "es": "Empacando"
+              }
+            }
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "id": "aklabs-desk-buddy-1",
+          "sku": "AKLABSDESKBUDDY-CODING",
+          "options": {
+            "pose": "coding"
+          },
+          "prices": {
+            "USD": 2800,
+            "EUR": 2600
+          },
+          "salePrices": null
+        },
+        {
+          "id": "aklabs-desk-buddy-2",
+          "sku": "AKLABSDESKBUDDY-SHIPPING",
+          "options": {
+            "pose": "shipping"
+          },
+          "prices": {
+            "USD": 2800,
+            "EUR": 2600
+          },
+          "salePrices": null
+        }
+      ]
+    },
+    {
+      "id": "aklabs-crew-socks",
+      "handle": "aklabs-crew-socks",
+      "categoryId": "socks",
+      "copy": {
+        "en": {
+          "title": "AKLabs Crew Socks",
+          "subtitle": "Cushioned crew height with a subtle AK cuff mark",
+          "description": "Crew-height socks with a reinforced heel and toe and a soft cushioned sole. The AK monogram sits small on the cuff in the lab palette. Built for long days on hard floors, not as a novelty pair."
+        },
+        "es": {
+          "title": "Calcetines crew AKLabs",
+          "subtitle": "Altura crew acolchada con marca AK sutil en el puño",
+          "description": "Calcetines a la altura crew con talón y punta reforzados y suela acolchada. El monograma AK va pequeño en el puño con la paleta del lab. Hechos para jornadas largas sobre piso duro, no como un par de novedad."
+        }
+      },
+      "material": {
+        "en": "80% cotton, 18% polyamide, 2% elastane",
+        "es": "80 % algodón, 18 % poliamida, 2 % elastano"
+      },
+      "weight": 80,
+      "prices": {
+        "USD": 1600,
+        "EUR": 1500
+      },
+      "salePrices": null,
+      "images": [
+        {
+          "id": "crew-socks",
+          "source": "/aklabs/products/crew-socks.png",
+          "width": 1024,
+          "height": 1024,
+          "alt": {
+            "en": "Black AKLabs crew socks with red, blue and cyan AK cuff marks.",
+            "es": "Calcetines altos negros AKLabs con marcas AK rojas, azules y celestes en los puños."
+          },
+          "avif": {
+            "400": "/aklabs/products/crew-socks-400.avif",
+            "800": "/aklabs/products/crew-socks-800.avif"
+          },
+          "webp": {
+            "400": "/aklabs/products/crew-socks-400.webp",
+            "800": "/aklabs/products/crew-socks-800.webp"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "size",
+          "name": {
+            "en": "Size",
+            "es": "Talla"
+          },
+          "values": [
+            {
+              "id": "s-m",
+              "label": {
+                "en": "S/M",
+                "es": "S/M"
+              }
+            },
+            {
+              "id": "l-xl",
+              "label": {
+                "en": "L/XL",
+                "es": "L/XL"
+              }
+            }
+          ]
+        },
+        {
+          "id": "color",
+          "name": {
+            "en": "Color",
+            "es": "Color"
+          },
+          "values": [
+            {
+              "id": "black",
+              "label": {
+                "en": "Black",
+                "es": "Negro"
+              }
+            },
+            {
+              "id": "navy",
+              "label": {
+                "en": "Navy",
+                "es": "Azul marino"
+              }
+            },
+            {
+              "id": "white",
+              "label": {
+                "en": "White",
+                "es": "Blanco"
+              }
+            }
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "id": "aklabs-crew-socks-1",
+          "sku": "AKLABSCREWSOCKS-SM-BLACK",
+          "options": {
+            "size": "s-m",
+            "color": "black"
+          },
+          "prices": {
+            "USD": 1600,
+            "EUR": 1500
+          },
+          "salePrices": null
+        },
+        {
+          "id": "aklabs-crew-socks-2",
+          "sku": "AKLABSCREWSOCKS-SM-NAVY",
+          "options": {
+            "size": "s-m",
+            "color": "navy"
+          },
+          "prices": {
+            "USD": 1600,
+            "EUR": 1500
+          },
+          "salePrices": null
+        },
+        {
+          "id": "aklabs-crew-socks-3",
+          "sku": "AKLABSCREWSOCKS-SM-WHITE",
+          "options": {
+            "size": "s-m",
+            "color": "white"
+          },
+          "prices": {
+            "USD": 1600,
+            "EUR": 1500
+          },
+          "salePrices": null
+        },
+        {
+          "id": "aklabs-crew-socks-4",
+          "sku": "AKLABSCREWSOCKS-LXL-BLACK",
+          "options": {
+            "size": "l-xl",
+            "color": "black"
+          },
+          "prices": {
+            "USD": 1600,
+            "EUR": 1500
+          },
+          "salePrices": null
+        },
+        {
+          "id": "aklabs-crew-socks-5",
+          "sku": "AKLABSCREWSOCKS-LXL-NAVY",
+          "options": {
+            "size": "l-xl",
+            "color": "navy"
+          },
+          "prices": {
+            "USD": 1600,
+            "EUR": 1500
+          },
+          "salePrices": null
+        },
+        {
+          "id": "aklabs-crew-socks-6",
+          "sku": "AKLABSCREWSOCKS-LXL-WHITE",
+          "options": {
+            "size": "l-xl",
+            "color": "white"
+          },
+          "prices": {
+            "USD": 1600,
+            "EUR": 1500
+          },
+          "salePrices": null
+        }
+      ]
+    },
+    {
+      "id": "aklabs-beanie",
+      "handle": "aklabs-beanie",
+      "categoryId": "caps",
+      "copy": {
+        "en": {
+          "title": "AKLabs Beanie",
+          "subtitle": "Ribbed knit with a folded cuff monogram",
+          "description": "A ribbed knit beanie with a double-fold cuff and a small embroidered AK on the front. Soft acrylic blend that keeps its shape after washing. Made for cold studios and early outdoor shoots."
+        },
+        "es": {
+          "title": "Beanie AKLabs",
+          "subtitle": "Punto acanalado con monograma en el doblez",
+          "description": "Beanie de punto acanalado con doblez doble y un AK pequeño bordado al frente. Mezcla de acrílico suave que mantiene la forma tras lavar. Para estudios fríos y rodajes tempranos al aire libre."
+        }
+      },
+      "material": {
+        "en": "100% acrylic knit",
+        "es": "Punto acrílico 100 %"
+      },
+      "weight": 95,
+      "prices": {
+        "USD": 2200,
+        "EUR": 2000
+      },
+      "salePrices": null,
+      "images": [
+        {
+          "id": "beanie",
+          "source": "/aklabs/products/beanie.png",
+          "width": 1024,
+          "height": 1024,
+          "alt": {
+            "en": "Navy ribbed AKLabs beanie with an embroidered red, blue and cyan AK cuff mark.",
+            "es": "Gorro azul marino acanalado AKLabs con marca AK bordada en rojo, azul y celeste en el doblez."
+          },
+          "avif": {
+            "400": "/aklabs/products/beanie-400.avif",
+            "800": "/aklabs/products/beanie-800.avif"
+          },
+          "webp": {
+            "400": "/aklabs/products/beanie-400.webp",
+            "800": "/aklabs/products/beanie-800.webp"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "color",
+          "name": {
+            "en": "Color",
+            "es": "Color"
+          },
+          "values": [
+            {
+              "id": "black",
+              "label": {
+                "en": "Black",
+                "es": "Negro"
+              }
+            },
+            {
+              "id": "navy",
+              "label": {
+                "en": "Navy",
+                "es": "Azul marino"
+              }
+            },
+            {
+              "id": "red",
+              "label": {
+                "en": "Red",
+                "es": "Rojo"
+              }
+            }
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "id": "aklabs-beanie-1",
+          "sku": "AKLABSBEANIE-BLACK",
+          "options": {
+            "color": "black"
+          },
+          "prices": {
+            "USD": 2200,
+            "EUR": 2000
+          },
+          "salePrices": null
+        },
+        {
+          "id": "aklabs-beanie-2",
+          "sku": "AKLABSBEANIE-NAVY",
+          "options": {
+            "color": "navy"
+          },
+          "prices": {
+            "USD": 2200,
+            "EUR": 2000
+          },
+          "salePrices": null
+        },
+        {
+          "id": "aklabs-beanie-3",
+          "sku": "AKLABSBEANIE-RED",
+          "options": {
+            "color": "red"
+          },
+          "prices": {
+            "USD": 2200,
+            "EUR": 2000
+          },
+          "salePrices": null
+        }
+      ]
+    },
+    {
+      "id": "aklabs-trucker-hat",
+      "handle": "aklabs-trucker-hat",
+      "categoryId": "caps",
+      "copy": {
+        "en": {
+          "title": "AKLabs Trucker Hat",
+          "subtitle": "Mesh back, flat brim, raised front panel",
+          "description": "A classic trucker with a structured front panel, breathable mesh back, and an adjustable snap. The AK mark is embroidered high on the front. Lighter than the Pro Cap when the day runs warm."
+        },
+        "es": {
+          "title": "Gorra trucker AKLabs",
+          "subtitle": "Malla atrás, visera plana, panel frontal alto",
+          "description": "Trucker clásica con panel frontal estructurado, malla transpirable atrás y cierre snap ajustable. La marca AK va bordada alta al frente. Más ligera que la Pro Cap cuando el día aprieta."
+        }
+      },
+      "material": {
+        "en": "Cotton twill front, polyester mesh back",
+        "es": "Frente de sarga de algodón y malla de poliéster atrás"
+      },
+      "weight": 110,
+      "prices": {
+        "USD": 2600,
+        "EUR": 2400
+      },
+      "salePrices": null,
+      "images": [
+        {
+          "id": "trucker-hat",
+          "source": "/aklabs/products/trucker-hat.png",
+          "width": 1024,
+          "height": 1024,
+          "alt": {
+            "en": "Navy AKLabs mesh-back trucker cap with a red, blue and cyan AK front mark.",
+            "es": "Gorra trucker azul marino AKLabs con malla trasera y marca AK roja, azul y celeste al frente."
+          },
+          "avif": {
+            "400": "/aklabs/products/trucker-hat-400.avif",
+            "800": "/aklabs/products/trucker-hat-800.avif"
+          },
+          "webp": {
+            "400": "/aklabs/products/trucker-hat-400.webp",
+            "800": "/aklabs/products/trucker-hat-800.webp"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "color",
+          "name": {
+            "en": "Color",
+            "es": "Color"
+          },
+          "values": [
+            {
+              "id": "navy",
+              "label": {
+                "en": "Navy",
+                "es": "Azul marino"
+              }
+            },
+            {
+              "id": "black",
+              "label": {
+                "en": "Black",
+                "es": "Negro"
+              }
+            },
+            {
+              "id": "red",
+              "label": {
+                "en": "Red",
+                "es": "Rojo"
+              }
+            }
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "id": "aklabs-trucker-hat-1",
+          "sku": "AKLABSTRUCKERHAT-NAVY",
+          "options": {
+            "color": "navy"
+          },
+          "prices": {
+            "USD": 2600,
+            "EUR": 2400
+          },
+          "salePrices": null
+        },
+        {
+          "id": "aklabs-trucker-hat-2",
+          "sku": "AKLABSTRUCKERHAT-BLACK",
+          "options": {
+            "color": "black"
+          },
+          "prices": {
+            "USD": 2600,
+            "EUR": 2400
+          },
+          "salePrices": null
+        },
+        {
+          "id": "aklabs-trucker-hat-3",
+          "sku": "AKLABSTRUCKERHAT-RED",
+          "options": {
+            "color": "red"
+          },
+          "prices": {
+            "USD": 2600,
+            "EUR": 2400
+          },
+          "salePrices": null
+        }
+      ]
+    },
+    {
+      "id": "aklabs-long-sleeve",
+      "handle": "aklabs-long-sleeve",
+      "categoryId": "tees",
+      "copy": {
+        "en": {
+          "title": "AKLabs Long Sleeve",
+          "subtitle": "Clean ringspun long sleeve with a chest mark",
+          "description": "A ringspun long-sleeve tee at a midweight that layers under a jacket or stands alone. Small AK print on the chest, clean hem, and a modern unisex cut. Soft enough for travel days and studio nights."
+        },
+        "es": {
+          "title": "Manga larga AKLabs",
+          "subtitle": "Ringspun limpia con marca en el pecho",
+          "description": "Camiseta de manga larga ringspun de peso medio que funciona bajo una chaqueta o sola. Print AK pequeño en el pecho, ruedo limpio y corte unisex moderno. Suave para días de viaje y noches de estudio."
+        }
+      },
+      "material": {
+        "en": "100% ringspun cotton",
+        "es": "Algodón hilado en anillos 100 %"
+      },
+      "weight": 280,
+      "prices": {
+        "USD": 3400,
+        "EUR": 3200
+      },
+      "salePrices": null,
+      "images": [
+        {
+          "id": "long-sleeve",
+          "source": "/aklabs/products/long-sleeve.png",
+          "width": 1024,
+          "height": 1024,
+          "alt": {
+            "en": "Folded white AKLabs long-sleeve T-shirt with a small red, blue and cyan AK chest print.",
+            "es": "Camiseta blanca doblada de manga larga AKLabs con estampado AK rojo, azul y celeste en el pecho."
+          },
+          "avif": {
+            "400": "/aklabs/products/long-sleeve-400.avif",
+            "800": "/aklabs/products/long-sleeve-800.avif"
+          },
+          "webp": {
+            "400": "/aklabs/products/long-sleeve-400.webp",
+            "800": "/aklabs/products/long-sleeve-800.webp"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "size",
+          "name": {
+            "en": "Size",
+            "es": "Talla"
+          },
+          "values": [
+            {
+              "id": "s",
+              "label": {
+                "en": "S",
+                "es": "S"
+              }
+            },
+            {
+              "id": "m",
+              "label": {
+                "en": "M",
+                "es": "M"
+              }
+            },
+            {
+              "id": "l",
+              "label": {
+                "en": "L",
+                "es": "L"
+              }
+            },
+            {
+              "id": "xl",
+              "label": {
+                "en": "XL",
+                "es": "XL"
+              }
+            }
+          ]
+        },
+        {
+          "id": "color",
+          "name": {
+            "en": "Color",
+            "es": "Color"
+          },
+          "values": [
+            {
+              "id": "white",
+              "label": {
+                "en": "White",
+                "es": "Blanco"
+              }
+            },
+            {
+              "id": "navy",
+              "label": {
+                "en": "Navy",
+                "es": "Azul marino"
+              }
+            }
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "id": "aklabs-long-sleeve-1",
+          "sku": "AKLABSLONGSLEEVE-S-WHITE",
+          "options": {
+            "size": "s",
+            "color": "white"
+          },
+          "prices": {
+            "USD": 3400,
+            "EUR": 3200
+          },
+          "salePrices": null
+        },
+        {
+          "id": "aklabs-long-sleeve-2",
+          "sku": "AKLABSLONGSLEEVE-S-NAVY",
+          "options": {
+            "size": "s",
+            "color": "navy"
+          },
+          "prices": {
+            "USD": 3400,
+            "EUR": 3200
+          },
+          "salePrices": null
+        },
+        {
+          "id": "aklabs-long-sleeve-3",
+          "sku": "AKLABSLONGSLEEVE-M-WHITE",
+          "options": {
+            "size": "m",
+            "color": "white"
+          },
+          "prices": {
+            "USD": 3400,
+            "EUR": 3200
+          },
+          "salePrices": null
+        },
+        {
+          "id": "aklabs-long-sleeve-4",
+          "sku": "AKLABSLONGSLEEVE-M-NAVY",
+          "options": {
+            "size": "m",
+            "color": "navy"
+          },
+          "prices": {
+            "USD": 3400,
+            "EUR": 3200
+          },
+          "salePrices": null
+        },
+        {
+          "id": "aklabs-long-sleeve-5",
+          "sku": "AKLABSLONGSLEEVE-L-WHITE",
+          "options": {
+            "size": "l",
+            "color": "white"
+          },
+          "prices": {
+            "USD": 3400,
+            "EUR": 3200
+          },
+          "salePrices": null
+        },
+        {
+          "id": "aklabs-long-sleeve-6",
+          "sku": "AKLABSLONGSLEEVE-L-NAVY",
+          "options": {
+            "size": "l",
+            "color": "navy"
+          },
+          "prices": {
+            "USD": 3400,
+            "EUR": 3200
+          },
+          "salePrices": null
+        },
+        {
+          "id": "aklabs-long-sleeve-7",
+          "sku": "AKLABSLONGSLEEVE-XL-WHITE",
+          "options": {
+            "size": "xl",
+            "color": "white"
+          },
+          "prices": {
+            "USD": 3400,
+            "EUR": 3200
+          },
+          "salePrices": null
+        },
+        {
+          "id": "aklabs-long-sleeve-8",
+          "sku": "AKLABSLONGSLEEVE-XL-NAVY",
+          "options": {
+            "size": "xl",
+            "color": "navy"
+          },
+          "prices": {
+            "USD": 3400,
+            "EUR": 3200
+          },
+          "salePrices": null
+        }
+      ]
+    },
+    {
+      "id": "aklabs-canvas-tote",
+      "handle": "aklabs-canvas-tote",
+      "categoryId": "bags",
+      "copy": {
+        "en": {
+          "title": "AKLabs Canvas Tote",
+          "subtitle": "Heavy canvas with a printed wordmark",
+          "description": "A durable canvas tote with long shoulder straps and an interior pocket. The AKLABS wordmark is printed on one face. Carries a laptop sleeve, a notebook, and the rest of a workday without stretching out."
+        },
+        "es": {
+          "title": "Tote de canvas AKLabs",
+          "subtitle": "Canvas grueso con wordmark impreso",
+          "description": "Tote de canvas resistente con asas largas y bolsillo interior. El wordmark AKLABS va impreso en una cara. Carga una funda de laptop, un cuaderno y el resto del día de trabajo sin deformarse."
+        }
+      },
+      "material": {
+        "en": "12 oz cotton canvas",
+        "es": "Lona de algodón de 12 oz"
+      },
+      "weight": 320,
+      "prices": {
+        "USD": 2200,
+        "EUR": 2000
+      },
+      "salePrices": null,
+      "images": [
+        {
+          "id": "canvas-tote",
+          "source": "/aklabs/products/canvas-tote.png",
+          "width": 1024,
+          "height": 1024,
+          "alt": {
+            "en": "Natural cream AKLabs canvas tote bag with long handles and a large red, blue and cyan AK print.",
+            "es": "Bolso AKLabs de lona color crema natural con asas largas y gran estampado AK rojo, azul y celeste."
+          },
+          "avif": {
+            "400": "/aklabs/products/canvas-tote-400.avif",
+            "800": "/aklabs/products/canvas-tote-800.avif"
+          },
+          "webp": {
+            "400": "/aklabs/products/canvas-tote-400.webp",
+            "800": "/aklabs/products/canvas-tote-800.webp"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "color",
+          "name": {
+            "en": "Color",
+            "es": "Color"
+          },
+          "values": [
+            {
+              "id": "natural",
+              "label": {
+                "en": "Natural",
+                "es": "Natural"
+              }
+            },
+            {
+              "id": "black",
+              "label": {
+                "en": "Black",
+                "es": "Negro"
+              }
+            }
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "id": "aklabs-canvas-tote-1",
+          "sku": "AKLABSCANVASTOTE-NATURAL",
+          "options": {
+            "color": "natural"
+          },
+          "prices": {
+            "USD": 2200,
+            "EUR": 2000
+          },
+          "salePrices": null
+        },
+        {
+          "id": "aklabs-canvas-tote-2",
+          "sku": "AKLABSCANVASTOTE-BLACK",
+          "options": {
+            "color": "black"
+          },
+          "prices": {
+            "USD": 2200,
+            "EUR": 2000
+          },
+          "salePrices": null
+        }
+      ]
+    },
+    {
+      "id": "aklabs-sling-bag",
+      "handle": "aklabs-sling-bag",
+      "categoryId": "bags",
+      "copy": {
+        "en": {
+          "title": "AKLabs Sling Bag",
+          "subtitle": "Crossbody sling with a water-resistant shell",
+          "description": "A compact crossbody sling with a water-resistant shell, an adjustable strap, and a padded phone pocket. The AK mark sits discreet on the flap. Hands-free for markets, airports, and short city runs."
+        },
+        "es": {
+          "title": "Sling bag AKLabs",
+          "subtitle": "Sling cruzado con carcasa resistente al agua",
+          "description": "Sling compacto cruzado con carcasa resistente al agua, correa ajustable y bolsillo acolchado para el teléfono. La marca AK va discreta en la solapa. Manos libres para mercados, aeropuertos y trayectos cortos por la ciudad."
+        }
+      },
+      "material": {
+        "en": "Water-resistant nylon, YKK zippers",
+        "es": "Nailon resistente al agua, cremalleras YKK"
+      },
+      "weight": 280,
+      "prices": {
+        "USD": 3800,
+        "EUR": 3500
+      },
+      "salePrices": null,
+      "images": [
+        {
+          "id": "sling-bag",
+          "source": "/aklabs/products/sling-bag.png",
+          "width": 1024,
+          "height": 1024,
+          "alt": {
+            "en": "Navy AKLabs crossbody sling bag with an adjustable strap and a red, blue and cyan AK front mark.",
+            "es": "Bolso cruzado azul marino AKLabs con correa ajustable y marca AK roja, azul y celeste al frente."
+          },
+          "avif": {
+            "400": "/aklabs/products/sling-bag-400.avif",
+            "800": "/aklabs/products/sling-bag-800.avif"
+          },
+          "webp": {
+            "400": "/aklabs/products/sling-bag-400.webp",
+            "800": "/aklabs/products/sling-bag-800.webp"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "color",
+          "name": {
+            "en": "Color",
+            "es": "Color"
+          },
+          "values": [
+            {
+              "id": "navy",
+              "label": {
+                "en": "Navy",
+                "es": "Azul marino"
+              }
+            },
+            {
+              "id": "black",
+              "label": {
+                "en": "Black",
+                "es": "Negro"
+              }
+            }
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "id": "aklabs-sling-bag-1",
+          "sku": "AKLABSSLINGBAG-NAVY",
+          "options": {
+            "color": "navy"
+          },
+          "prices": {
+            "USD": 3800,
+            "EUR": 3500
+          },
+          "salePrices": null
+        },
+        {
+          "id": "aklabs-sling-bag-2",
+          "sku": "AKLABSSLINGBAG-BLACK",
+          "options": {
+            "color": "black"
+          },
+          "prices": {
+            "USD": 3800,
+            "EUR": 3500
+          },
+          "salePrices": null
+        }
+      ]
+    },
+    {
+      "id": "aklabs-enamel-pin-set",
+      "handle": "aklabs-enamel-pin-set",
+      "categoryId": "pins",
+      "copy": {
+        "en": {
+          "title": "AK Enamel Pin Set",
+          "subtitle": "Hard enamel pins of the lab marks",
+          "description": "Hard enamel pins of the AK monogram and circular badge, with rubber clutch backs. Available as a single pin or a three-piece set. Gold or black metal outlines that sit clean on a jacket or tote."
+        },
+        "es": {
+          "title": "Set de pines de esmalte AK",
+          "subtitle": "Pines de esmalte duro con las marcas del lab",
+          "description": "Pines de esmalte duro del monograma AK y el badge circular, con cierre de goma. Disponibles como pin suelto o set de tres. Contornos en oro o negro que quedan limpios en una chaqueta o un tote."
+        }
+      },
+      "material": {
+        "en": "Hard enamel on metal",
+        "es": "Esmalte duro sobre metal"
+      },
+      "weight": 25,
+      "prices": {
+        "USD": 1200,
+        "EUR": 1100
+      },
+      "salePrices": null,
+      "images": [
+        {
+          "id": "enamel-pins",
+          "source": "/aklabs/products/enamel-pins.png",
+          "width": 1024,
+          "height": 1024,
+          "alt": {
+            "en": "AKLabs metal enamel pins with red, blue and cyan AK marks.",
+            "es": "Pines metálicos AKLabs de esmalte con marcas AK rojas, azules y celestes."
+          },
+          "avif": {
+            "400": "/aklabs/products/enamel-pins-400.avif",
+            "800": "/aklabs/products/enamel-pins-800.avif"
+          },
+          "webp": {
+            "400": "/aklabs/products/enamel-pins-400.webp",
+            "800": "/aklabs/products/enamel-pins-800.webp"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "set",
+          "name": {
+            "en": "Set",
+            "es": "Conjunto"
+          },
+          "values": [
+            {
+              "id": "1-pin",
+              "label": {
+                "en": "1 pin",
+                "es": "1 pin"
+              }
+            },
+            {
+              "id": "3-pins",
+              "label": {
+                "en": "3 pins",
+                "es": "3 pines"
+              }
+            }
+          ]
+        },
+        {
+          "id": "finish",
+          "name": {
+            "en": "Finish",
+            "es": "Acabado"
+          },
+          "values": [
+            {
+              "id": "gold",
+              "label": {
+                "en": "Gold",
+                "es": "Dorado"
+              }
+            },
+            {
+              "id": "black",
+              "label": {
+                "en": "Black",
+                "es": "Negro"
+              }
+            }
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "id": "aklabs-enamel-pin-set-1",
+          "sku": "AKLABSENAMELPINSET-1-PIN-GOLD",
+          "options": {
+            "set": "1-pin",
+            "finish": "gold"
+          },
+          "prices": {
+            "USD": 1200,
+            "EUR": 1100
+          },
+          "salePrices": null
+        },
+        {
+          "id": "aklabs-enamel-pin-set-2",
+          "sku": "AKLABSENAMELPINSET-1-PIN-BLACK",
+          "options": {
+            "set": "1-pin",
+            "finish": "black"
+          },
+          "prices": {
+            "USD": 1200,
+            "EUR": 1100
+          },
+          "salePrices": null
+        },
+        {
+          "id": "aklabs-enamel-pin-set-3",
+          "sku": "AKLABSENAMELPINSET-3-PINS-GOLD",
+          "options": {
+            "set": "3-pins",
+            "finish": "gold"
+          },
+          "prices": {
+            "USD": 1200,
+            "EUR": 1100
+          },
+          "salePrices": null
+        },
+        {
+          "id": "aklabs-enamel-pin-set-4",
+          "sku": "AKLABSENAMELPINSET-3-PINS-BLACK",
+          "options": {
+            "set": "3-pins",
+            "finish": "black"
+          },
+          "prices": {
+            "USD": 1200,
+            "EUR": 1100
+          },
+          "salePrices": null
+        }
+      ]
+    },
+    {
+      "id": "aklabs-woven-patch",
+      "handle": "aklabs-woven-patch",
+      "categoryId": "pins",
+      "copy": {
+        "en": {
+          "title": "AK Woven Patch",
+          "subtitle": "Iron-on woven mark for jackets and bags",
+          "description": "A tightly woven patch of the AK monogram with a heat-activated backing. Small or large, ready for a coach jacket, a tote, or a backpack. Edges stay clean after pressing."
+        },
+        "es": {
+          "title": "Parche tejido AK",
+          "subtitle": "Marca tejida termoadhesiva para chaquetas y bolsos",
+          "description": "Parche tejido denso del monograma AK con respaldo termoadhesivo. Pequeño o grande, listo para una coach jacket, un tote o una mochila. Los bordes se mantienen limpios después de planchar."
+        }
+      },
+      "material": {
+        "en": "Woven polyester with iron-on backing",
+        "es": "Poliéster tejido con respaldo termoadhesivo"
+      },
+      "weight": 15,
+      "prices": {
+        "USD": 800,
+        "EUR": 700
+      },
+      "salePrices": null,
+      "images": [
+        {
+          "id": "woven-patch",
+          "source": "/aklabs/products/woven-patch.png",
+          "width": 1024,
+          "height": 1024,
+          "alt": {
+            "en": "Woven AKLabs patch with a red, blue and cyan AK monogram.",
+            "es": "Parche tejido AKLabs con monograma AK rojo, azul y celeste."
+          },
+          "avif": {
+            "400": "/aklabs/products/woven-patch-400.avif",
+            "800": "/aklabs/products/woven-patch-800.avif"
+          },
+          "webp": {
+            "400": "/aklabs/products/woven-patch-400.webp",
+            "800": "/aklabs/products/woven-patch-800.webp"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "size",
+          "name": {
+            "en": "Size",
+            "es": "Talla"
+          },
+          "values": [
+            {
+              "id": "small",
+              "label": {
+                "en": "Small",
+                "es": "Pequeño"
+              }
+            },
+            {
+              "id": "large",
+              "label": {
+                "en": "Large",
+                "es": "Grande"
+              }
+            }
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "id": "aklabs-woven-patch-1",
+          "sku": "AKLABSWOVENPATCH-SMALL",
+          "options": {
+            "size": "small"
+          },
+          "prices": {
+            "USD": 800,
+            "EUR": 700
+          },
+          "salePrices": null
+        },
+        {
+          "id": "aklabs-woven-patch-2",
+          "sku": "AKLABSWOVENPATCH-LARGE",
+          "options": {
+            "size": "large"
+          },
+          "prices": {
+            "USD": 800,
+            "EUR": 700
+          },
+          "salePrices": null
+        }
+      ]
+    },
+    {
+      "id": "aklabs-lanyard",
+      "handle": "aklabs-lanyard",
+      "categoryId": "accessories",
+      "copy": {
+        "en": {
+          "title": "AKLabs Lanyard",
+          "subtitle": "Woven strap with a metal clip and breakaway",
+          "description": "A woven lanyard with the AKLABS wordmark repeating along the strap, a swivel metal clip, and a safety breakaway. Built for badges, keys, and event passes without looking temporary."
+        },
+        "es": {
+          "title": "Lanyard AKLabs",
+          "subtitle": "Cinta tejida con clip metálico y rotura de seguridad",
+          "description": "Lanyard tejido con el wordmark AKLABS repetido a lo largo de la cinta, clip metálico giratorio y rotura de seguridad. Para credenciales, llaves y pases de eventos sin verse improvisado."
+        }
+      },
+      "material": {
+        "en": "Woven polyester, metal clip",
+        "es": "Poliéster tejido, clip metálico"
+      },
+      "weight": 40,
+      "prices": {
+        "USD": 1200,
+        "EUR": 1100
+      },
+      "salePrices": null,
+      "images": [
+        {
+          "id": "lanyard",
+          "source": "/aklabs/products/lanyard.png",
+          "width": 1024,
+          "height": 1024,
+          "alt": {
+            "en": "Navy AKLabs woven lanyard with repeating red, blue and cyan AK monograms and a silver clip.",
+            "es": "Cinta tejida azul marino AKLabs con monogramas AK rojos, azules y celestes repetidos y clip plateado."
+          },
+          "avif": {
+            "400": "/aklabs/products/lanyard-400.avif",
+            "800": "/aklabs/products/lanyard-800.avif"
+          },
+          "webp": {
+            "400": "/aklabs/products/lanyard-400.webp",
+            "800": "/aklabs/products/lanyard-800.webp"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "color",
+          "name": {
+            "en": "Color",
+            "es": "Color"
+          },
+          "values": [
+            {
+              "id": "navy",
+              "label": {
+                "en": "Navy",
+                "es": "Azul marino"
+              }
+            },
+            {
+              "id": "black",
+              "label": {
+                "en": "Black",
+                "es": "Negro"
+              }
+            },
+            {
+              "id": "cyan",
+              "label": {
+                "en": "Cyan",
+                "es": "Celeste"
+              }
+            }
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "id": "aklabs-lanyard-1",
+          "sku": "AKLABSLANYARD-NAVY",
+          "options": {
+            "color": "navy"
+          },
+          "prices": {
+            "USD": 1200,
+            "EUR": 1100
+          },
+          "salePrices": null
+        },
+        {
+          "id": "aklabs-lanyard-2",
+          "sku": "AKLABSLANYARD-BLACK",
+          "options": {
+            "color": "black"
+          },
+          "prices": {
+            "USD": 1200,
+            "EUR": 1100
+          },
+          "salePrices": null
+        },
+        {
+          "id": "aklabs-lanyard-3",
+          "sku": "AKLABSLANYARD-CYAN",
+          "options": {
+            "color": "cyan"
+          },
+          "prices": {
+            "USD": 1200,
+            "EUR": 1100
+          },
+          "salePrices": null
+        }
+      ]
+    },
+    {
+      "id": "aklabs-lab-notebook",
+      "handle": "aklabs-lab-notebook",
+      "categoryId": "stationery",
+      "copy": {
+        "en": {
+          "title": "AKLabs Lab Notebook",
+          "subtitle": "A5 notebook with a printed AK cover",
+          "description": "An A5 notebook with thick paper that takes pen and marker without bleed. Choose blank or lined pages and a soft or hard cover. The AK mark sits centered on the front—made for sketches, standups, and shipping notes."
+        },
+        "es": {
+          "title": "Cuaderno de lab AKLabs",
+          "subtitle": "Cuaderno A5 con portada AK impresa",
+          "description": "Cuaderno A5 con papel grueso que aguanta pluma y marcador sin traspasar. Elige páginas en blanco o rayadas y tapa blanda o dura. La marca AK va centrada al frente: para bocetos, standups y notas de envío."
+        }
+      },
+      "material": {
+        "en": "120 gsm paper, printed cover",
+        "es": "Papel de 120 g/m², tapa impresa"
+      },
+      "weight": 280,
+      "prices": {
+        "USD": 1600,
+        "EUR": 1500
+      },
+      "salePrices": null,
+      "images": [
+        {
+          "id": "lab-notebook",
+          "source": "/aklabs/products/lab-notebook.png",
+          "width": 1024,
+          "height": 1024,
+          "alt": {
+            "en": "Navy AKLabs notebook with a centered red, blue and cyan AK cover print.",
+            "es": "Cuaderno azul marino AKLabs con estampado AK rojo, azul y celeste centrado en la tapa."
+          },
+          "avif": {
+            "400": "/aklabs/products/lab-notebook-400.avif",
+            "800": "/aklabs/products/lab-notebook-800.avif"
+          },
+          "webp": {
+            "400": "/aklabs/products/lab-notebook-400.webp",
+            "800": "/aklabs/products/lab-notebook-800.webp"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "ruling",
+          "name": {
+            "en": "Pages",
+            "es": "Páginas"
+          },
+          "values": [
+            {
+              "id": "blank",
+              "label": {
+                "en": "Blank",
+                "es": "En blanco"
+              }
+            },
+            {
+              "id": "lined",
+              "label": {
+                "en": "Lined",
+                "es": "Rayadas"
+              }
+            }
+          ]
+        },
+        {
+          "id": "cover",
+          "name": {
+            "en": "Cover",
+            "es": "Tapa"
+          },
+          "values": [
+            {
+              "id": "soft",
+              "label": {
+                "en": "Soft",
+                "es": "Blanda"
+              }
+            },
+            {
+              "id": "hard",
+              "label": {
+                "en": "Hard",
+                "es": "Dura"
+              }
+            }
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "id": "aklabs-lab-notebook-1",
+          "sku": "AKLABSLABNOTEBOOK-BLANK-SOFT",
+          "options": {
+            "ruling": "blank",
+            "cover": "soft"
+          },
+          "prices": {
+            "USD": 1600,
+            "EUR": 1500
+          },
+          "salePrices": null
+        },
+        {
+          "id": "aklabs-lab-notebook-2",
+          "sku": "AKLABSLABNOTEBOOK-BLANK-HARD",
+          "options": {
+            "ruling": "blank",
+            "cover": "hard"
+          },
+          "prices": {
+            "USD": 1600,
+            "EUR": 1500
+          },
+          "salePrices": null
+        },
+        {
+          "id": "aklabs-lab-notebook-3",
+          "sku": "AKLABSLABNOTEBOOK-LINED-SOFT",
+          "options": {
+            "ruling": "lined",
+            "cover": "soft"
+          },
+          "prices": {
+            "USD": 1600,
+            "EUR": 1500
+          },
+          "salePrices": null
+        },
+        {
+          "id": "aklabs-lab-notebook-4",
+          "sku": "AKLABSLABNOTEBOOK-LINED-HARD",
+          "options": {
+            "ruling": "lined",
+            "cover": "hard"
+          },
+          "prices": {
+            "USD": 1600,
+            "EUR": 1500
+          },
+          "salePrices": null
+        }
+      ]
+    },
+    {
+      "id": "aklabs-mark-poster",
+      "handle": "aklabs-mark-poster",
+      "categoryId": "stationery",
+      "copy": {
+        "en": {
+          "title": "AK Mark Poster",
+          "subtitle": "Print of the circular AK badge",
+          "description": "A museum-grade print of the circular AK badge on heavy matte stock. Available in A3 or A2. Ships flat-packed so the edges stay sharp until it hits the wall."
+        },
+        "es": {
+          "title": "Póster del mark AK",
+          "subtitle": "Print del badge circular AK",
+          "description": "Print de calidad museo del badge circular AK sobre papel mate grueso. Disponible en A3 o A2. Se envía plano para que los bordes lleguen nítidos hasta la pared."
+        }
+      },
+      "material": {
+        "en": "Matte archival paper, 200 gsm",
+        "es": "Papel mate de conservación, 200 g/m²"
+      },
+      "weight": 120,
+      "prices": {
+        "USD": 1800,
+        "EUR": 1600
+      },
+      "salePrices": null,
+      "images": [
+        {
+          "id": "mark-poster",
+          "source": "/aklabs/products/mark-poster.png",
+          "width": 1024,
+          "height": 1024,
+          "alt": {
+            "en": "Cream AKLabs poster featuring a large red, blue and cyan AK monogram.",
+            "es": "Póster color crema AKLabs con un gran monograma AK rojo, azul y celeste."
+          },
+          "avif": {
+            "400": "/aklabs/products/mark-poster-400.avif",
+            "800": "/aklabs/products/mark-poster-800.avif"
+          },
+          "webp": {
+            "400": "/aklabs/products/mark-poster-400.webp",
+            "800": "/aklabs/products/mark-poster-800.webp"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "size",
+          "name": {
+            "en": "Size",
+            "es": "Talla"
+          },
+          "values": [
+            {
+              "id": "a3",
+              "label": {
+                "en": "A3",
+                "es": "A3"
+              }
+            },
+            {
+              "id": "a2",
+              "label": {
+                "en": "A2",
+                "es": "A2"
+              }
+            }
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "id": "aklabs-mark-poster-1",
+          "sku": "AKLABSMARKPOSTER-A3",
+          "options": {
+            "size": "a3"
+          },
+          "prices": {
+            "USD": 1800,
+            "EUR": 1600
+          },
+          "salePrices": null
+        },
+        {
+          "id": "aklabs-mark-poster-2",
+          "sku": "AKLABSMARKPOSTER-A2",
+          "options": {
+            "size": "a2"
+          },
+          "prices": {
+            "USD": 1800,
+            "EUR": 1600
+          },
+          "salePrices": null
+        }
+      ]
+    },
+    {
+      "id": "aklabs-ceramic-mug",
+      "handle": "aklabs-ceramic-mug",
+      "categoryId": "drinkware",
+      "copy": {
+        "en": {
+          "title": "AKLabs Ceramic Mug",
+          "subtitle": "Dishwasher-safe mug with a wrap print",
+          "description": "A ceramic mug with a wrap-around AK print and a comfortable C-handle. Dishwasher and microwave safe. The everyday desk cup when the steel bottle is already full."
+        },
+        "es": {
+          "title": "Taza de cerámica AKLabs",
+          "subtitle": "Taza apta para lavavajillas con print envolvente",
+          "description": "Taza de cerámica con print AK envolvente y asa cómoda en C. Apta para lavavajillas y microondas. La taza de escritorio de todos los días cuando la botella de acero ya está llena."
+        }
+      },
+      "material": {
+        "en": "Ceramic, dishwasher safe",
+        "es": "Cerámica apta para lavavajillas"
+      },
+      "weight": 350,
+      "prices": {
+        "USD": 1800,
+        "EUR": 1600
+      },
+      "salePrices": null,
+      "images": [
+        {
+          "id": "ceramic-mug",
+          "source": "/aklabs/products/ceramic-mug.png",
+          "width": 1024,
+          "height": 1024,
+          "alt": {
+            "en": "White AKLabs ceramic mug with a C-shaped handle and red, blue and cyan AK print.",
+            "es": "Taza blanca de cerámica AKLabs con asa en C y estampado AK rojo, azul y celeste."
+          },
+          "avif": {
+            "400": "/aklabs/products/ceramic-mug-400.avif",
+            "800": "/aklabs/products/ceramic-mug-800.avif"
+          },
+          "webp": {
+            "400": "/aklabs/products/ceramic-mug-400.webp",
+            "800": "/aklabs/products/ceramic-mug-800.webp"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "color",
+          "name": {
+            "en": "Color",
+            "es": "Color"
+          },
+          "values": [
+            {
+              "id": "white",
+              "label": {
+                "en": "White",
+                "es": "Blanco"
+              }
+            },
+            {
+              "id": "navy",
+              "label": {
+                "en": "Navy",
+                "es": "Azul marino"
+              }
+            }
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "id": "aklabs-ceramic-mug-1",
+          "sku": "AKLABSCERAMICMUG-WHITE",
+          "options": {
+            "color": "white"
+          },
+          "prices": {
+            "USD": 1800,
+            "EUR": 1600
+          },
+          "salePrices": null
+        },
+        {
+          "id": "aklabs-ceramic-mug-2",
+          "sku": "AKLABSCERAMICMUG-NAVY",
+          "options": {
+            "color": "navy"
+          },
+          "prices": {
+            "USD": 1800,
+            "EUR": 1600
+          },
+          "salePrices": null
+        }
+      ]
+    },
+    {
+      "id": "aklabs-mousepad",
+      "handle": "aklabs-mousepad",
+      "categoryId": "accessories",
+      "copy": {
+        "en": {
+          "title": "AKLabs Desk Mat",
+          "subtitle": "Low-friction surface with a stitched edge",
+          "description": "A low-friction desk mat with a non-slip rubber base and a stitched edge that will not fray. Standard for a laptop setup or XL for keyboard plus mouse. A faint AK mark sits in the corner."
+        },
+        "es": {
+          "title": "Desk mat AKLabs",
+          "subtitle": "Superficie de baja fricción con borde cosido",
+          "description": "Desk mat de baja fricción con base de goma antideslizante y borde cosido que no se deshilacha. Tamaño estándar para laptop o XL para teclado y mouse. Una marca AK sutil en la esquina."
+        }
+      },
+      "material": {
+        "en": "Cloth top, natural rubber base",
+        "es": "Superficie textil y base de caucho natural"
+      },
+      "weight": 400,
+      "prices": {
+        "USD": 2000,
+        "EUR": 1800
+      },
+      "salePrices": null,
+      "images": [
+        {
+          "id": "mousepad",
+          "source": "/aklabs/products/mousepad.png",
+          "width": 1024,
+          "height": 1024,
+          "alt": {
+            "en": "Navy rectangular AKLabs desk mat with a red, blue and cyan AK corner mark.",
+            "es": "Alfombrilla rectangular azul marino de escritorio AKLabs con marca AK roja, azul y celeste en la esquina."
+          },
+          "avif": {
+            "400": "/aklabs/products/mousepad-400.avif",
+            "800": "/aklabs/products/mousepad-800.avif"
+          },
+          "webp": {
+            "400": "/aklabs/products/mousepad-400.webp",
+            "800": "/aklabs/products/mousepad-800.webp"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "size",
+          "name": {
+            "en": "Size",
+            "es": "Talla"
+          },
+          "values": [
+            {
+              "id": "standard",
+              "label": {
+                "en": "Standard",
+                "es": "Estándar"
+              }
+            },
+            {
+              "id": "xl",
+              "label": {
+                "en": "XL",
+                "es": "XL"
+              }
+            }
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "id": "aklabs-mousepad-1",
+          "sku": "AKLABSMOUSEPAD-STANDARD",
+          "options": {
+            "size": "standard"
+          },
+          "prices": {
+            "USD": 2000,
+            "EUR": 1800
+          },
+          "salePrices": null
+        },
+        {
+          "id": "aklabs-mousepad-2",
+          "sku": "AKLABSMOUSEPAD-XL",
+          "options": {
+            "size": "xl"
+          },
+          "prices": {
+            "USD": 2000,
+            "EUR": 1800
+          },
+          "salePrices": null
+        }
+      ]
+    },
+    {
+      "id": "aklabs-card-sleeve",
+      "handle": "aklabs-card-sleeve",
+      "categoryId": "accessories",
+      "copy": {
+        "en": {
+          "title": "AKLabs Card Sleeve",
+          "subtitle": "Slim RFID sleeve for cards and cash",
+          "description": "A slim card sleeve with RFID lining and a pull-tab compartment for IDs. Holds a few cards and folded cash without the bulk of a full wallet. Embossed AK on the front face."
+        },
+        "es": {
+          "title": "Fundas de tarjetas AKLabs",
+          "subtitle": "Funda slim RFID para tarjetas y efectivo",
+          "description": "Funda slim con forro RFID y compartimento con lengüeta para IDs. Guarda unas tarjetas y billetes doblados sin el volumen de una billetera completa. AK en relieve en la cara frontal."
+        }
+      },
+      "material": {
+        "en": "Vegan leather with RFID lining",
+        "es": "Cuero vegano con forro RFID"
+      },
+      "weight": 60,
+      "prices": {
+        "USD": 2400,
+        "EUR": 2200
+      },
+      "salePrices": null,
+      "images": [
+        {
+          "id": "card-sleeve",
+          "source": "/aklabs/products/card-sleeve.png",
+          "width": 1024,
+          "height": 1024,
+          "alt": {
+            "en": "Black AKLabs slim card sleeve with an embossed red, blue and cyan AK front mark.",
+            "es": "Tarjetero negro delgado AKLabs con marca AK roja, azul y celeste en relieve al frente."
+          },
+          "avif": {
+            "400": "/aklabs/products/card-sleeve-400.avif",
+            "800": "/aklabs/products/card-sleeve-800.avif"
+          },
+          "webp": {
+            "400": "/aklabs/products/card-sleeve-400.webp",
+            "800": "/aklabs/products/card-sleeve-800.webp"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "color",
+          "name": {
+            "en": "Color",
+            "es": "Color"
+          },
+          "values": [
+            {
+              "id": "black",
+              "label": {
+                "en": "Black",
+                "es": "Negro"
+              }
+            },
+            {
+              "id": "navy",
+              "label": {
+                "en": "Navy",
+                "es": "Azul marino"
+              }
+            }
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "id": "aklabs-card-sleeve-1",
+          "sku": "AKLABSCARDSLEEVE-BLACK",
+          "options": {
+            "color": "black"
+          },
+          "prices": {
+            "USD": 2400,
+            "EUR": 2200
+          },
+          "salePrices": null
+        },
+        {
+          "id": "aklabs-card-sleeve-2",
+          "sku": "AKLABSCARDSLEEVE-NAVY",
+          "options": {
+            "color": "navy"
+          },
+          "prices": {
+            "USD": 2400,
+            "EUR": 2200
+          },
+          "salePrices": null
+        }
+      ]
+    },
+    {
+      "id": "aklabs-coach-jacket",
+      "handle": "aklabs-coach-jacket",
+      "categoryId": "hoodies",
+      "copy": {
+        "en": {
+          "title": "AKLabs Coach Jacket",
+          "subtitle": "Lightweight shell with a snap front",
+          "description": "A lightweight coach jacket with a snap front, elastic cuffs, and a water-resistant shell. The AK monogram is embroidered on the left chest. Layers over a tee when the hoodie is too heavy."
+        },
+        "es": {
+          "title": "Coach jacket AKLabs",
+          "subtitle": "Shell ligera con cierre a broches",
+          "description": "Coach jacket ligera con cierre a broches, puños elásticos y shell resistente al agua. El monograma AK va bordado en el pecho izquierdo. Se lleva sobre una camiseta cuando la hoodie pesa demasiado."
+        }
+      },
+      "material": {
+        "en": "100% polyester shell, mesh lining",
+        "es": "Exterior de poliéster 100 % y forro de malla"
+      },
+      "weight": 480,
+      "prices": {
+        "USD": 7200,
+        "EUR": 6600
+      },
+      "salePrices": null,
+      "images": [
+        {
+          "id": "coach-jacket",
+          "source": "/aklabs/products/coach-jacket.png",
+          "width": 1024,
+          "height": 1024,
+          "alt": {
+            "en": "Navy AKLabs snap-front coach jacket with an embroidered red, blue and cyan AK chest mark.",
+            "es": "Chaqueta azul marino AKLabs con broches y marca AK roja, azul y celeste bordada en el pecho."
+          },
+          "avif": {
+            "400": "/aklabs/products/coach-jacket-400.avif",
+            "800": "/aklabs/products/coach-jacket-800.avif"
+          },
+          "webp": {
+            "400": "/aklabs/products/coach-jacket-400.webp",
+            "800": "/aklabs/products/coach-jacket-800.webp"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "size",
+          "name": {
+            "en": "Size",
+            "es": "Talla"
+          },
+          "values": [
+            {
+              "id": "s",
+              "label": {
+                "en": "S",
+                "es": "S"
+              }
+            },
+            {
+              "id": "m",
+              "label": {
+                "en": "M",
+                "es": "M"
+              }
+            },
+            {
+              "id": "l",
+              "label": {
+                "en": "L",
+                "es": "L"
+              }
+            },
+            {
+              "id": "xl",
+              "label": {
+                "en": "XL",
+                "es": "XL"
+              }
+            }
+          ]
+        },
+        {
+          "id": "color",
+          "name": {
+            "en": "Color",
+            "es": "Color"
+          },
+          "values": [
+            {
+              "id": "navy",
+              "label": {
+                "en": "Navy",
+                "es": "Azul marino"
+              }
+            },
+            {
+              "id": "black",
+              "label": {
+                "en": "Black",
+                "es": "Negro"
+              }
+            }
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "id": "aklabs-coach-jacket-1",
+          "sku": "AKLABSCOACHJACKET-S-NAVY",
+          "options": {
+            "size": "s",
+            "color": "navy"
+          },
+          "prices": {
+            "USD": 7200,
+            "EUR": 6600
+          },
+          "salePrices": null
+        },
+        {
+          "id": "aklabs-coach-jacket-2",
+          "sku": "AKLABSCOACHJACKET-S-BLACK",
+          "options": {
+            "size": "s",
+            "color": "black"
+          },
+          "prices": {
+            "USD": 7200,
+            "EUR": 6600
+          },
+          "salePrices": null
+        },
+        {
+          "id": "aklabs-coach-jacket-3",
+          "sku": "AKLABSCOACHJACKET-M-NAVY",
+          "options": {
+            "size": "m",
+            "color": "navy"
+          },
+          "prices": {
+            "USD": 7200,
+            "EUR": 6600
+          },
+          "salePrices": null
+        },
+        {
+          "id": "aklabs-coach-jacket-4",
+          "sku": "AKLABSCOACHJACKET-M-BLACK",
+          "options": {
+            "size": "m",
+            "color": "black"
+          },
+          "prices": {
+            "USD": 7200,
+            "EUR": 6600
+          },
+          "salePrices": null
+        },
+        {
+          "id": "aklabs-coach-jacket-5",
+          "sku": "AKLABSCOACHJACKET-L-NAVY",
+          "options": {
+            "size": "l",
+            "color": "navy"
+          },
+          "prices": {
+            "USD": 7200,
+            "EUR": 6600
+          },
+          "salePrices": null
+        },
+        {
+          "id": "aklabs-coach-jacket-6",
+          "sku": "AKLABSCOACHJACKET-L-BLACK",
+          "options": {
+            "size": "l",
+            "color": "black"
+          },
+          "prices": {
+            "USD": 7200,
+            "EUR": 6600
+          },
+          "salePrices": null
+        },
+        {
+          "id": "aklabs-coach-jacket-7",
+          "sku": "AKLABSCOACHJACKET-XL-NAVY",
+          "options": {
+            "size": "xl",
+            "color": "navy"
+          },
+          "prices": {
+            "USD": 7200,
+            "EUR": 6600
+          },
+          "salePrices": null
+        },
+        {
+          "id": "aklabs-coach-jacket-8",
+          "sku": "AKLABSCOACHJACKET-XL-BLACK",
+          "options": {
+            "size": "xl",
+            "color": "black"
+          },
+          "prices": {
+            "USD": 7200,
+            "EUR": 6600
+          },
+          "salePrices": null
+        }
+      ]
+    }
+  ],
+  "promotions": [
+    {
+      "code": "AKLABS10",
+      "type": "percentage",
+      "value": 10,
+      "label": {
+        "en": "10% lab welcome",
+        "es": "10 % de bienvenida al lab"
+      }
+    }
+  ]
+}

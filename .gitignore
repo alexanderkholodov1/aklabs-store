@@ -12,6 +12,7 @@ build/
 .turbo/
 coverage/
 *.tsbuildinfo
+.tmp/
 
 # Variables de entorno: nunca subir secretos (solo los .env.example)
 .env

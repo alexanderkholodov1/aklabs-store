@@ -457,7 +457,8 @@ export function resolveProductCopy(
   const handle = product.handle ?? ""
   const entry = handle ? productCopy[handle] : undefined
   const overlay =
-    entry?.[locale] ?? (locale !== DEFAULT_LOCALE ? entry?.[DEFAULT_LOCALE] : undefined)
+    entry?.[locale] ??
+    (locale !== DEFAULT_LOCALE ? entry?.[DEFAULT_LOCALE] : undefined)
 
   return {
     title: overlay?.title ?? product.title ?? "",
