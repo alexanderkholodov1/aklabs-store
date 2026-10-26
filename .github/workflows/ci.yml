@@ -1,10 +1,18 @@
 name: CI
 
+# Real CI runs on main, on version (hito) branches and on pull requests. A push to a temporary rehearsal/** branch
+# runs the same jobs in rehearsal mode: a failing job is recorded in a verdict artifact instead of turning the run
+# red, and nothing is deployed. Work reaches main or a hito branch only after its rehearsal passed.
 on:
   push:
-    branches: [main]
+    branches: [main, 'v[0-9]*', 'rehearsal/**']
   pull_request:
   workflow_dispatch:
+    inputs:
+      deploy:
+        description: Deploy this ref to aklabs-store.web.app (production) after the checks pass
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -16,12 +24,14 @@ concurrency:
 env:
   MEDUSA_DISABLE_TELEMETRY: "true"
   NEXT_TELEMETRY_DISABLED: "1"
+  REHEARSAL: ${{ startsWith(github.ref, 'refs/heads/rehearsal/') }}
 
 jobs:
   typecheck:
     name: Type-check
     runs-on: ubuntu-latest
     timeout-minutes: 20
+    continue-on-error: ${{ startsWith(github.ref, 'refs/heads/rehearsal/') }}
     defaults:
       run:
         working-directory: store
@@ -50,3 +60,93 @@ jobs:
       # `medusa develop`, so code must not depend on them to compile.
       - name: Backend
         run: pnpm --dir apps/backend exec tsc --noEmit -p .
+
+      - name: Record rehearsal verdict
+        if: ${{ always() && env.REHEARSAL == 'true' }}
+        working-directory: .
+        run: |
+          mkdir -p .tmp/verdict
+          printf '{"sha":"%s","job":"%s","status":"%s"}\n' "${{ github.sha }}" "${{ github.job }}" "${{ job.status }}" > .tmp/verdict/verdict.json
+          cat .tmp/verdict/verdict.json
+      - name: Upload rehearsal verdict
+        if: ${{ always() && env.REHEARSAL == 'true' }}
+        uses: actions/upload-artifact@v7
+        with:
+          name: rehearsal-verdict-${{ github.job }}
+          path: .tmp/verdict/verdict.json
+
+  site:
+    name: Static site
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    continue-on-error: ${{ startsWith(github.ref, 'refs/heads/rehearsal/') }}
+    defaults:
+      run:
+        working-directory: store
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - uses: pnpm/action-setup@v6
+        with:
+          package_json_file: store/package.json
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: store/.nvmrc
+          cache: pnpm
+          cache-dependency-path: store/pnpm-lock.yaml
+
+      - name: Install
+        run: pnpm install --frozen-lockfile
+
+      # The static export (no server, no Medusa, no secrets) that Firebase Hosting serves.
+      - name: Build the static export
+        run: pnpm --dir apps/storefront run build:site
+
+      # Page checks against the exported files: routes, size budget, accessibility (axe) and the purchase flow.
+      - name: Check the site
+        run: pnpm --dir apps/storefront run check:site
+
+      - name: Upload the site
+        uses: actions/upload-artifact@v7
+        with:
+          name: site
+          path: store/apps/storefront/out
+          retention-days: 7
+
+      - name: Record rehearsal verdict
+        if: ${{ always() && env.REHEARSAL == 'true' }}
+        working-directory: .
+        run: |
+          mkdir -p .tmp/verdict
+          printf '{"sha":"%s","job":"%s","status":"%s"}\n' "${{ github.sha }}" "${{ github.job }}" "${{ job.status }}" > .tmp/verdict/verdict.json
+          cat .tmp/verdict/verdict.json
+      - name: Upload rehearsal verdict
+        if: ${{ always() && env.REHEARSAL == 'true' }}
+        uses: actions/upload-artifact@v7
+        with:
+          name: rehearsal-verdict-${{ github.job }}
+          path: .tmp/verdict/verdict.json
+
+  deploy:
+    name: Deploy to aklabs-store.web.app
+    needs: [typecheck, site]
+    if: ${{ github.ref == 'refs/heads/main' && github.event_name == 'push' || github.event_name == 'workflow_dispatch' && inputs.deploy }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/download-artifact@v7
+        with:
+          name: site
+          path: store/apps/storefront/out
+      - uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: ${{ secrets.GITHUB_TOKEN }}
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_AKLABS_STORE }}
+          projectId: aklabs-store
+          channelId: live
