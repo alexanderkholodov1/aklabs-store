@@ -3,7 +3,7 @@
 Living document: what is done, what is being worked on, what comes next, and
 the decisions that belong to the owner. Updated with every version.
 
-Last update: 2026-09-30 · Current version: **v0.2 (foundation)** · Next: **v0.3 (first public version)**
+Last update: 2026-10-26 · Current public baseline: **v0.2 (foundation)** · In validation: **v0.3 (static simulator)**
 
 ## Vision
 
@@ -91,10 +91,15 @@ These apply to every version and to every workstream brief. A version is not don
 
 ## Now
 
-- v0.2 is complete and ready for review in PR #2. It includes the review fixes (CI, catalog cache, locale input validation) and the accessibility requirements.
-- The work for v0.3 is split into packages in [WORKPLAN.md](WORKPLAN.md), ready to delegate.
-- Waiting for the owner's answers to the decisions below. D1 and D2 block v0.3.
-- Research done: [`docs/research/shopping-simulators.md`](research/shopping-simulators.md). Key lessons: speed comes from architecture (static pages, local state, tiny assets, no third-party scripts); the payoff scene (the courier) is the product; honesty works best in layers; the free Hosting transfer quota makes a size budget mandatory.
+- v0.3 implementation is on `v0.3.0`: deterministic bilingual catalog, static export,
+  local commerce, offline courier simulation and portfolio pages. Medusa stays local.
+- Local validation passes: both app type-checks, storefront lint, 105 exported routes,
+  44 phone/laptop page audits, three purchases including offline delivery, reflow from
+  320 to 2560 px and enlarged text. Final rehearsal is the remaining release gate.
+- D1 is approved (2026-10-26). Deploy credentials are managed by the coordinator;
+  deployment is outside this implementation session.
+- See the [static storefront guide](STATIC-STOREFRONT.md) for build commands, data
+  boundaries and the limits of automated accessibility testing.
 
 ## Versions
 
@@ -120,18 +125,18 @@ These apply to every version and to every workstream brief. A version is not don
 
 ### v0.3: first public version (next)
 Goal: aklabs-store.web.app is live, fast, responsive, and carries the portfolio essentials.
-- [ ] Catalog pipeline: Medusa export to `catalog.json` (products, variants, USD and EUR prices, sale prices, categories, English and Spanish copy)
-- [ ] Size budget: about 150 KB of JavaScript and 300 KB per first view, checked in CI. Product images converted to AVIF and WebP at build time (today: 34 PNGs averaging 165 KB), no third-party scripts, Firebase SDK loaded only when needed
-- [ ] Static export with `/en` and `/es` routes; product and category pages generated at build time
-- [ ] Client-side cart with persistence, currency switch (USD, EUR) and promotion codes
-- [ ] Simulated checkout that never asks for real payment data; confirmation page; order kept in the browser
-- [ ] Courier simulation and tracking page (timeline and animated route)
-- [ ] Responsive and zoom pass from 360 to 2560 px wide, at 150% zoom, and reflow at 400%
-- [ ] Accessibility baseline: skip link, landmarks, focus styles, written alt text for all 34 product images in English and Spanish, reduced motion, axe checks in CI
-- [ ] About page (profile, highlights, contact) and How it works page (architecture, security, for businesses)
-- [ ] Honesty in layers: a small SIMULATION chip, a note at checkout, a receipt footer, and a "What is real?" page (answer: only the donations page); credit the Korean origin of the trend
+- [x] Catalog pipeline: Medusa export to `catalog.json` (products, variants, USD and EUR prices, sale prices, categories, English and Spanish copy)
+- [x] Size budget: about 150 KB of JavaScript and 300 KB per first view, checked in CI. Product images converted to AVIF and WebP at build time (today: 34 PNGs averaging 165 KB), no third-party scripts, Firebase SDK loaded only when needed
+- [x] Static export with `/en` and `/es` routes; product and category pages generated at build time
+- [x] Client-side cart with persistence, currency switch (USD, EUR) and promotion codes
+- [x] Simulated checkout that never asks for real payment data; confirmation page; order kept in the browser
+- [x] Courier simulation and tracking page (timeline and animated route)
+- [x] Responsive and zoom pass from 360 to 2560 px wide, at 150% zoom, and reflow at 400%
+- [x] Accessibility baseline: skip link, landmarks, focus styles, written alt text for all 34 product images in English and Spanish, reduced motion, axe checks in CI
+- [x] About page (profile, highlights, contact) and How it works page (architecture, security, for businesses)
+- [x] Honesty in layers: a small SIMULATION chip, a note at checkout, a receipt footer, and a "What is real?" page (answer: only the donations page); credit the Korean origin of the trend
 - [ ] CD: deploy main to Firebase Hosting and a preview channel for each pull request
-- [ ] Salvage the reviewed parts of `wip/batch1-partial` (listing, pagination, sorting, sale badges)
+- [x] Salvage the reviewed parts of `wip/batch1-partial` (listing, pagination, sorting, sale badges)
 
 ### v0.4: accounts and data
 - [ ] Firebase Auth: an anonymous session by default; optional Google sign-in that keeps the history (account linking)
@@ -181,12 +186,12 @@ Goal: aklabs-store.web.app is live, fast, responsive, and carries the portfolio 
 
 ## Decisions needed from the owner
 
-**D1. Architecture (blocks v0.3).** Static simulator on Firebase Spark plus GitHub Actions, with Medusa as the local back-office (diagram above).
+**D1. Architecture (approved 2026-10-26).** Static simulator on Firebase Spark plus GitHub Actions, with Medusa as the local back-office (diagram above).
 - Alternative: keep Medusa running live on a free external host (Render, Koyeb). Free instances sleep after about 15 minutes idle, take a minute or more to wake up, and 512 MB of RAM is tight for Medusa. The store would feel slow and break often.
 - Alternative: paid hosting. Ruled out.
 - Recommendation: go static. Needed: your OK.
 
-**D2. Deploy credentials for CI/CD (blocks the first deploy).**
+**D2. Deploy credentials for CI/CD (provided to the coordinator).**
 - Option A (recommended): in the repository folder run `firebase login` and then `firebase init hosting:github`. It creates a deploy-only service account and stores it as a GitHub secret.
 - Option B: reuse the admin key from `private/`. Not recommended: it has broad permissions and would live in GitHub.
 
@@ -209,6 +214,8 @@ Goal: aklabs-store.web.app is live, fast, responsive, and carries the portfolio 
 **D9. Own domain (optional, any time).** About $10 to $15 a year. It gives a professional address instead of `web.app`, allows branded e-mail (D4), and with a free CDN proxy in front it can cache the site and protect the 10 GB monthly transfer quota. Not needed for v0.3.
 
 ## Decided
+
+- 2026-10-26: D1 approved; implement a static, bilingual shopping simulator for v0.3. Medusa remains the local back-office. Deployment follows coordinator validation.
 
 - 2026-09-30: free tiers only; no Blaze plan.
 - 2026-09-30: host on aklabs-store.web.app with CI/CD; the repository is now `aklabs-store`.

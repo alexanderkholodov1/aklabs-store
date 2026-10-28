@@ -4,7 +4,13 @@ How the work is split between the coordinator (the main Claude session) and
 delegated agents, and the work packages for the next version. It complements
 [ROADMAP.md](ROADMAP.md), which says what and when; this file says who and how.
 
-Status: **v0.3 packages are defined and ready to launch once the owner approves D1 and D2.**
+Status: **v0.3 is being built on the hito branch `v0.3.0`** (WP1 to WP4 in one Codex session, WP5 by the coordinator).
+
+Operator decision (2026-10-26): ship a public version recruiters can try, on the static architecture (D1). His words:
+"quiero que despliegues algo presentable de aklabs-store y little-galaxy, porque debo mandar un CV a una empresa de
+UI/UX (asi que hay que demostrar eso) ... Encargate de subir algo a produccion en ambos, algo que ellos puedan probar".
+Deploy credentials (D2): the owner uploaded the project's Firebase keys; CI deploys with the repository secret
+`FIREBASE_SERVICE_ACCOUNT_AKLABS_STORE`.
 
 ## Execution rules
 
@@ -94,7 +100,7 @@ Order: batch A runs first (WP1 and WP2 in parallel), then batch B (WP3 and WP4 i
 ### WP5. Delivery and quality gates (coordinator)
 - **Owns:** `.github/workflows/**` and `firebase.json`.
 - **Output:**
-  - Deploy of `main` to aklabs-store.web.app and a preview channel for each pull request (needs D2).
+  - Deploy of `main` to aklabs-store.web.app and a preview channel for each pull request (needs D2) — done in `v0.3.0`: the preview address appears in the comment the Firebase Hosting action leaves on every pull request.
   - A size budget check and axe checks on key pages in CI.
   - A Content Security Policy in report-only mode.
 - **Done when:** the pull request previews and the production deploy work, and the gates fail on regressions.
