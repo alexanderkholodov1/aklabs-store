@@ -239,6 +239,9 @@ ul {
   min-height: 44px;
   white-space: nowrap;
 }
+.wordmark img {
+  flex: none;
+}
 .wordmark-store {
   font-size: 0.6em;
   font-weight: 400;
@@ -1118,8 +1121,9 @@ summary {
     font-size: 1.05rem;
     gap: 4px;
   }
-  .wordmark svg {
+  .wordmark img {
     width: 30px;
+    height: auto;
   }
   .header-actions {
     gap: 4px;
@@ -1388,8 +1392,9 @@ summary {
   .wordmark {
     font-size: 0.94rem;
   }
-  .wordmark svg {
+  .wordmark img {
     width: 25px;
+    height: auto;
   }
   .header-actions {
     gap: 1px;
