@@ -100,7 +100,7 @@ Order: batch A runs first (WP1 and WP2 in parallel), then batch B (WP3 and WP4 i
 ### WP5. Delivery and quality gates (coordinator)
 - **Owns:** `.github/workflows/**` and `firebase.json`.
 - **Output:**
-  - Deploy of `main` to aklabs-store.web.app and a preview channel for each pull request (needs D2).
+  - Deploy of `main` to aklabs-store.web.app and a preview channel for each pull request (needs D2) — done in `v0.3.0`: the preview address appears in the comment the Firebase Hosting action leaves on every pull request.
   - A size budget check and axe checks on key pages in CI.
   - A Content Security Policy in report-only mode.
 - **Done when:** the pull request previews and the production deploy work, and the gates fail on regressions.
