@@ -2,7 +2,7 @@
 import { Icon } from "@modules/common/icon"
 import { useCart } from "@lib/sim/cart"
 import { OfflineStatus } from "./offline"
-import { useRef, useState } from "react"
+import { Suspense, useRef, useState } from "react"
 import type { Locale } from "@lib/i18n/locales"
 import { siteCopy } from "@lib/i18n/site-copy"
 import { SITE } from "@lib/site"
@@ -146,7 +146,7 @@ export function Shell({
         )}
       </header>
       <main id="main" tabIndex={-1}>
-        {children}
+        <Suspense fallback={null}>{children}</Suspense>
       </main>
       <footer className="site-footer">
         <div className="footer-main container">
