@@ -54,12 +54,13 @@ export function Shell({
       >
         <div className="header-inner">
           <a href={`/${locale}`} className="wordmark" aria-label="AKLabs Store">
-            <svg viewBox="0 0 48 40" width="37" height="32" aria-hidden="true">
-              <path
-                fill="currentColor"
-                d="M0 37 18 3h9L12 37zm17-13h17v7H14zm12-21h8v14L47 3H37L26 20l13 17h10L36 20z"
-              />
-            </svg>
+            <img
+              src="/aklabs/brand/logo-circle.png"
+              width={34}
+              height={32}
+              alt=""
+              decoding="async"
+            />
             <span>
               AKLABS<span className="wordmark-store"> / STORE</span>
             </span>
