@@ -45,18 +45,19 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #e4eaf5;
-  color: #1739c6;
+  background: var(--frame);
+  color: var(--blue);
 }
-.showcase-monogram > svg {
-  width: 50%;
+.showcase-monogram > .showcase-logo {
+  width: 46%;
   max-width: 240px;
+  height: auto;
   z-index: 1;
-  transform: translateX(-4%);
+  filter: drop-shadow(0 18px 30px rgb(11 30 216 / 0.25));
 }
 .showcase-orbit {
   position: absolute;
-  border: 1px solid #1739c633;
+  border: 1px solid rgb(11 30 216 / 0.2);
   border-radius: 50%;
   width: 90%;
   height: 90%;
@@ -281,7 +282,10 @@
   margin-bottom: 0;
 }
 .showcase-business {
-  background: #1739c6;
+  background:
+    radial-gradient(36rem 26rem at 105% -10%, rgb(18 181 234 / 0.45), transparent 60%),
+    radial-gradient(30rem 22rem at -5% 110%, rgb(227 22 31 / 0.5), transparent 60%),
+    #0b1ed8;
   color: #fff;
   padding: 48px;
   border-radius: var(--radius);
@@ -415,7 +419,7 @@
   .showcase-monogram {
     aspect-ratio: 1.8;
   }
-  .showcase-monogram > svg {
+  .showcase-monogram > .showcase-logo {
     width: 38%;
     max-width: 190px;
   }

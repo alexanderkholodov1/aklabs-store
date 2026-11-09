@@ -18,7 +18,7 @@
   padding-block: 25px;
 }
 .cart-art {
-  background: #eceee8;
+  background: var(--frame);
   border-radius: var(--radius);
   aspect-ratio: 1;
   overflow: hidden;
@@ -29,9 +29,7 @@
 .cart-art img {
   height: 100%;
   width: 100%;
-  object-fit: contain;
-  mix-blend-mode: multiply;
-  padding: 8px;
+  object-fit: cover;
 }
 .cart-line h2 {
   font-size: 1.05rem;
@@ -182,7 +180,7 @@
   background: var(--cyan);
   border-radius: var(--radius);
   margin-block: 30px;
-  color: #101d39;
+  color: #0a1033;
 }
 .simulation-notice p {
   color: inherit;
@@ -349,7 +347,7 @@
   border: 0;
   padding: 23px;
   border-radius: var(--radius);
-  color: #101d39;
+  color: #0a1033;
 }
 .payment-free p {
   color: #394659;
@@ -575,7 +573,7 @@ dialog h2 {
   font-size: 1.7rem;
 }
 dialog::backdrop {
-  background: #101d3980;
+  background: #0a103380;
   backdrop-filter: blur(3px);
 }
 [data-theme="dark"] .form-error {

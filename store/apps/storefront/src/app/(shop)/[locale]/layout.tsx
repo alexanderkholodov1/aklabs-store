@@ -6,6 +6,8 @@ import { CartProvider } from "@lib/sim/cart"
 import { Shell } from "@modules/layout/shell"
 import { SITE } from "@lib/site"
 import "styles/globals.css"
+import "styles/brand.css"
+import { fontVariables } from "styles/fonts"
 export const dynamicParams = false
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),
@@ -17,7 +19,7 @@ export const metadata: Metadata = {
     "Explore fictional AKLabs merch. A complete shopping experiment with zero charges, built by Alexander Kholodov.",
   icons: { icon: "/aklabs/brand/logo-circle.png" },
 }
-export const viewport: Viewport = { themeColor: "#101d39" }
+export const viewport: Viewport = { themeColor: "#060b2b" }
 export function generateStaticParams() {
   return SUPPORTED_LOCALES.map((locale) => ({ locale }))
 }
@@ -31,7 +33,12 @@ export default async function Layout({
   const { locale } = await params
   if (!isLocale(locale)) notFound()
   return (
-    <html lang={locale} data-theme="light" suppressHydrationWarning>
+    <html
+      lang={locale}
+      data-theme="light"
+      className={fontVariables}
+      suppressHydrationWarning
+    >
       <head>
         <script
           dangerouslySetInnerHTML={{

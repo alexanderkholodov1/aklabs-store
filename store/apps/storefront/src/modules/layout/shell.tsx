@@ -2,7 +2,7 @@
 import { Icon } from "@modules/common/icon"
 import { useCart } from "@lib/sim/cart"
 import { OfflineStatus } from "./offline"
-import { Suspense, useRef, useState } from "react"
+import { Suspense, useEffect, useRef, useState } from "react"
 import type { Locale } from "@lib/i18n/locales"
 import { siteCopy } from "@lib/i18n/site-copy"
 import { SITE } from "@lib/site"
@@ -15,7 +15,17 @@ export function Shell({
   locale: Locale
 }) {
   const t = siteCopy(locale)
-  const { count } = useCart()
+  const { count, ready: cartReady } = useCart()
+  // The bag answers when a piece goes in: its counter bumps once. Only after
+  // the stored bag has loaded, so opening a page never animates by itself.
+  const [bump, setBump] = useState(0)
+  const lastCount = useRef<number | null>(null)
+  useEffect(() => {
+    if (!cartReady) return
+    if (lastCount.current !== null && count > lastCount.current)
+      setBump((b) => b + 1)
+    lastCount.current = count
+  }, [count, cartReady])
   const { currency, setCurrency, dark, toggleDark, ready } = usePreferences()
   const [open, setOpen] = useState(false)
   const toggle = useRef<HTMLButtonElement>(null)
@@ -110,7 +120,12 @@ export function Shell({
                 <path d="M8 8V6a4 4 0 0 1 8 0v2" />
               </svg>
               <span>{t.cart}</span>
-              <span className="bag-count" aria-hidden="true">
+              <span
+                className="bag-count"
+                key={bump}
+                data-bump={bump > 0 ? "" : undefined}
+                aria-hidden="true"
+              >
                 {count}
               </span>
               <span className="sr-only">{count}</span>

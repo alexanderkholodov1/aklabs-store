@@ -67,11 +67,6 @@ export default async function Home({
               priority
               sizes="(max-width: 760px) 90vw, 48vw"
             />
-            <span className="hero-stamp" aria-hidden="true">
-              AK
-              <br />
-              <small>LAB ESSENTIALS</small>
-            </span>
           </div>
           <div className="hero-caption">
             <div>

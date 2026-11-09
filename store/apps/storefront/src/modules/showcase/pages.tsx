@@ -32,12 +32,16 @@ export function AboutPage({ locale }: { locale: Locale }) {
         </div>
         <div className="showcase-identity">
           <div className="showcase-monogram" aria-hidden="true">
-            <svg viewBox="0 0 245 190" fill="none">
-              <path
-                d="M19 163 89 27h28L58 163H19Zm50-45h72v24H57l12-24Zm62-91h29v57l40-57h34l-58 71 64 65h-39l-58-63V27Z"
-                fill="currentColor"
-              />
-            </svg>
+            {/* His circular AK logo (public/aklabs/brand, 2026-09-28), never a drawn one. */}
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              className="showcase-logo"
+              src="/aklabs/brand/logo-circle.png"
+              width={551}
+              height={521}
+              alt=""
+              decoding="async"
+            />
             <span className="showcase-orbit showcase-orbit-one" />
             <span className="showcase-orbit showcase-orbit-two" />
           </div>
