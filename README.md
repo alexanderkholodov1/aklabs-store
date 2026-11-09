@@ -1,184 +1,62 @@
-# AKLabs Store · Medusa v2 + Next.js + Supabase
+# AKLabs Store
 
-Tienda en línea del merch **AKLabs** (hoodies, camisetas, joggers, gorras, termos y
-botellas) construida con **Medusa v2** como backend de comercio, un **storefront
-Next.js** y **PostgreSQL de Supabase** como base de datos.
+**Live: [aklabs-store.web.app](https://aklabs-store.web.app)**
 
-- Región **Ecuador** en **USD** (`/ec`) con envío estándar y express.
-- Región **Europe** en **EUR** (`/dk`, `/de`, `/es`...) con el mismo catálogo.
-- Flujo de compra completo: producto → carrito → checkout en 4 pasos → orden
-  registrada en la tabla `order` de Supabase.
+A shopping simulator for the AKLabs merch line: browse, fill a bag, check out and
+follow the courier on a map, without spending anything. Every product is
+fictional, nothing is charged and nothing is shipped. It is also a working
+e-commerce portfolio piece by [Alexander Kholodov](https://www.linkedin.com/in/alexanderkholodov1/).
 
+## What it shows
 
----
-
-## Arquitectura
-
-```
-Navegador ──HTTP──▶ Storefront Next.js (localhost:8000)
-                     │  Server Components + Server Actions
-                     │  @medusajs/js-sdk + publishable API key
-                     ▼
-                  Medusa v2 (localhost:9000)  ← Admin en /app
-                     │  Store API / Admin API, workflows, módulos
-                     │  knex + MikroORM (pool de conexiones)
-                     ▼
-        Supabase Postgres (Session pooler, puerto 5432)
-```
-
-- El navegador **nunca** habla con Supabase: no hay `supabase-js`, ni Supabase
-  Auth, ni RLS. Supabase se usa solo como Postgres administrado.
-- Toda la lógica (precios por región, impuestos, envíos, pagos, órdenes) vive en
-  Medusa. El storefront solo consume la Store API.
-
-## Estructura
-
-```
-.
-├── README.md                 ← este archivo
-└── store/                    ← monorepo pnpm + Turborepo
-    ├── apps/backend/         ← Medusa v2 (@dtc/backend)
-    │   ├── medusa-config.ts
-    │   ├── .env.example
-    │   └── src/
-    │       ├── migration-scripts/initial-data-seed.ts   (datos base del starter)
-    │       └── scripts/
-    │           ├── add-ec-region.ts         región Ecuador USD + impuestos + envío
-    │           ├── seed-aklabs-products.ts  catálogo AKLabs (USD y EUR)
-    │           ├── sync-aklabs-catalog.ts   textos, precios, limpieza del demo, envíos en español
-    │           └── setup-aklabs.ts          ejecuta los tres anteriores en orden
-    └── apps/storefront/      ← Next.js 15 (@dtc/storefront)
-        ├── .env.example
-        ├── public/aklabs/    logos e imágenes de productos
-        └── src/              app router, módulos y sistema de diseño AKLabs
-```
-
-## Requisitos
-
-- Node.js **20.19+** o **22.12+**
-- **pnpm 10+** (el proyecto declara `pnpm@11.5.2`; con Corepack: `corepack enable`)
-- Un proyecto de **Supabase** (plan gratuito sirve)
-
-## Arranque local (paso a paso)
-
-### 1. Instalar dependencias
-
-```bash
-git clone https://github.com/alexanderkholodov1/supaday-ecommerce.git
-cd supaday-ecommerce/store
-pnpm install
-```
-
-### 2. Base de datos en Supabase
-
-1. Crea un proyecto en [supabase.com](https://supabase.com).
-2. En **Connect**, copia la cadena del **Session pooler** (puerto **5432**). Es
-   compatible con IPv4 y mantiene sesiones largas, que es lo que necesita Medusa
-   (migraciones y transacciones).
-
-### 3. Variables del backend
-
-```bash
-cp apps/backend/.env.example apps/backend/.env
-```
-
-Edita `apps/backend/.env`:
-
-| Variable | Valor |
+| For | What to look at |
 |---|---|
-| `DATABASE_URL` | Cadena del Session pooler: `postgresql://postgres.<ref>:<password>@aws-0-<region>.pooler.supabase.com:5432/postgres` |
-| `JWT_SECRET`, `COOKIE_SECRET` | Cadenas aleatorias largas |
-| `STORE_CORS`, `ADMIN_CORS`, `AUTH_CORS` | Déjalas como en el ejemplo para trabajo local |
+| Visitors | A complete purchase in English or Spanish: 30 products, sizes and colors, USD or EUR, a promotion code, a checkout that never asks for payment data, and a courier that arrives in one or two minutes, even offline. |
+| Engineers | A static Next.js export on Firebase Hosting with no server, a deterministic catalog pipeline, browser-side cart and orders with validated storage, an offline service worker, and CI that checks types, every route, size budgets, accessibility and full purchases before anything deploys. |
+| Businesses | The path from a brand to a store a customer enjoys, at zero hosting cost, with the owner keeping the data and the revenue. See the How it works page. |
 
-`REDIS_URL` **no existe** en el archivo: se eliminó a propósito, no se dejó vacía.
-Sin Redis, Medusa usa event bus, caché y locking en memoria, suficiente para
-desarrollo.
+Accessibility is a requirement of every version (WCAG 2.2 AA): keyboard and
+screen-reader support, written alternatives for all product images, reduced
+motion, and reflow down to 320 px.
 
-### 4. Migraciones y datos
+## Architecture
 
-```bash
-cd apps/backend
-pnpm medusa db:migrate          # crea las tablas (product, region, cart, order, payment...)
-pnpm seed                       # = medusa exec ./src/scripts/setup-aklabs.ts
-pnpm medusa user -e admin@aklabs.test -p <tu-contraseña>
+```
+Browser ── static HTML, CSS and JavaScript (Next.js static export)
+  │         cart, checkout, orders and courier simulated in the browser
+  ▼
+Firebase Hosting ── CDN, HTTPS, security headers, a preview site per pull request
+
+GitHub Actions ── type-check, static export, site checks; deploys main
+Medusa v2 (store/apps/backend) ── local back-office; its catalog is exported to
+                                  store/apps/storefront/src/data/catalog.json
 ```
 
-- `db:migrate` crea las tablas y ejecuta el script de datos iniciales del
-  starter: región Europe (EUR), canal de venta, almacén y publishable API key.
-- `pnpm seed` agrega la región Ecuador (USD), las opciones de envío, el catálogo
-  AKLabs con precios en USD y EUR, y elimina (borrado lógico) los productos demo
-  del starter. Es idempotente: se puede ejecutar varias veces.
+Free tiers only: Firebase Spark and GitHub Actions for a public repository.
 
-### 5. Levantar el backend
+## Run it
 
-```bash
-pnpm dev                        # desde apps/backend → http://localhost:9000
+Requires Node 22 and Corepack. From `store/`:
+
+```sh
+corepack pnpm install --frozen-lockfile
+pnpm --dir apps/storefront run build:site   # catalog, static export, offline worker
+pnpm --dir apps/storefront run start        # http://127.0.0.1:8000
+pnpm --dir apps/storefront run check:site   # routes, budgets, axe, purchase flows
 ```
 
-Admin: <http://localhost:9000/app>. Entra con el usuario creado en el paso 4 y
-copia la clave en **Settings → Publishable API Keys**.
+No environment variables, accounts or servers are needed to build or run the
+storefront.
 
-### 6. Variables del storefront y arranque
+## Documents
 
-```bash
-cd ../storefront
-cp .env.example .env.local      # pega la publishable key en NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY
-pnpm dev                        # → http://localhost:8000 (redirige a /ec)
-```
+- [Static storefront guide](docs/STATIC-STOREFRONT.md): build, catalog, browser data, offline behavior and checks.
+- [Roadmap](docs/ROADMAP.md): principles, versions and the decisions that belong to the owner.
+- [Work plan](docs/WORKPLAN.md): how the work is split and its quality gates.
+- [Owner's observations](docs/OPERATOR-OBSERVATIONS.md): every observation of the owner and its state.
+- [Medusa back-office guide](docs/BACKOFFICE-MEDUSA.es.md) (Spanish): the original Medusa v2 and Supabase setup.
 
-También se pueden levantar ambos desde `store/` con `pnpm dev`.
+## Stack
 
-## Scripts útiles
-
-| Comando (en `store/apps/backend`) | Qué hace |
-|---|---|
-| `pnpm dev` | Backend Medusa en modo desarrollo |
-| `pnpm medusa db:migrate` | Ejecuta migraciones pendientes |
-| `pnpm seed` | Setup completo AKLabs (región EC, catálogo, limpieza) |
-| `pnpm medusa exec ./src/scripts/sync-aklabs-catalog.ts` | Re-sincroniza textos, precios USD/EUR y envíos |
-| `pnpm medusa user -e <email> -p <pass>` | Crea un usuario administrador |
-
-## Regiones, moneda y envíos
-
-| Región | Países | Moneda | Envíos |
-|---|---|---|---|
-| Ecuador | `ec` | USD | Envío estándar Ecuador ($10), Envío express Ecuador ($15) |
-| Europe | `de, dk, es, fr, gb, it, se` | EUR | Standard Shipping (10 €), Express Shipping (10 €) |
-
-El país va en la URL (`/ec`, `/dk`). El middleware del storefront la resuelve con
-la lista de regiones de Medusa, y el carrito se crea en esa región. Por eso el
-mismo producto cuesta **$58,00** en `/ec` y **54,00 €** en `/dk`.
-
-## Comprobar una compra en Supabase
-
-Después de comprar, la página de confirmación muestra el número de pedido
-(`#display_id`) y el ID de la fila (`order_...`). En el SQL Editor de Supabase:
-
-```sql
-select o.id, o.display_id, o.email, o.currency_code, r.name as region, o.created_at
-from "order" o
-join region r on r.id = o.region_id
-order by o.created_at desc
-limit 5;
-```
-
-## Solución de problemas
-
-- **Cada paso del checkout tarda varios segundos.** Es normal con una base remota:
-  cada consulta viaja al pooler de Supabase (unos 150 ms) y los workflows de Medusa
-  hacen muchas consultas por paso.
-- **`Missing required environment variables: NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY`**:
-  falta la clave en `apps/storefront/.env.local`.
-- **Error de publishable key al cargar productos**: la clave debe pertenecer al
-  canal de venta "Default Sales Channel".
-- **Puerto ocupado**: libera el 9000 (backend) o el 8000 (storefront).
-
-## Despliegue (opcional)
-
-- Backend: cualquier servicio Node con proceso persistente (Railway, Render,
-  Medusa Cloud) usando el mismo `DATABASE_URL` del Session pooler, `medusa build`
-  y `medusa start`. Agrega el dominio del storefront a `STORE_CORS` y `AUTH_CORS`.
-- Storefront: Vercel u otro host de Next.js, con `NEXT_PUBLIC_MEDUSA_BACKEND_URL`
-  apuntando al backend público.
-- Imágenes: el catálogo usa URLs absolutas `STOREFRONT_PUBLIC_URL/aklabs/...`.
-  Ejecuta el seed con esa variable apuntando al dominio público.
+Next.js 15, React 19, TypeScript, Playwright with axe-core, Firebase Hosting,
+GitHub Actions, Medusa v2, pnpm workspaces.

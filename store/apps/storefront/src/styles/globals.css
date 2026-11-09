@@ -1,17 +1,30 @@
 @import "./commerce.css";
+/*
+ * AKLabs design tokens (his design system, 2026-09-28). The colors come from
+ * the AK monogram: red (A), royal blue (K stem) and celeste (K leg), plus the
+ * navy of the merch.
+ */
 :root {
-  --paper: #f7f7f2;
+  --paper: #f3f7fc;
   --surface: #fff;
-  --ink: #101d39;
-  --muted: #596174;
-  --line: #d8dcd9;
-  --blue: #1739c6;
-  --cyan: #bfeafa;
-  --mint: #e5eadf;
-  --navy: #101d39;
-  --radius: 5px;
+  --ink: #0a1033;
+  --muted: #535c74;
+  --line: #d5deea;
+  --blue: #0b1ed8;
+  --royal: #0a4fb3;
+  --red: #e3161f;
+  --sky: #12b5ea;
+  --cyan: #c4ecfb;
+  --mint: #e3eef8;
+  --navy: #060b2b;
+  --radius: 14px;
+  /* The full monogram gradient is for surfaces and rims; text and buttons use
+     the deep variant, which keeps white text at AA contrast end to end. */
+  --ak-gradient: linear-gradient(120deg, #e3161f 0%, #0b1ed8 52%, #12b5ea 100%);
+  --ak-gradient-deep: linear-gradient(120deg, #d0101a 0%, #0b1ed8 55%, #0a4fb3 100%);
+  --frame: #e9eef5;
   color-scheme: light;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), Inter, Arial, Helvetica, sans-serif;
   font-size: 16px;
 }
 * {
@@ -29,8 +42,8 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 ::selection {
-  background: #bfeafa;
-  color: #101d39;
+  background: #c4ecfb;
+  color: #0a1033;
 }
 a {
   color: inherit;
@@ -204,14 +217,14 @@ ul {
   text-transform: uppercase;
   font-size: 0.63rem;
   letter-spacing: 0.12em;
-  color: #c9edff;
+  color: #c4ecfb;
 }
 .simulation-chip::before {
   content: "";
   height: 5px;
   width: 5px;
   border-radius: 50%;
-  background: #8dd9f7;
+  background: var(--sky);
   margin-right: 7px;
 }
 .site-header {
@@ -238,6 +251,9 @@ ul {
   letter-spacing: -0.06em;
   min-height: 44px;
   white-space: nowrap;
+}
+.wordmark img {
+  flex: none;
 }
 .wordmark-store {
   font-size: 0.6em;
@@ -373,7 +389,7 @@ ul {
 }
 .button.light {
   background: #fff;
-  color: #101d39;
+  color: #0a1033;
   border-color: #fff;
 }
 .button.full {
@@ -397,10 +413,10 @@ ul {
 }
 .hero-art {
   position: relative;
-  background: #e9eae3;
+  background: var(--frame);
   border-radius: var(--radius);
   overflow: hidden;
-  aspect-ratio: 1.08;
+  aspect-ratio: 1;
 }
 .hero-art picture {
   height: 100%;
@@ -408,9 +424,7 @@ ul {
 .hero-art img {
   width: 100%;
   height: 100%;
-  object-fit: contain;
-  mix-blend-mode: multiply;
-  padding: 18px;
+  object-fit: cover;
   transition: transform 0.5s;
 }
 .hero-visual:hover img {
@@ -422,29 +436,6 @@ ul {
   left: 20px;
   z-index: 1;
   font-size: 0.65rem;
-  letter-spacing: 0.08em;
-}
-.hero-stamp {
-  position: absolute;
-  right: 22px;
-  bottom: 25px;
-  width: 89px;
-  height: 89px;
-  border: 1px solid #101d39;
-  border-radius: 50%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: 2rem;
-  line-height: 1.2;
-  transform: rotate(-12deg);
-  background: #d7eefe;
-  color: #101d39;
-  letter-spacing: -0.08em;
-}
-.hero-stamp small {
-  font-size: 0.36rem;
   letter-spacing: 0.08em;
 }
 .hero-caption {
@@ -520,8 +511,8 @@ ul {
   display: block;
 }
 .product-art {
-  background: #eceee8;
-  aspect-ratio: 1/1.15;
+  background: var(--frame);
+  aspect-ratio: 1;
   position: relative;
   overflow: hidden;
   border-radius: var(--radius);
@@ -529,9 +520,7 @@ ul {
 .product-art img {
   width: 100%;
   height: 100%;
-  object-fit: contain;
-  padding: 14px;
-  mix-blend-mode: multiply;
+  object-fit: cover;
   transition: transform 0.35s;
 }
 .product-art picture {
@@ -550,7 +539,7 @@ ul {
   display: grid;
   place-items: center;
   border-radius: 50%;
-  color: #101d39;
+  color: #0a1033;
 }
 .product-card-meta {
   display: flex;
@@ -601,27 +590,19 @@ ul {
   padding-top: 18px;
 }
 .edit-art {
-  aspect-ratio: 1.5;
-  background: #dfe9ee;
+  aspect-ratio: 1.15;
+  background: var(--frame);
   margin-bottom: 22px;
   border-radius: var(--radius);
   overflow: hidden;
-}
-.edit-card:nth-child(2) .edit-art {
-  background: #e7e8dd;
-}
-.edit-card:nth-child(3) .edit-art {
-  background: #e7e1df;
 }
 .edit-art picture {
   height: 100%;
 }
 .edit-art img {
-  object-fit: contain;
+  object-fit: cover;
   width: 100%;
   height: 100%;
-  padding: 18px;
-  mix-blend-mode: multiply;
   transition: transform 0.3s;
 }
 .edit-card:hover img {
@@ -865,7 +846,7 @@ ul {
 }
 .detail-art {
   aspect-ratio: 1;
-  background: #e9eae3;
+  background: var(--frame);
   border-radius: var(--radius);
   overflow: hidden;
 }
@@ -875,9 +856,7 @@ ul {
 .detail-art img {
   width: 100%;
   height: 100%;
-  object-fit: contain;
-  padding: 24px;
-  mix-blend-mode: multiply;
+  object-fit: cover;
 }
 .product-information {
   padding-top: 20px;
@@ -985,7 +964,7 @@ summary {
   width: 74px;
   height: 74px;
   padding: 5px;
-  background: #e9eae3;
+  background: var(--frame);
   border-radius: var(--radius);
 }
 .gallery-thumbs button[aria-pressed="true"] {
@@ -993,8 +972,9 @@ summary {
 }
 .gallery-thumbs img {
   height: 60px;
-  object-fit: contain;
-  mix-blend-mode: multiply;
+  width: 60px;
+  object-fit: cover;
+  border-radius: calc(var(--radius) - 6px);
 }
 .storage-warning {
   background: #fff0ca;
@@ -1009,27 +989,21 @@ summary {
   border-radius: var(--radius);
 }
 [data-theme="dark"] {
-  --paper: #111a2b;
-  --surface: #19263b;
-  --ink: #eff3f8;
-  --muted: #b5bfd0;
-  --line: #39465c;
-  --blue: #a6c1ff;
+  --paper: #070d2e;
+  --surface: #0f1846;
+  --ink: #eef5fc;
+  --muted: #b3bfd8;
+  --line: #2a3768;
+  --blue: #62cff6;
+  --frame: #e9eef5;
   color-scheme: dark;
 }
-[data-theme="dark"] .hero-art,
-[data-theme="dark"] .product-art,
-[data-theme="dark"] .detail-art,
-[data-theme="dark"] .edit-art,
-[data-theme="dark"] .gallery-thumbs button {
-  background: #dfe3df;
-}
 [data-theme="dark"] .hero-index {
-  color: #101d39;
+  color: #0a1033;
 }
 [data-theme="dark"] .button:hover {
-  background: #a6c1ff;
-  color: #101d39;
+  background: #62cff6;
+  color: #0a1033;
 }
 [data-theme="dark"] .sale-label {
   background: #663227;
@@ -1048,9 +1022,6 @@ summary {
   }
   .section {
     padding-block: 90px;
-  }
-  .hero-art {
-    aspect-ratio: 1.15;
   }
 }
 @media (max-width: 1100px) {
@@ -1118,8 +1089,9 @@ summary {
     font-size: 1.05rem;
     gap: 4px;
   }
-  .wordmark svg {
+  .wordmark img {
     width: 30px;
+    height: auto;
   }
   .header-actions {
     gap: 4px;
@@ -1175,22 +1147,6 @@ summary {
     margin-top: 25px;
     font-size: 0.54rem;
   }
-  .hero-art {
-    aspect-ratio: 1.15;
-  }
-  .hero-art img {
-    padding: 12px;
-  }
-  .hero-stamp {
-    width: 72px;
-    height: 72px;
-    font-size: 1.7rem;
-    right: 18px;
-    bottom: 18px;
-  }
-  .hero-stamp small {
-    font-size: 0.3rem;
-  }
   .hero-caption {
     padding-top: 12px;
   }
@@ -1243,9 +1199,6 @@ summary {
   .price {
     font-size: 0.78rem;
   }
-  .product-art img {
-    padding: 9px;
-  }
   .card-arrow {
     width: 27px;
     height: 27px;
@@ -1261,11 +1214,7 @@ summary {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
   .edit-art {
-    aspect-ratio: 0.8;
     margin-bottom: 13px;
-  }
-  .edit-art img {
-    padding: 6px;
   }
   .edit-card .eyebrow {
     font-size: 0.48rem;
@@ -1356,9 +1305,6 @@ summary {
   .product-information .eyebrow {
     margin-bottom: 14px;
   }
-  .detail-art {
-    aspect-ratio: 1.1;
-  }
   .product-page {
     padding-top: 20px;
   }
@@ -1388,8 +1334,9 @@ summary {
   .wordmark {
     font-size: 0.94rem;
   }
-  .wordmark svg {
+  .wordmark img {
     width: 25px;
+    height: auto;
   }
   .header-actions {
     gap: 1px;
@@ -1416,9 +1363,6 @@ summary {
   }
   .edits-grid {
     grid-template-columns: 1fr;
-  }
-  .edit-art {
-    aspect-ratio: 2;
   }
   .edit-card h3 {
     font-size: 1.4rem;
