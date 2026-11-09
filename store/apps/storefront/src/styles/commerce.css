@@ -6,16 +6,17 @@
 }
 .commerce-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1.5fr) minmax(290px, 1fr);
+  grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
   gap: 65px;
   align-items: start;
 }
 .cart-line {
   display: grid;
-  grid-template-columns: 150px 1fr;
+  grid-template-columns: 150px minmax(0, 1fr);
   gap: 26px;
   border-top: 1px solid var(--line);
   padding-block: 25px;
+  min-width: 0;
 }
 .cart-art {
   background: var(--frame);
@@ -44,11 +45,17 @@
 .cart-line strong {
   font-size: 0.88rem;
 }
+.cart-line-info {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
 .cart-line-controls {
   display: flex;
-  gap: 20px;
+  flex-wrap: wrap;
+  gap: 12px 20px;
   align-items: center;
   margin-top: 10px;
+  max-width: 100%;
 }
 .cart-line-controls select {
   min-width: 65px;
@@ -69,6 +76,8 @@
   background: var(--surface);
   border: 1px solid var(--line);
   border-radius: var(--radius);
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 .order-summary h2 {
   font-size: 1.25rem;
@@ -80,10 +89,16 @@
 }
 .totals > div {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
-  gap: 15px;
+  gap: 8px 15px;
   font-size: 0.84rem;
   margin-bottom: 13px;
+}
+.totals dt,
+.totals dd {
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 .totals dd {
   margin: 0;
@@ -116,6 +131,7 @@
 }
 .promo-form > div {
   display: flex;
+  flex-wrap: wrap;
   gap: 8px;
 }
 .promo-form input {
@@ -123,7 +139,8 @@
 }
 .promo-form button {
   font-size: 0.7rem;
-  min-width: 85px;
+  min-width: 0;
+  flex: 1 1 5rem;
   border-radius: var(--radius);
   padding: 6px 10px;
 }
@@ -585,10 +602,10 @@ dialog::backdrop {
 @media (max-width: 1000px) {
   .commerce-grid {
     gap: 30px;
-    grid-template-columns: minmax(0, 1.3fr) minmax(270px, 1fr);
+    grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
   }
   .cart-line {
-    grid-template-columns: 100px 1fr;
+    grid-template-columns: 100px minmax(0, 1fr);
     gap: 17px;
   }
   .order-summary {
@@ -608,14 +625,28 @@ dialog::backdrop {
     gap: 28px;
   }
   .cart-line {
-    grid-template-columns: 100px 1fr;
+    grid-template-columns: minmax(0, 1fr);
     padding-block: 20px;
+  }
+  .cart-art {
+    width: min(140px, 42vw);
   }
   .cart-line h2 {
     font-size: 0.96rem;
+    overflow-wrap: anywhere;
+  }
+  .cart-lines {
+    min-width: 0;
   }
   .cart-line-controls {
     margin-top: 6px;
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .cart-line-controls select,
+  .cart-line-controls button {
+    width: 100%;
+    max-width: 100%;
   }
   .order-summary {
     padding: 23px;
@@ -736,7 +767,7 @@ dialog::backdrop {
     font-size: 2.45rem;
   }
   .cart-line {
-    grid-template-columns: 85px 1fr;
+    grid-template-columns: 85px minmax(0, 1fr);
     gap: 13px;
   }
   .order-celebration h1 {
